@@ -33,10 +33,12 @@ export const PageHero = ({ title, sanskrit, subtitle, image, align = "center", i
             : "object-cover"
         }`}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(20_40%_12%/0.14)_0%,hsl(20_40%_12%/0.26)_100%)]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/28 via-background/8 to-background/10" />
+      {/* Strong dark scrim so text is always readable */}
+      <div className="absolute inset-0 bg-black/55" />
+      {/* Warm gradient overlay for brand feel */}
+      <div className="absolute inset-0 bg-[linear-gradient(160deg,hsl(20_60%_10%/0.55)_0%,hsl(20_40%_12%/0.25)_60%,transparent_100%)]" />
       {/* Festive radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,hsl(22_88%_52%/0.12),transparent_55%),radial-gradient(circle_at_75%_70%,hsl(184_65%_32%/0.1),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(22_88%_52%/0.18),transparent_55%)]" />
     </div>
 
     <div className={`container-narrow relative w-full z-10 ${size === "compact" ? "py-10 md:py-14" : size === "full" ? "py-16 md:py-24" : "py-14 md:py-20"} ${align === "center" ? "text-center" : ""}`}>
@@ -89,7 +91,7 @@ export const PageHero = ({ title, sanskrit, subtitle, image, align = "center", i
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className={`text-background leading-relaxed drop-shadow-[0_4px_14px_hsl(20_40%_12%/0.6)] ${
+            className={`text-white/90 leading-relaxed drop-shadow-[0_4px_14px_rgba(0,0,0,0.8)] ${
               size === "compact" ? "mt-5 text-base md:text-lg" : "mt-6 text-lg md:text-xl"
             }`}
           >
