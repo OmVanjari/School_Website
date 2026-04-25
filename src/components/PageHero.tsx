@@ -5,6 +5,7 @@ interface PageHeroProps {
   sanskrit?: string;
   subtitle?: string;
   image: string;
+  mobileImage?: string;
   align?: "center" | "left";
   imageFit?: "cover" | "contain";
   imagePosition?: string;
@@ -12,27 +13,40 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-export const PageHero = ({ title, sanskrit, subtitle, image, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => (
-  <section className={`relative w-full overflow-x-clip overflow-y-hidden bg-gradient-temple flex items-center ${
+export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => (
+  <section className={`relative w-full overflow-x-clip bg-gradient-temple flex items-center ${
     size === "full"
-      ? "min-h-[75vh] md:min-h-[88vh]"
+      ? "min-h-[100svh] md:min-h-[88vh]"
       : size === "compact"
-      ? "min-h-[54vh] md:min-h-[62vh]"
-      : "min-h-[62vh] md:min-h-[72vh]"
+      ? "min-h-[70vh] md:min-h-[62vh]"
+      : "min-h-[80vh] md:min-h-[72vh]"
   }`}>
     {/* Background image with layered gradients */}
     <div className="absolute inset-0 w-full h-full">
-      <img
-        src={image}
-        alt=""
-        aria-hidden
-        style={{ objectPosition: imagePosition }}
-        className={`absolute inset-0 h-full w-full opacity-95 animate-fade-in ${
-          imageFit === "contain"
-            ? "object-contain object-center"
-            : "object-cover"
-        }`}
-      />
+      {mobileImage ? (
+        <picture className="absolute inset-0 h-full w-full">
+          <source media="(max-width: 767px)" srcSet={mobileImage} />
+          <img
+            src={image}
+            alt=""
+            aria-hidden
+            style={{ objectPosition: imagePosition }}
+            className={`absolute inset-0 h-full w-full opacity-95 animate-fade-in ${
+              imageFit === "contain" ? "object-contain object-center" : "object-cover object-center"
+            }`}
+          />
+        </picture>
+      ) : (
+        <img
+          src={image}
+          alt=""
+          aria-hidden
+          style={{ objectPosition: imagePosition }}
+          className={`absolute inset-0 h-full w-full opacity-95 animate-fade-in ${
+            imageFit === "contain" ? "object-contain object-center" : "object-cover object-top md:object-center"
+          }`}
+        />
+      )}
       {/* Strong dark scrim so text is always readable */}
       <div className="absolute inset-0 bg-black/55" />
       {/* Warm gradient overlay for brand feel */}

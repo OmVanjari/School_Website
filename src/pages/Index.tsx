@@ -10,6 +10,7 @@ import {
   BookOpen, FlaskConical, Palette, Trophy, Users, Award, Sparkles, ArrowRight, Quote,
 } from "lucide-react";
 import heroHome from "@/assets/schoolhome.png";
+import heroHomeMobile from "@/assets/homemobilehero.png";
 
 const features = [
   { icon: BookOpen, title: "Holistic Learning", desc: "Vedic wisdom blended with modern pedagogy for the whole child." },
@@ -72,6 +73,7 @@ const Index = () => {
         sanskrit="॥ विद्यया अमृतमश्नुते ॥"
         subtitle={t("home.heroSubtitle")}
         image={heroHome}
+        mobileImage={heroHomeMobile}
         imageFit="cover"
         imagePosition="center center"
         size="full"
