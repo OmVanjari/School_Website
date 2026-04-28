@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -245,52 +245,38 @@ const About = () => {
     {/* Principal */}
     <section className="py-20">
       <div className="container-narrow">
-        <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-[#07382f] shadow-temple">
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-orange-400 via-orange-300 to-orange-400" />
-          <div className="grid gap-0 md:grid-cols-[360px_1fr]">
-            {/* Left - portrait card */}
-            <div className="relative p-8 md:p-12 flex items-center justify-center">
-              <div className="relative w-full max-w-xs">
-                <div className="rounded-2xl overflow-hidden border-2 border-gold/20 shadow-lg bg-[#0b4a3a]">
-                  {/* Replace src with a real photo url when available */}
+        <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-card shadow-temple">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-festive" />
+          <div className="flex flex-col md:flex-row">
+            {/* Left - portrait */}
+            <div className="flex items-center justify-center p-8 md:p-10 md:w-64 shrink-0">
+              <div className="relative w-48">
+                <div className="rounded-2xl overflow-hidden border border-gold/30 shadow-lg bg-muted">
                   <img
                     src="/assets/principal-placeholder.jpg"
-                    alt="Principal"
-                    className="w-full h-80 object-cover rounded-lg"
-                    onError={(e)=>{(e.target as HTMLImageElement).style.display='none'}}
+                    alt="Dr. Arvind Krishnan"
+                    className="w-full h-60 object-cover object-top"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
-                  <div className="p-4 flex justify-center">
-                    <div className="-mt-10">
-                      <div className="h-32 w-28 md:h-40 md:w-32 rounded-lg overflow-hidden border-4 border-background shadow-md bg-gradient-festive flex items-center justify-center text-4xl md:text-5xl font-display text-secondary">
-                        🙏
-                      </div>
-                      <div className="mt-4 flex justify-center">
-                        <span className="bg-orange-500 text-white px-4 py-1 rounded-full font-semibold">Sajjada Nashin</span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div className="mt-6 text-center text-sm text-muted-foreground">Rahmatullah Alaih · Sajjada Nashin<br/>Dargah Shah Ajmal, Allahabad</div>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-gradient-festive text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow">
+                    Principal
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Right - quote and signature */}
-            <div className="relative p-10 md:p-14">
-              <div className="max-w-3xl mx-auto">
-                <div className="text-gold/80 text-6xl leading-none">“</div>
-                <p className="mt-2 text-white italic text-xl md:text-2xl leading-relaxed">
-                  Education is the light that dispels the darkness of ignorance. At Darul Uloom Junaidia Ajmalia, we strive to nurture not just the mind, but the soul and character of every student.
+            {/* Right - quote */}
+            <div className="flex-1 flex items-center p-8 md:p-12 md:pl-2">
+              <div className="w-full">
+                <div className="text-primary/60 text-5xl font-serif leading-none mb-1">"</div>
+                <p className="text-foreground/85 italic text-lg md:text-xl leading-relaxed">
+                  Education is the sacred flame that illuminates the path of dharma. At our Vidyalaya, we strive to nurture not just the mind, but the soul and character of every student.
                 </p>
-
-                <div className="mt-8 border-t border-gold/20 pt-6 flex items-center justify-between">
-                  <div>
-                    <div className="text-orange-400 font-semibold text-lg md:text-xl">Hazrat Syed Akmal Ahmad Ajmali</div>
-                    <div className="text-sm text-muted-foreground mt-1">Rahmatullah Alaih · Sajjada Nashin</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="h-px w-48 bg-gold/20 mb-2" />
-                    <div className="text-sm text-muted-foreground">Signed</div>
-                  </div>
+                <div className="mt-8 border-t border-gold/20 pt-5">
+                  <div className="text-primary font-semibold text-base md:text-lg">Dr. Arvind Krishnan</div>
+                  <div className="text-xs text-muted-foreground mt-1">Principal · Vidyalaya</div>
                 </div>
               </div>
             </div>
@@ -298,7 +284,6 @@ const About = () => {
         </div>
       </div>
     </section>
-
     {/* Leadership Team */}
     <section className="container-narrow py-20 relative">
       <SectionHeader eyebrow="॥ नेतृत्वम् ॥" title="Leadership Team" subtitle="Dedicated educators shaping the future of our students." />
