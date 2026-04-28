@@ -79,32 +79,30 @@ const Calendar = () => {
                 key={event.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ delay: (i % 6) * 0.07 }}
-                className="bg-card rounded-2xl border border-gold/20 overflow-hidden shadow-soft hover:shadow-warm hover:-translate-y-1 transition-all duration-300"
+                className="bg-card rounded-2xl border border-gold/20 overflow-hidden shadow-soft hover:shadow-warm hover:-translate-y-1 transition-all duration-300 flex"
               >
-                <div className="flex">
-                  {/* Date block */}
-                  <div className={`${HEADER_COLORS[event.category]} text-white p-4 text-center w-20 shrink-0 flex flex-col justify-center`}>
-                    <div className="font-display text-3xl font-bold leading-none">{day}</div>
-                    <div className="text-xs uppercase tracking-widest mt-1 opacity-90">{month}</div>
-                  </div>
-                  {/* Content */}
-                  <div className="p-4 flex-1 min-w-0">
-                    <span className={`inline-block text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border font-medium ${CATEGORY_COLORS[event.category]}`}>
-                      {event.category}
-                    </span>
-                    <h3 className="font-display text-base text-secondary mt-1.5 leading-snug">{event.title}</h3>
-                    {event.endDate && (
-                      <p className="text-xs text-muted-foreground mt-0.5">Until {new Date(event.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</p>
-                    )}
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{event.description}</p>
-                    {event.location && (
-                      <div className="flex items-center gap-1 mt-1.5 text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3" /> {event.location}
-                      </div>
-                    )}
-                  </div>
+                {/* Date block */}
+                <div className="bg-yellow-400 text-red-700 text-center w-24 shrink-0 flex flex-col items-center justify-center py-4 px-2">
+                  <div className="font-display text-4xl font-bold leading-none">{day}</div>
+                  <div className="text-sm uppercase tracking-widest mt-1 font-semibold">{month}</div>
+                </div>
+                {/* Content */}
+                <div className="p-4 flex-1 min-w-0">
+                  <span className={`inline-block text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border font-medium ${CATEGORY_COLORS[event.category]}`}>
+                    {event.category}
+                  </span>
+                  <h3 className="font-display text-base text-secondary mt-1.5 leading-snug">{event.title}</h3>
+                  {event.endDate && (
+                    <p className="text-xs text-muted-foreground mt-0.5">Until {new Date(event.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{event.description}</p>
+                  {event.location && (
+                    <div className="flex items-center gap-1 mt-1.5 text-xs text-muted-foreground">
+                      <MapPin className="h-3 w-3" /> {event.location}
+                    </div>
+                  )}
                 </div>
               </motion.article>
             );
@@ -129,3 +127,4 @@ const Calendar = () => {
 };
 
 export default Calendar;
+

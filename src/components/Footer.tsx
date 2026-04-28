@@ -2,56 +2,112 @@ import { Link } from "react-router-dom";
 import { Flame, MapPin, Phone, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
+/*
+  Pick a combo by changing the number (1–4):
+  1 → Red → Orange → Yellow  gradient  +  Dark Red text
+  2 → Blue → Orange → Yellow gradient  +  Dark Blue text
+  3 → Orange → Red → Yellow  gradient  +  Dark Red text
+  4 → Yellow → Orange → Red  gradient  +  Dark Red text
+*/
+const COMBO = 1;
+
+const combos: Record<number, { bg: string; text: string; muted: string; border: string }> = {
+  1: {
+    bg:     "linear-gradient(135deg,#f97316 0%,#fbbf24 45%,#fde68a 100%)",
+    text:   "#7c2d12",
+    muted:  "#9a3412",
+    border: "#7c2d1230",
+  },
+  2: {
+    bg:     "linear-gradient(135deg,#ef4444 0%,#f97316 45%,#fde68a 100%)",
+    text:   "#7f1d1d",
+    muted:  "#991b1b",
+    border: "#7f1d1d30",
+  },
+  3: {
+    bg:     "linear-gradient(135deg,#fbbf24 0%,#f97316 50%,#ef4444 100%)",
+    text:   "#7c2d12",
+    muted:  "#9a3412",
+    border: "#7c2d1230",
+  },
+  4: {
+    bg:     "linear-gradient(135deg,#60a5fa 0%,#f97316 50%,#fde68a 100%)",
+    text:   "#1e3a8a",
+    muted:  "#1e40af",
+    border: "#1e3a8a30",
+  },
+};
+
+const c = combos[COMBO];
+
+const links = [
+  { to: "/about", label: "About Us" },
+  { to: "/academics", label: "Academics" },
+  { to: "/admissions", label: "Admissions" },
+  { to: "/calendar", label: "Calendar" },
+  { to: "/notices", label: "Notices" },
+  { to: "/fees", label: "Fee Structure" },
+  { to: "/contact", label: "Contact Us" },
+];
+
 export const Footer = () => (
-  <footer className="relative mt-12 md:mt-16 overflow-hidden text-[#5a2117] bg-[linear-gradient(135deg,hsl(18_62%_34%)_0%,hsl(24_78%_50%)_42%,hsl(38_95%_86%)_100%)]">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,hsl(43_88%_55%/0.18),transparent_50%)]" />
-    <div className="absolute inset-0 bg-[linear-gradient(105deg,transparent_15%,hsl(43_95%_78%/0.12)_40%,transparent_70%)] animate-shimmer" />
-    <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(20_40%_12%/0.02)_0%,transparent_22%,transparent_78%,hsl(20_40%_12%/0.04)_100%)]" />
+  <footer className="relative mt-12 md:mt-16 overflow-hidden" style={{ background: c.bg }}>
     <div className="container-narrow relative grid gap-10 py-16 md:grid-cols-4">
+      {/* Brand */}
       <div className="md:col-span-2">
         <div className="flex items-center gap-3 mb-4">
-          <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-saffron shadow-gold">
-            <span className="absolute inset-0 rounded-full border border-gold/50 animate-ring-pulse" />
-            <Flame className="h-6 w-6" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full" style={{ background: `${c.text}22`, border: `1px solid ${c.text}44` }}>
+            <Flame className="h-6 w-6" style={{ color: c.text }} />
           </div>
           <div>
-            <div className="font-display text-2xl font-bold text-[#5a2117]">Vidyalaya</div>
-            <div className="font-sanskrit text-sm text-[#5a2117]/90">विद्या ददाति विनयं</div>
+            <div className="font-display text-2xl font-bold" style={{ color: c.text }}>Vidyalaya</div>
+            <div className="font-sanskrit text-sm" style={{ color: c.muted }}>विद्या ददाति विनयं</div>
           </div>
         </div>
-        <p className="text-[#5a2117]/78 max-w-md leading-relaxed">
+        <p className="max-w-md leading-relaxed text-sm" style={{ color: c.muted }}>
           Where ancient wisdom meets modern learning. Nurturing every child with the rich heritage of Bharat.
         </p>
       </div>
 
+      {/* Quick Links */}
       <div>
-        <h4 className="font-display text-lg text-[#5a2117] mb-4">Quick Links</h4>
-        <ul className="space-y-2 text-sm text-[#5a2117]/82">
-          <li><Link to="/about" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">About Us</Link></li>
-          <li><Link to="/academics" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Academics</Link></li>
-          <li><Link to="/admissions" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Admissions</Link></li>
-          <li><Link to="/calendar" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Calendar</Link></li>
-          <li><Link to="/notices" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Notices</Link></li>
-          <li><Link to="/fees" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Fee Structure</Link></li>
-          <li><Link to="/contact" className="hover:text-[#2f120d] transition-colors inline-block hover:translate-x-1 duration-300">Contact Us</Link></li>
+        <h4 className="font-display text-lg mb-4" style={{ color: c.text }}>Quick Links</h4>
+        <ul className="space-y-2 text-sm">
+          {links.map(l => (
+            <li key={l.to}>
+              <Link to={l.to} className="transition-colors inline-block hover:translate-x-1 duration-200 hover:opacity-100 opacity-80" style={{ color: c.muted }}>
+                {l.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
 
+      {/* Contact */}
       <div>
-        <h4 className="font-display text-lg text-[#5a2117] mb-4">Visit Us</h4>
-        <ul className="space-y-3 text-sm text-[#5a2117]/82">
-          <li className="flex gap-2"><MapPin className="h-4 w-4 mt-0.5 text-[#5a2117] shrink-0" /> 108, Saraswati Marg, Bengaluru</li>
-          <li className="flex gap-2"><Phone className="h-4 w-4 mt-0.5 text-[#5a2117] shrink-0" /> +91 98765 43210</li>
-          <li className="flex gap-2"><Mail className="h-4 w-4 mt-0.5 text-[#5a2117] shrink-0" /> hello@vidyalaya.in</li>
+        <h4 className="font-display text-lg mb-4" style={{ color: c.text }}>Visit Us</h4>
+        <ul className="space-y-3 text-sm">
+          {[
+            { Icon: MapPin, val: "108, Saraswati Marg, Bengaluru" },
+            { Icon: Phone, val: "+91 98765 43210" },
+            { Icon: Mail,  val: "hello@vidyalaya.in" },
+          ].map(({ Icon, val }) => (
+            <li key={val} className="flex gap-2" style={{ color: c.muted }}>
+              <Icon className="h-4 w-4 mt-0.5 shrink-0" style={{ color: c.text }} />
+              {val}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
+
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.15, duration: 0.5 }}
-      className="border-t border-[#5a2117]/12 py-5 text-center text-sm text-[#5a2117]/76"
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ delay: 0.1, duration: 0.4 }}
+      className="py-5 text-center text-sm"
+      style={{ borderTop: `1px solid ${c.border}`, color: c.muted }}
     >
       © {new Date().getFullYear()} Vidyalaya · Crafted with devotion · शुभम् भवतु
     </motion.div>
