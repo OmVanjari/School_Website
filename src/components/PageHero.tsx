@@ -48,9 +48,9 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
         />
       )}
       {/* Strong dark scrim so text is always readable */}
-      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-black/70" />
       {/* Warm gradient overlay for brand feel */}
-      <div className="absolute inset-0 bg-[linear-gradient(160deg,hsl(20_60%_10%/0.55)_0%,hsl(20_40%_12%/0.25)_60%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(160deg,hsl(20_60%_10%/0.75)_0%,hsl(20_40%_12%/0.45)_60%,transparent_100%)]" />
       {/* Festive radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(22_88%_52%/0.18),transparent_55%)]" />
     </div>
@@ -77,11 +77,10 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
           size === "compact" ? "text-3xl md:text-5xl lg:text-[3.4rem]" : "text-4xl md:text-6xl lg:text-[4rem]"
         }`}>
           <span
-            className="bg-clip-text text-transparent animate-title-shimmer"
+            className="bg-clip-text text-transparent"
             style={{
               backgroundImage:
                 "linear-gradient(90deg, hsl(43 95% 86%) 0%, hsl(38 90% 68%) 28%, hsl(22 88% 58%) 55%, hsl(43 95% 86%) 100%)",
-              backgroundSize: "200% auto",
             }}
           >
             {title}

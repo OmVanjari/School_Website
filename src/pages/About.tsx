@@ -93,7 +93,7 @@ const About = () => {
             key={m.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.55 }}
             className="group relative overflow-hidden rounded-3xl section-surface ornate-frame border border-gold/30 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -135,7 +135,7 @@ const About = () => {
               key={item.year}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ delay: i * 0.08, duration: 0.45 }}
               className="relative mb-6 last:mb-0"
             >
@@ -162,7 +162,7 @@ const About = () => {
             key={achievement.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
             className="group h-full overflow-hidden rounded-3xl border border-gold/20 bg-card/85 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -223,7 +223,7 @@ const About = () => {
               key={facility.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
               className="rounded-xl bg-card p-6 border border-gold/30 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-warm group"
             >
@@ -243,38 +243,55 @@ const About = () => {
     </section>
 
     {/* Principal */}
-    <section className="bg-gradient-temple py-20">
+    <section className="py-20">
       <div className="container-narrow">
-        <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-card shadow-temple">
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-festive" />
-          <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="grid gap-0 md:grid-cols-[280px_1fr]">
-            <div className="relative flex items-center justify-center bg-gradient-to-br from-primary/10 via-gold/10 to-secondary/10 p-8 md:p-10">
-              <MandalaBg className="absolute inset-0 w-full h-full opacity-10" />
-              <div className="relative flex flex-col items-center text-center">
-                <div className="flex h-40 w-40 items-center justify-center rounded-full border-4 border-background bg-gradient-festive text-6xl shadow-temple md:h-48 md:w-48">
-                  🙏
+        <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-[#07382f] shadow-temple">
+          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-orange-400 via-orange-300 to-orange-400" />
+          <div className="grid gap-0 md:grid-cols-[360px_1fr]">
+            {/* Left - portrait card */}
+            <div className="relative p-8 md:p-12 flex items-center justify-center">
+              <div className="relative w-full max-w-xs">
+                <div className="rounded-2xl overflow-hidden border-2 border-gold/20 shadow-lg bg-[#0b4a3a]">
+                  {/* Replace src with a real photo url when available */}
+                  <img
+                    src="/assets/principal-placeholder.jpg"
+                    alt="Principal"
+                    className="w-full h-80 object-cover rounded-lg"
+                    onError={(e)=>{(e.target as HTMLImageElement).style.display='none'}}
+                  />
+                  <div className="p-4 flex justify-center">
+                    <div className="-mt-10">
+                      <div className="h-32 w-28 md:h-40 md:w-32 rounded-lg overflow-hidden border-4 border-background shadow-md bg-gradient-festive flex items-center justify-center text-4xl md:text-5xl font-display text-secondary">
+                        🙏
+                      </div>
+                      <div className="mt-4 flex justify-center">
+                        <span className="bg-orange-500 text-white px-4 py-1 rounded-full font-semibold">Sajjada Nashin</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-background/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-primary">
-                  PRINCIPAL
-                </div>
+                <div className="mt-6 text-center text-sm text-muted-foreground">Rahmatullah Alaih · Sajjada Nashin<br/>Dargah Shah Ajmal, Allahabad</div>
               </div>
             </div>
 
-            <div className="relative p-8 md:p-12">
-              <Users className="h-8 w-8 text-primary mb-4" />
-              <p className="font-sanskrit text-xl md:text-2xl text-primary mb-4">
-                "आचार्यदेवो भव"
-              </p>
-              <div className="relative">
-                <span className="absolute -left-2 top-0 text-5xl leading-none text-gold/35">“</span>
-                <p className="pl-8 text-lg md:text-2xl text-foreground/85 italic leading-relaxed">
-                  Education is not the filling of a vessel, but the kindling of a flame. At Vidyalaya, we kindle that flame with the oil of tradition and the wick of innovation.
+            {/* Right - quote and signature */}
+            <div className="relative p-10 md:p-14">
+              <div className="max-w-3xl mx-auto">
+                <div className="text-gold/80 text-6xl leading-none">“</div>
+                <p className="mt-2 text-white italic text-xl md:text-2xl leading-relaxed">
+                  Education is the light that dispels the darkness of ignorance. At Darul Uloom Junaidia Ajmalia, we strive to nurture not just the mind, but the soul and character of every student.
                 </p>
-              </div>
-              <div className="mt-8 flex flex-col gap-1 border-t border-gold/20 pt-5">
-                <div className="font-display text-2xl text-secondary">Dr. Arvind Krishnan</div>
-                <div className="text-sm md:text-base text-muted-foreground">Principal, Vidyalaya</div>
+
+                <div className="mt-8 border-t border-gold/20 pt-6 flex items-center justify-between">
+                  <div>
+                    <div className="text-orange-400 font-semibold text-lg md:text-xl">Hazrat Syed Akmal Ahmad Ajmali</div>
+                    <div className="text-sm text-muted-foreground mt-1">Rahmatullah Alaih · Sajjada Nashin</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="h-px w-48 bg-gold/20 mb-2" />
+                    <div className="text-sm text-muted-foreground">Signed</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -291,7 +308,7 @@ const About = () => {
             key={member.name}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.45 }}
             className="group rounded-2xl section-surface border border-gold/20 shadow-soft overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -315,3 +332,4 @@ const About = () => {
 };
 
 export default About;
+

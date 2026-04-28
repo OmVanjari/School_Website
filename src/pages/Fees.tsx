@@ -32,7 +32,7 @@ const Fees = () => (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.05 }}
         className="bg-card rounded-2xl border border-gold/20 overflow-x-auto shadow-soft"
       >
         <table className="w-full text-sm">
@@ -51,7 +51,7 @@ const Fees = () => (
                 key={fee.id}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ delay: i * 0.06 }}
                 className="hover:bg-muted/30 transition-colors"
               >
@@ -114,3 +114,4 @@ const Fees = () => (
 );
 
 export default Fees;
+

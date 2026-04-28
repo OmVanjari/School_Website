@@ -42,7 +42,7 @@ const Contact = () => {
               key={i.label}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ delay: idx * 0.08 }}
               className="flex gap-4 rounded-2xl bg-card p-5 border border-gold/30 shadow-soft hover:shadow-warm transition-all"
             >
@@ -120,3 +120,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
