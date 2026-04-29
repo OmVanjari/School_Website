@@ -40,6 +40,10 @@ type TranslationKey =
   | "home.features.eyebrow" | "home.features.schoolLife"
   // cultural
   | "home.cultural.quote"
+  // gallery section
+  | "home.gallery.title" | "home.gallery.sub"
+  | "home.gallery.l1" | "home.gallery.l2" | "home.gallery.l3"
+  | "home.gallery.l4" | "home.gallery.l5" | "home.gallery.l6" | "home.gallery.l7"
   // calendar page
   | "cal.heroTitle" | "cal.heroSubtitle"
   | "cal.sectionTitle" | "cal.sectionSub"
@@ -127,6 +131,16 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "home.cta.sub": "Admissions for 2026–27 are open. Take the first step today.",
     "home.cta.apply": "Apply Now",
     "home.cta.contact": "Contact Us",
+    // gallery
+    "home.gallery.title": "Life at Vidyalaya",
+    "home.gallery.sub": "A glimpse into our vibrant school community.",
+    "home.gallery.l1": "Campus Life",
+    "home.gallery.l2": "Academics",
+    "home.gallery.l3": "Admissions",
+    "home.gallery.l4": "Events & Festivals",
+    "home.gallery.l5": "Contact & Community",
+    "home.gallery.l6": "Sports & Fitness",
+    "home.gallery.l7": "School Home",
     // calendar
     "cal.heroTitle": "Academic Calendar",
     "cal.heroSubtitle": "Exams, results, holidays, meetings and events — your complete academic year at a glance.",
@@ -226,6 +240,16 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "home.cta.sub": "2026–27 के लिए प्रवेश खुले हैं। आज पहला कदम उठाएं।",
     "home.cta.apply": "अभी आवेदन करें",
     "home.cta.contact": "संपर्क करें",
+    // gallery
+    "home.gallery.title": "विद्यालय में जीवन",
+    "home.gallery.sub": "हमारे जीवंत विद्यालय समुदाय की एक झलक।",
+    "home.gallery.l1": "परिसर जीवन",
+    "home.gallery.l2": "शैक्षणिक",
+    "home.gallery.l3": "प्रवेश",
+    "home.gallery.l4": "उत्सव एवं कार्यक्रम",
+    "home.gallery.l5": "संपर्क एवं समुदाय",
+    "home.gallery.l6": "खेल एवं स्वास्थ्य",
+    "home.gallery.l7": "विद्यालय गृह",
     // calendar
     "cal.heroTitle": "शैक्षणिक कैलेंडर",
     "cal.heroSubtitle": "परीक्षाएं, परिणाम, छुट्टियाँ, बैठकें और कार्यक्रम — पूरे शैक्षणिक वर्ष की एक झलक।",

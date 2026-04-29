@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Megaphone, CalendarDays, MessageSquare, FileText, ClipboardList, Wallet, Users, TrendingUp } from "lucide-react";
+import { Megaphone, CalendarDays, MessageSquare, FileText, ClipboardList, Wallet, Users, TrendingUp, Images } from "lucide-react";
 
 const stats = [
-  { label: "Announcements", value: 12, icon: Megaphone, to: "/admin/announcements", color: "bg-orange-100 text-orange-600" },
-  { label: "Calendar Events", value: 28, icon: CalendarDays, to: "/admin/calendar", color: "bg-blue-100 text-blue-600" },
-  { label: "Inquiries", value: 7, icon: MessageSquare, to: "/admin/inquiries", color: "bg-green-100 text-green-600" },
-  { label: "Notices", value: 5, icon: FileText, to: "/admin/notices", color: "bg-purple-100 text-purple-600" },
-  { label: "Applications", value: 34, icon: ClipboardList, to: "/admin/admissions", color: "bg-yellow-100 text-yellow-600" },
-  { label: "Fee Records", value: 9, icon: Wallet, to: "/admin/fees", color: "bg-pink-100 text-pink-600" },
+  { label: "Announcements", value: 12, icon: Megaphone,     to: "/admin/announcements" },
+  { label: "Calendar Events", value: 28, icon: CalendarDays, to: "/admin/calendar" },
+  { label: "Inquiries", value: 7, icon: MessageSquare,       to: "/admin/inquiries" },
+  { label: "Notices", value: 5, icon: FileText,              to: "/admin/notices" },
+  { label: "Applications", value: 34, icon: ClipboardList,   to: "/admin/admissions" },
+  { label: "Fee Records", value: 9, icon: Wallet,            to: "/admin/fees" },
 ];
 
 const recentActivity = [
@@ -38,14 +38,14 @@ const AdminDashboard = () => (
         <Link
           key={label}
           to={to}
-          className="bg-card rounded-xl border border-gold/15 p-5 hover:shadow-warm hover:border-gold/40 transition-all group"
+          className="bg-card rounded-xl border border-gold/15 p-5 hover:shadow-warm hover:border-primary/30 transition-all group"
         >
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">{label}</p>
               <p className="font-display text-3xl font-bold text-secondary mt-1">{value}</p>
             </div>
-            <div className={`p-2.5 rounded-lg ${color}`}>
+            <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
               <Icon className="h-5 w-5" />
             </div>
           </div>
@@ -81,15 +81,16 @@ const AdminDashboard = () => (
             { label: "Add Event", to: "/admin/calendar", icon: CalendarDays },
             { label: "Publish Notice", to: "/admin/notices", icon: FileText },
             { label: "View Inquiries", to: "/admin/inquiries", icon: MessageSquare },
-            { label: "Update Fees", to: "/admin/fees", icon: Wallet },
-            { label: "View Applications", to: "/admin/admissions", icon: Users },
+            { label: "Update Fees",        to: "/admin/fees",          icon: Wallet },
+            { label: "View Applications",  to: "/admin/admissions",    icon: Users },
+            { label: "Manage Gallery",     to: "/admin/gallery",       icon: Images },
           ].map(({ label, to, icon: Icon }) => (
             <Link
               key={label}
               to={to}
-              className="flex items-center gap-2 p-3 rounded-lg border border-gold/15 hover:bg-primary/5 hover:border-primary/30 transition-all text-sm text-foreground/80"
+              className="flex items-center gap-2 p-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/40 transition-all text-sm font-medium text-primary"
             >
-              <Icon className="h-4 w-4 text-primary shrink-0" />
+              <Icon className="h-4 w-4 shrink-0" />
               {label}
             </Link>
           ))}

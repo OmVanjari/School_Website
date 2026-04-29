@@ -12,6 +12,13 @@ import {
 } from "lucide-react";
 import heroHome from "@/assets/newherosection.png";
 import heroHomeMobile from "@/assets/mobilevertficateimage.png";
+import heroAbout from "@/assets/hero-about.jpg";
+import heroAcademics from "@/assets/hero-academics.jpg";
+import heroAdmissions from "@/assets/hero-admissions.jpg";
+import heroCalendar from "@/assets/hero-calendar.jpg";
+import heroContact from "@/assets/hero-contact.jpg";
+import heroHero from "@/assets/hero-home.jpg";
+import schoolHome from "@/assets/schoolhome.png";
 import { announcements, calendarEvents } from "@/data/schoolData";
 
 // ─── static data (icons/colors are language-independent) ──────────────────────
@@ -41,6 +48,16 @@ const testimonialKeys = [
   { name: "home.test1.name", role: "home.test1.role", text: "home.test1.text" },
   { name: "home.test2.name", role: "home.test2.role", text: "home.test2.text" },
   { name: "home.test3.name", role: "home.test3.role", text: "home.test3.text" },
+] as const;
+
+const galleryItems = [
+  { src: heroHero,       labelKey: "home.gallery.l1" },
+  { src: heroAcademics,  labelKey: "home.gallery.l2" },
+  { src: heroAdmissions, labelKey: "home.gallery.l3" },
+  { src: heroCalendar,   labelKey: "home.gallery.l4" },
+  { src: heroContact,    labelKey: "home.gallery.l5" },
+  { src: heroAbout,      labelKey: "home.gallery.l6" },
+  { src: schoolHome,     labelKey: "home.gallery.l7" },
 ] as const;
 
 // ─── animated counter ──────────────────────────────────────────────────────────
@@ -98,7 +115,7 @@ const Index = () => {
             <ArrowRight className={`h-5 w-5 ${language === "hi" ? "hidden" : ""}`} />
           </Link>
         </Button>
-        <Button asChild variant="ornate" size="xl">
+        <Button asChild variant="hero" size="xl" className="opacity-90 hover:opacity-100">
           <Link to="/about">{t("home.discoverUs")}</Link>
         </Button>
       </PageHero>
@@ -280,6 +297,50 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ── Gallery Marquee ── */}
+      <section className="py-16 bg-background overflow-hidden">
+        <div className="container-narrow mb-8">
+          <SectionHeader
+            title={t("home.gallery.title")}
+            subtitle={t("home.gallery.sub")}
+          />
+        </div>
+
+        {/* Marquee track — duplicated for seamless loop */}
+        <div
+          className="relative flex overflow-hidden"
+          style={{ maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)" }}
+        >
+          {/* pause on hover via CSS group */}
+          <div className="flex gap-4 animate-[gallery-scroll_35s_linear_infinite] hover:[animation-play-state:paused]"
+            style={{ width: "max-content" }}
+          >
+            {[...galleryItems, ...galleryItems].map((item, i) => (
+              <div
+                key={i}
+                className="relative w-72 h-48 shrink-0 rounded-2xl overflow-hidden border border-gold/20 shadow-soft group"
+              >
+                <img
+                  src={item.src}
+                  alt={t(item.labelKey)}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                {/* label */}
+                <div className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2">
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-400/60" />
+                  <span className="font-display text-xs font-semibold tracking-widest uppercase text-amber-200 drop-shadow-md whitespace-nowrap">
+                    {t(item.labelKey)}
+                  </span>
+                  <span className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-400/60" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Cultural callout ── */}
       <section className="relative bg-gradient-festive text-primary-foreground overflow-hidden">
         <MandalaBg className="absolute -left-32 -top-32 w-[500px] h-[500px] opacity-20" />
@@ -345,10 +406,10 @@ const Index = () => {
             <h3 className="font-display text-3xl md:text-5xl font-bold mb-4">{t("home.cta.title")}</h3>
             <p className="text-lg opacity-90 mb-8 max-w-xl">{t("home.cta.sub")}</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild variant="gold" size="xl">
+              <Button asChild variant="hero" size="xl">
                 <Link to="/admissions">{t("home.cta.apply")}</Link>
               </Button>
-              <Button asChild variant="outline" size="xl" className="border-secondary/20 bg-white/60 text-secondary hover:bg-white/80">
+              <Button asChild variant="hero" size="xl" className="opacity-90 hover:opacity-100">
                 <Link to="/contact">{t("home.cta.contact")}</Link>
               </Button>
             </div>

@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Pencil, Check, X, ChevronRight } from "lucide-react";
 import { defaultFacilities, loadAboutFacilities, saveAboutFacilities, type AboutFacility } from "@/lib/aboutContent";
 
+type SectionKey = "history" | "missionVision" | "principal" | "facilities" | null;
+
 const AdminAbout = () => {
-  const [saved, setSaved] = useState(false);
-  const [facilities, setFacilities] = useState<AboutFacility[]>(defaultFacilities);
+  const [activeSection, setActiveSection] = useState<SectionKey>(null);
+  const [saved, setSaved] = useState<SectionKey>(null);
+
   const [form, setForm] = useState({
     history: "Founded in 2005, Vidyalaya has been a beacon of holistic education rooted in Bharatiya values.",
     mission: "To nurture curious minds and noble hearts through a blend of modern education and ancient wisdom.",
@@ -19,61 +23,96 @@ const AdminAbout = () => {
     principalPhoto: "",
   });
 
-  useEffect(() => {
-    setFacilities(loadAboutFacilities());
-  }, []);
+  const [facilities, setFacilities] = useState<AboutFacility[]>(defaultFacilities);
 
-  const updateFacility = (index: number, field: keyof AboutFacility, value: string) => {
-    setFacilities((prev) => prev.map((item, i) => (i === index ? { ...item, [field]: value } : item)));
+  useEffect(() => { setFacilities(loadAboutFacilities()); }, []);
+
+  const saveSection = (key: SectionKey) => {
+    if (key === "facilities") {
+      const clean = facilities
+        .map(f => ({ title: f.title.trim(), desc: f.desc.trim(), image: f.image.trim() }))
+        .filter(f => f.title && f.desc && f.image);
+      saveAboutFacilities(clean.length > 0 ? clean : defaultFacilities);
+    }
+    setSaved(key);
+    setActiveSection(null);
+    setTimeout(() => setSaved(null), 2000);
   };
 
-  const handleImageUpload = (index: number, event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const updateFacility = (i: number, field: keyof AboutFacility, value: string) =>
+    setFacilities(prev => prev.map((f, idx) => idx === i ? { ...f, [field]: value } : f));
+
+  const handleImageUpload = (i: number, e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        updateFacility(index, "image", reader.result);
-      }
-    };
+    reader.onload = () => { if (typeof reader.result === "string") updateFacility(i, "image", reader.result); };
     reader.readAsDataURL(file);
-    event.currentTarget.value = "";
+    e.currentTarget.value = "";
   };
 
-  const addFacility = () => {
-    setFacilities((prev) => [
-      ...prev,
-      { title: "", desc: "", image: "" },
-    ]);
-  };
+  // ── section card wrapper ──────────────────────────────────────────────────
+  const SectionCard = ({
+    id, title, summary, children,
+  }: { id: SectionKey; title: string; summary: string; children: React.ReactNode }) => {
+    const isOpen = activeSection === id;
+    const wasSaved = saved === id;
+    return (
+      <div className={`rounded-xl border transition-all duration-200 overflow-hidden ${isOpen ? "border-primary/40 shadow-warm" : "border-gold/20"} bg-card`}>
+        {/* Header row — always visible */}
+        <button
+          type="button"
+          onClick={() => setActiveSection(isOpen ? null : id)}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${isOpen ? "bg-primary text-white" : "bg-primary/10 text-primary"}`}>
+              {wasSaved ? <Check className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+            </div>
+            <div>
+              <p className="font-semibold text-secondary text-sm">{title}</p>
+              {!isOpen && <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{summary}</p>}
+            </div>
+          </div>
+          <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`} />
+        </button>
 
-  const removeFacility = (index: number) => {
-    setFacilities((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleSave = () => {
-    const cleanFacilities = facilities
-      .map((item) => ({
-        title: item.title.trim(),
-        desc: item.desc.trim(),
-        image: item.image.trim(),
-      }))
-      .filter((item) => item.title && item.desc && item.image);
-
-    saveAboutFacilities(cleanFacilities.length > 0 ? cleanFacilities : defaultFacilities);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+        {/* Edit form — only when open */}
+        {isOpen && (
+          <div className="px-5 pb-5 pt-1 border-t border-gold/15 space-y-4">
+            {children}
+            <div className="flex gap-3 pt-1">
+              <Button onClick={() => saveSection(id)} variant="hero" size="sm">
+                Save Section
+              </Button>
+              <Button onClick={() => setActiveSection(null)} variant="outline" size="sm">
+                <X className="h-3.5 w-3.5 mr-1" /> Cancel
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
-    <AdminPageShell title="About Us" subtitle="Edit school history, mission, vision, values and principal's message">
-      <div className="bg-card rounded-xl border border-gold/15 p-6 space-y-6">
-        <div className="space-y-1.5">
-          <Label>School History</Label>
-          <Textarea rows={3} value={form.history} onChange={e => setForm({ ...form, history: e.target.value })} />
-        </div>
-        <div className="grid md:grid-cols-2 gap-6">
+    <AdminPageShell title="About Us" subtitle="Click any section to edit it">
+      <div className="space-y-3">
+
+        {/* ── History ── */}
+        <SectionCard id="history" title="School History" summary={form.history}>
+          <div className="space-y-1.5">
+            <Label>School History</Label>
+            <Textarea rows={4} value={form.history} onChange={e => setForm({ ...form, history: e.target.value })} />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Core Values (comma-separated)</Label>
+            <Input value={form.values} onChange={e => setForm({ ...form, values: e.target.value })} />
+          </div>
+        </SectionCard>
+
+        {/* ── Mission & Vision ── */}
+        <SectionCard id="missionVision" title="Mission & Vision" summary={`${form.mission} · ${form.vision}`}>
           <div className="space-y-1.5">
             <Label>Mission</Label>
             <Textarea rows={3} value={form.mission} onChange={e => setForm({ ...form, mission: e.target.value })} />
@@ -82,86 +121,75 @@ const AdminAbout = () => {
             <Label>Vision</Label>
             <Textarea rows={3} value={form.vision} onChange={e => setForm({ ...form, vision: e.target.value })} />
           </div>
-        </div>
-        <div className="space-y-1.5">
-          <Label>Core Values (comma-separated)</Label>
-          <Input value={form.values} onChange={e => setForm({ ...form, values: e.target.value })} />
-        </div>
-        <hr className="border-gold/15" />
-        <h3 className="font-semibold text-secondary">Principal's Message</h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <Label>Principal Name</Label>
-            <Input value={form.principalName} onChange={e => setForm({ ...form, principalName: e.target.value })} />
-          </div>
-          <div className="space-y-1.5">
-            <Label>Photo URL (optional)</Label>
-            <Input value={form.principalPhoto} onChange={e => setForm({ ...form, principalPhoto: e.target.value })} placeholder="https://..." />
-          </div>
-        </div>
-        <div className="space-y-1.5">
-          <Label>Message</Label>
-          <Textarea rows={4} value={form.principalMessage} onChange={e => setForm({ ...form, principalMessage: e.target.value })} />
-        </div>
-        <hr className="border-gold/15" />
-        <div className="flex items-center justify-between gap-3">
-          <h3 className="font-semibold text-secondary">Campus Facilities</h3>
-          <Button type="button" onClick={addFacility} variant="outline" size="sm">Add Facility</Button>
-        </div>
-        <p className="text-xs text-muted-foreground">Upload a facility image or paste an image URL. These images are shown in the public About page scrolling gallery.</p>
-        <div className="space-y-4">
-          {facilities.map((facility, index) => (
-            <div key={`${facility.title || "facility"}-${index}`} className="rounded-xl border border-gold/20 p-4 space-y-3">
-              <div className="grid md:grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label>Facility Name</Label>
-                  <Input
-                    value={facility.title}
-                    onChange={(e) => updateFacility(index, "title", e.target.value)}
-                    placeholder="e.g. Robotics Lab"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label>Image URL</Label>
-                  <Input
-                    value={facility.image}
-                    onChange={(e) => updateFacility(index, "image", e.target.value)}
-                    placeholder="https://..."
-                  />
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <Label>Description</Label>
-                <Textarea
-                  rows={2}
-                  value={facility.desc}
-                  onChange={(e) => updateFacility(index, "desc", e.target.value)}
-                />
-              </div>
-              <div className="flex flex-wrap items-center gap-3">
-                <Label htmlFor={`facility-image-${index}`} className="text-xs text-primary">Upload Image</Label>
-                <Input
-                  id={`facility-image-${index}`}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(index, e)}
-                  className="max-w-xs"
-                />
-                {facilities.length > 1 && (
-                  <Button type="button" variant="ghost" size="sm" onClick={() => removeFacility(index)}>
-                    Remove
-                  </Button>
-                )}
-              </div>
-              {facility.image && (
-                <img src={facility.image} alt={facility.title || "Facility preview"} className="h-24 w-40 rounded-lg object-cover border border-gold/25" />
-              )}
+        </SectionCard>
+
+        {/* ── Principal ── */}
+        <SectionCard id="principal" title="Principal's Message" summary={`${form.principalName} — ${form.principalMessage}`}>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label>Principal Name</Label>
+              <Input value={form.principalName} onChange={e => setForm({ ...form, principalName: e.target.value })} />
             </div>
-          ))}
-        </div>
-        <Button onClick={handleSave} variant="hero" size="sm">
-          {saved ? "Saved ✓" : "Save Changes"}
-        </Button>
+            <div className="space-y-1.5">
+              <Label>Photo URL (optional)</Label>
+              <Input value={form.principalPhoto} onChange={e => setForm({ ...form, principalPhoto: e.target.value })} placeholder="https://..." />
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <Label>Message</Label>
+            <Textarea rows={4} value={form.principalMessage} onChange={e => setForm({ ...form, principalMessage: e.target.value })} />
+          </div>
+        </SectionCard>
+
+        {/* ── Facilities ── */}
+        <SectionCard id="facilities" title="Campus Facilities" summary={`${facilities.length} facilities listed`}>
+          <div className="space-y-3">
+            {facilities.map((f, i) => (
+              <div key={i} className="rounded-lg border border-gold/20 p-4 space-y-3 bg-muted/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wide">Facility {i + 1}</span>
+                  {facilities.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setFacilities(prev => prev.filter((_, idx) => idx !== i))}
+                      className="text-xs text-red-500 hover:text-red-600"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label>Name</Label>
+                    <Input value={f.title} onChange={e => updateFacility(i, "title", e.target.value)} placeholder="e.g. Robotics Lab" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label>Image URL</Label>
+                    <Input value={f.image} onChange={e => updateFacility(i, "image", e.target.value)} placeholder="https://..." />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Description</Label>
+                  <Textarea rows={2} value={f.desc} onChange={e => updateFacility(i, "desc", e.target.value)} />
+                </div>
+                <div className="flex items-center gap-3">
+                  <Label htmlFor={`img-${i}`} className="text-xs text-primary cursor-pointer hover:underline">Upload Image</Label>
+                  <Input id={`img-${i}`} type="file" accept="image/*" onChange={e => handleImageUpload(i, e)} className="max-w-xs" />
+                </div>
+                {f.image && <img src={f.image} alt={f.title} className="h-20 w-36 rounded-lg object-cover border border-gold/25" />}
+              </div>
+            ))}
+          </div>
+          <Button
+            type="button"
+            onClick={() => setFacilities(prev => [...prev, { title: "", desc: "", image: "" }])}
+            variant="outline"
+            size="sm"
+          >
+            + Add Facility
+          </Button>
+        </SectionCard>
+
       </div>
     </AdminPageShell>
   );
