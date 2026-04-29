@@ -129,6 +129,10 @@ export default {
           "0%": { backgroundPosition: "0% 50%" },
           "100%": { backgroundPosition: "200% 50%" },
         },
+        "gallery-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -136,8 +140,8 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "fade-in-up": "fade-in-up 0.8s cubic-bezier(0.22,1,0.36,1) forwards",
         "scale-in": "scale-in 0.5s ease-out forwards",
-        "slow-spin": "slow-spin 60s linear infinite",
-        "reverse-spin": "reverse-spin 80s linear infinite",
+        "slow-spin": "slow-spin 90s linear infinite",
+        "reverse-spin": "reverse-spin 120s linear infinite",
         "float": "float 5s ease-in-out infinite",
         "float-slow": "float-slow 7s ease-in-out infinite",
         "shimmer": "shimmer 3s linear infinite",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -93,7 +93,7 @@ const About = () => {
             key={m.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.55 }}
             className="group relative overflow-hidden rounded-3xl section-surface ornate-frame border border-gold/30 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -135,7 +135,7 @@ const About = () => {
               key={item.year}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ delay: i * 0.08, duration: 0.45 }}
               className="relative mb-6 last:mb-0"
             >
@@ -162,7 +162,7 @@ const About = () => {
             key={achievement.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
             className="group h-full overflow-hidden rounded-3xl border border-gold/20 bg-card/85 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -223,7 +223,7 @@ const About = () => {
               key={facility.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
               className="rounded-xl bg-card p-6 border border-gold/30 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-warm group"
             >
@@ -243,45 +243,47 @@ const About = () => {
     </section>
 
     {/* Principal */}
-    <section className="bg-gradient-temple py-20">
+    <section className="py-20">
       <div className="container-narrow">
         <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-card shadow-temple">
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-festive" />
-          <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="grid gap-0 md:grid-cols-[280px_1fr]">
-            <div className="relative flex items-center justify-center bg-gradient-to-br from-primary/10 via-gold/10 to-secondary/10 p-8 md:p-10">
-              <MandalaBg className="absolute inset-0 w-full h-full opacity-10" />
-              <div className="relative flex flex-col items-center text-center">
-                <div className="flex h-40 w-40 items-center justify-center rounded-full border-4 border-background bg-gradient-festive text-6xl shadow-temple md:h-48 md:w-48">
-                  🙏
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-festive" />
+          <div className="flex flex-col md:flex-row">
+            {/* Left - portrait */}
+            <div className="flex items-center justify-center p-8 md:p-10 md:w-64 shrink-0">
+              <div className="relative w-48">
+                <div className="rounded-2xl overflow-hidden border border-gold/30 shadow-lg bg-muted">
+                  <img
+                    src="/assets/principal-placeholder.jpg"
+                    alt="Dr. Arvind Krishnan"
+                    className="w-full h-60 object-cover object-top"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
                 </div>
-                <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-background/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-primary">
-                  PRINCIPAL
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-gradient-festive text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow">
+                    Principal
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className="relative p-8 md:p-12">
-              <Users className="h-8 w-8 text-primary mb-4" />
-              <p className="font-sanskrit text-xl md:text-2xl text-primary mb-4">
-                "आचार्यदेवो भव"
-              </p>
-              <div className="relative">
-                <span className="absolute -left-2 top-0 text-5xl leading-none text-gold/35">“</span>
-                <p className="pl-8 text-lg md:text-2xl text-foreground/85 italic leading-relaxed">
-                  Education is not the filling of a vessel, but the kindling of a flame. At Vidyalaya, we kindle that flame with the oil of tradition and the wick of innovation.
+            {/* Right - quote */}
+            <div className="flex-1 flex items-center p-8 md:p-12 md:pl-2">
+              <div className="w-full">
+                <div className="text-primary/60 text-5xl font-serif leading-none mb-1">"</div>
+                <p className="text-foreground/85 italic text-lg md:text-xl leading-relaxed">
+                  Education is the sacred flame that illuminates the path of dharma. At our Vidyalaya, we strive to nurture not just the mind, but the soul and character of every student.
                 </p>
-              </div>
-              <div className="mt-8 flex flex-col gap-1 border-t border-gold/20 pt-5">
-                <div className="font-display text-2xl text-secondary">Dr. Arvind Krishnan</div>
-                <div className="text-sm md:text-base text-muted-foreground">Principal, Vidyalaya</div>
+                <div className="mt-8 border-t border-gold/20 pt-5">
+                  <div className="text-primary font-semibold text-base md:text-lg">Dr. Arvind Krishnan</div>
+                  <div className="text-xs text-muted-foreground mt-1">Principal · Vidyalaya</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-
     {/* Leadership Team */}
     <section className="container-narrow py-20 relative">
       <SectionHeader eyebrow="॥ नेतृत्वम् ॥" title="Leadership Team" subtitle="Dedicated educators shaping the future of our students." />
@@ -291,7 +293,7 @@ const About = () => {
             key={member.name}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ delay: i * 0.1, duration: 0.45 }}
             className="group rounded-2xl section-surface border border-gold/20 shadow-soft overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm"
           >
@@ -315,3 +317,4 @@ const About = () => {
 };
 
 export default About;
+

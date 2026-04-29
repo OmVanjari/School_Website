@@ -89,7 +89,7 @@
     background-image:
       radial-gradient(circle at 10% 0%, hsl(22 88% 52% / 0.06), transparent 40%),
       radial-gradient(circle at 90% 100%, hsl(358 65% 32% / 0.05), transparent 40%);
-    background-attachment: fixed;
+    /* removed background-attachment: fixed — causes repaint on every scroll tick */
   }
   h1, h2, h3, h4, .font-display {
     font-family: 'Cinzel', serif;
@@ -152,20 +152,7 @@
     position: relative;
     isolation: isolate;
   }
-  .sacred-grid::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.22;
-    background-image:
-      radial-gradient(circle at 1px 1px, hsl(22 88% 52% / 0.24) 1px, transparent 0),
-      linear-gradient(to right, hsl(22 88% 52% / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(358 65% 32% / 0.04) 1px, transparent 1px);
-    background-size: 20px 20px, 24px 24px, 24px 24px;
-    mask-image: radial-gradient(circle at center, black 35%, transparent 92%);
-  }
+  /* removed ::before pseudo-element — multi-layer radial-gradient + mask causes expensive repaints */
   .ornate-frame {
     position: relative;
   }

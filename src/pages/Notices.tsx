@@ -61,7 +61,7 @@ const Notices = () => {
                 key={notice.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ delay: i * 0.06 }}
                 className="bg-card rounded-2xl border border-gold/20 p-5 md:p-6 flex items-start gap-4 hover:shadow-warm transition-all"
               >
@@ -103,3 +103,4 @@ const Notices = () => {
 };
 
 export default Notices;
+
