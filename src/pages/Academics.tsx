@@ -1,595 +1,534 @@
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
+import { MandalaBg } from "@/components/MandalaBg";
 import { Button } from "@/components/ui/button";
-import { 
-  FlaskConical, 
-  Palette, 
-  Calculator, 
-  Trophy, 
-  BookOpen, 
-  Music,
-  Microscope,
-  Globe,
-  Laptop,
-  Languages,
-  Library,
-  Lightbulb,
-  Users,
-  Award,
-  Sparkles,
-  ChevronRight,
-  GraduationCap,
-  Atom,
-  Beaker
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  BookOpen, FlaskConical, Calculator, Globe, Music, Dumbbell, Code, Palette,
+  CheckCircle2, GraduationCap, Star, Users, ArrowRight, Sparkles, Trophy, Lightbulb, Atom, Brain,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
 import heroAcademics from "@/assets/hero-academics.jpg";
 
-const streams = [
-  { icon: FlaskConical, name: "Science", desc: "STEM Labs, Robotics Club, Vedic Astronomy", color: "from-blue-500 via-cyan-500 to-teal-500", glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]" },
-  { icon: Palette, name: "Arts", desc: "Classical Dance, Visual Arts, Drama", color: "from-pink-500 via-rose-500 to-red-500", glow: "group-hover:shadow-[0_0_40px_rgba(236,72,153,0.5)]" },
-  { icon: Calculator, name: "Commerce", desc: "Entrepreneurship, Accounting, Bharat Markets", color: "from-green-500 via-emerald-500 to-teal-500", glow: "group-hover:shadow-[0_0_40px_rgba(34,197,94,0.5)]" },
-  { icon: Trophy, name: "Sports", desc: "Yoga, Kabaddi, Cricket, Athletics", color: "from-orange-500 via-amber-500 to-yellow-500", glow: "group-hover:shadow-[0_0_40px_rgba(249,115,22,0.5)]" },
-  { icon: BookOpen, name: "Languages", desc: "Sanskrit, Hindi, English, Tamil", color: "from-purple-500 via-violet-500 to-indigo-500", glow: "group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)]" },
-  { icon: Music, name: "Music", desc: "Carnatic, Hindustani, Tabla, Veena", color: "from-indigo-500 via-blue-500 to-cyan-500", glow: "group-hover:shadow-[0_0_40px_rgba(99,102,241,0.5)]" },
-];
+/* ─── Static colour/icon config (language-independent) ─── */
 
-const stages = [
-  { stage: "Bal Vatika", grades: "Pre-K – KG", desc: "Play-based learning rooted in stories from the Panchatantra.", icon: Sparkles, color: "from-pink-400 to-rose-400" },
-  { stage: "Prathama", grades: "Grades 1–5", desc: "Foundational literacy, Sanskrit shlokas, and curiosity-driven projects.", icon: BookOpen, color: "from-blue-400 to-cyan-400" },
-  { stage: "Madhyama", grades: "Grades 6–8", desc: "STEM, arts and Vedic mathematics — building character and competence.", icon: Lightbulb, color: "from-purple-400 to-violet-400" },
-  { stage: "Uttama", grades: "Grades 9–12", desc: "Board excellence, electives, and global readiness with rooted values.", icon: Award, color: "from-orange-400 to-amber-400" },
-];
+const statsMeta = [
+  { key: "statsPassRate" as const, value: "98%", icon: Star, color: "from-amber-500 to-orange-500" },
+  { key: "statsUniversity" as const, value: "150+", icon: GraduationCap, color: "from-primary to-orange-400" },
+  { key: "statsExperts" as const, value: "40+", icon: Users, color: "from-secondary to-red-400" },
+  { key: "statsOlympiad" as const, value: "25+", icon: Trophy, color: "from-gold to-amber-400" },
+] as const;
 
-const subjects = [
-  { name: "Mathematics", icon: Calculator, desc: "Vedic & Modern Math", gradient: "from-blue-500 to-cyan-500" },
-  { name: "Science", icon: Microscope, desc: "Physics, Chemistry, Biology", gradient: "from-green-500 to-emerald-500" },
-  { name: "English", icon: Globe, desc: "Literature & Communication", gradient: "from-purple-500 to-pink-500" },
-  { name: "Computer Science", icon: Laptop, desc: "Coding & AI Fundamentals", gradient: "from-orange-500 to-red-500" },
-  { name: "Sanskrit", icon: Languages, desc: "Classical Language Studies", gradient: "from-yellow-500 to-orange-500" },
-  { name: "Social Studies", icon: Users, desc: "History, Geography, Civics", gradient: "from-indigo-500 to-purple-500" },
-];
+const programsMeta = [
+  { idx: 1, emoji: "🌱", color: "from-emerald-500/20 to-teal-500/10", border: "border-emerald-400/30", accent: "text-emerald-600", badge: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+  { idx: 2, emoji: "📚", color: "from-blue-500/20 to-indigo-500/10", border: "border-blue-400/30", accent: "text-blue-600", badge: "bg-blue-50 text-blue-700 border-blue-200" },
+  { idx: 3, emoji: "🎯", color: "from-primary/20 to-orange-500/10", border: "border-primary/30", accent: "text-primary", badge: "bg-orange-50 text-orange-700 border-orange-200" },
+  { idx: 4, emoji: "🏛️", color: "from-secondary/20 to-red-500/10", border: "border-secondary/30", accent: "text-secondary", badge: "bg-red-50 text-red-700 border-red-200" },
+] as const;
 
-const facilities = [
-  { 
-    title: "Smart Classrooms", 
-    desc: "Interactive digital boards and modern learning tools in every classroom for immersive education.", 
-    icon: Laptop,
-    gradient: "from-blue-500 to-cyan-500"
-  },
-  { 
-    title: "Science Laboratories", 
-    desc: "State-of-the-art physics, chemistry, and biology labs with latest equipment and safety standards.", 
-    icon: Beaker,
-    gradient: "from-purple-500 to-pink-500"
-  },
-  { 
-    title: "Digital Library", 
-    desc: "Vast collection of books, e-resources, and quiet study spaces for focused learning.", 
-    icon: Library,
-    gradient: "from-green-500 to-emerald-500"
-  },
-  { 
-    title: "Sports Complex", 
-    desc: "Indoor and outdoor facilities for yoga, athletics, and traditional sports development.", 
-    icon: Trophy,
-    gradient: "from-orange-500 to-red-500"
-  },
-];
+const pillarIcons = [Brain, Atom, Lightbulb, Sparkles] as const;
 
+const pillarsMeta = [
+  {
+    num: "01", devanagari: "१",
+    accent: "hsl(38 95% 58%)",
+    accentClass: "text-amber-400",
+    borderClass: "border-amber-400/25",
+    glowClass: "from-amber-500/20",
+    barClass: "from-amber-400 to-orange-500",
+    tagClass: "bg-amber-400/10 text-amber-300 border-amber-400/20",
+    tag: "Critical Thinking",
+  },
+  {
+    num: "02", devanagari: "२",
+    accent: "hsl(22 88% 58%)",
+    accentClass: "text-orange-400",
+    borderClass: "border-orange-400/25",
+    glowClass: "from-orange-500/20",
+    barClass: "from-primary to-orange-400",
+    tagClass: "bg-orange-400/10 text-orange-300 border-orange-400/20",
+    tag: "STEM",
+  },
+  {
+    num: "03", devanagari: "३",
+    accent: "hsl(340 70% 60%)",
+    accentClass: "text-rose-400",
+    borderClass: "border-rose-400/25",
+    glowClass: "from-rose-500/20",
+    barClass: "from-secondary to-rose-500",
+    tagClass: "bg-rose-400/10 text-rose-300 border-rose-400/20",
+    tag: "Creative",
+  },
+  {
+    num: "04", devanagari: "४",
+    accent: "hsl(43 88% 60%)",
+    accentClass: "text-gold",
+    borderClass: "border-gold/25",
+    glowClass: "from-gold/20",
+    barClass: "from-gold to-amber-400",
+    tagClass: "bg-gold/10 text-yellow-300 border-gold/20",
+    tag: "Culture",
+  },
+] as const;
+
+const subjectsMeta = [
+  { icon: BookOpen,    color: "from-amber-500 to-orange-500",   ritual: "🪔", sanskritName: "वाक् विद्या",    ritualLabel: "Saraswati Puja" },
+  { icon: Calculator,  color: "from-blue-500 to-indigo-500",    ritual: "🔢", sanskritName: "गणित शास्त्र",   ritualLabel: "Vedic Ganit" },
+  { icon: FlaskConical,color: "from-emerald-500 to-teal-500",   ritual: "🌿", sanskritName: "प्रकृति विज्ञान", ritualLabel: "Pancha Bhuta" },
+  { icon: Globe,       color: "from-primary to-orange-400",     ritual: "🗺️", sanskritName: "भूगोल इतिहास",  ritualLabel: "Dharti Mata" },
+  { icon: Code,        color: "from-violet-500 to-purple-500",  ritual: "⚙️", sanskritName: "संगणक विद्या",   ritualLabel: "Yantra Shastra" },
+  { icon: Palette,     color: "from-pink-500 to-rose-500",      ritual: "🎨", sanskritName: "चित्र कला",      ritualLabel: "Shilpa Shastra" },
+  { icon: Music,       color: "from-secondary to-red-400",      ritual: "🎵", sanskritName: "संगीत नृत्य",    ritualLabel: "Gandharva Veda" },
+  { icon: Dumbbell,    color: "from-gold to-amber-500",         ritual: "🧘", sanskritName: "शारीरिक शिक्षा", ritualLabel: "Sharir Dharma" },
+] as const;
+
+/* ─── Animated number ───────────────────────────────────── */
+const AnimatedNumber = ({ value }: { value: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.8 });
+  return (
+    <span ref={ref} className={`transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+      {value}
+    </span>
+  );
+};
+
+/* ─── Component ─────────────────────────────────────────── */
 const Academics = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.98]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const { t } = useLanguage();
+  const [activeProgram, setActiveProgram] = useState(0);
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const programs = programsMeta.map((m) => ({
+    ...m,
+    level: t(`academics.prog${m.idx}Level`),
+    grades: t(`academics.prog${m.idx}Grades`),
+    desc: t(`academics.prog${m.idx}Desc`),
+    highlights: [
+      t(`academics.prog${m.idx}h1`),
+      t(`academics.prog${m.idx}h2`),
+      t(`academics.prog${m.idx}h3`),
+      t(`academics.prog${m.idx}h4`),
+    ],
+  }));
+
+  const pillars = pillarIcons.map((Icon, i) => ({
+    Icon,
+    title: t(`academics.pillar${i + 1}Title`),
+    desc: t(`academics.pillar${i + 1}Desc`),
+  }));
+
+  const subjects = subjectsMeta.map(({ icon: Icon, color, ritual, sanskritName, ritualLabel }, i) => ({
+    Icon,
+    color,
+    ritual,
+    sanskritName,
+    ritualLabel,
+    name: t(`academics.subj${i + 1}Name`),
+    desc: t(`academics.subj${i + 1}Desc`),
+  }));
 
   return (
     <>
-      {/* Scroll Progress Bar */}
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-gold to-primary z-50 origin-left"
-        style={{ scaleX: smoothProgress }}
+      <PageHero
+        title={t("academics.heroTitle")}
+        sanskrit="॥ सा विद्या या विमुक्तये ॥"
+        subtitle={t("academics.heroSubtitle")}
+        image={heroAcademics}
+        size="full"
       />
 
-      {/* Enhanced Hero Section with Parallax */}
-      <motion.div 
-        ref={heroRef} 
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative"
-      >
-        <motion.div style={{ y: heroY }}>
-          <PageHero
-            title="Our Academic Excellence"
-            sanskrit="॥ सा विद्या या विमुक्तये ॥"
-            subtitle="A curriculum where Vedic mathematics and quantum physics share the same blackboard — nurturing minds for tomorrow."
-            image={heroAcademics}
-          >
-            <Link to="/admissions">
+      {/* ── Stats Bar ── */}
+      <section className="container-narrow -mt-10 relative z-20">
+        <div className="rounded-3xl border border-gold/30 bg-card shadow-temple overflow-hidden">
+          {/* Top festive bar */}
+          <div className="h-1 w-full bg-gradient-festive" />
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gold/15">
+            {statsMeta.map((s, i) => (
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative group"
+                key={s.key}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="relative group flex flex-col items-center justify-center gap-2 p-6 md:p-8 text-center overflow-hidden"
               >
-                <Button 
-                  size="lg" 
-                  className="relative bg-white text-primary hover:bg-white/95 shadow-2xl text-lg px-8 py-6 rounded-xl overflow-hidden group"
-                >
-                  {/* Animated gradient border */}
-                  <motion.div 
-                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--gold)), hsl(var(--primary)))",
-                      backgroundSize: "200% 100%",
-                    }}
-                    animate={{
-                      backgroundPosition: ["0% 50%", "200% 50%", "0% 50%"],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                  <span className="relative z-10 flex items-center gap-2">
-                    Explore Our Programs
-                    <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  
-                  {/* Ripple effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-white/20 rounded-xl"
-                    initial={{ scale: 0, opacity: 1 }}
-                    whileHover={{ scale: 2, opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                  />
-                </Button>
-              </motion.div>
-            </Link>
-          </PageHero>
-        </motion.div>
-      </motion.div>
-
-      {/* Curriculum Overview - Glassmorphism Cards */}
-      <section className="container-narrow py-24 relative overflow-hidden">
-        {/* Floating decorative blobs */}
-        <motion.div 
-          className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"
-          animate={{ 
-            x: [0, 30, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-10 w-96 h-96 bg-gold/10 rounded-full blur-3xl"
-          animate={{ 
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionHeader 
-            eyebrow="॥ पाठ्यक्रम ॥" 
-            title="Our Curriculum" 
-            subtitle="Comprehensive education from foundation to excellence" 
-          />
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 relative z-10">
-          {stages.map((s, i) => (
-            <motion.div
-              key={s.stage}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -12, scale: 1.03 }}
-              className="group relative rounded-3xl p-8 border border-white/20 shadow-2xl overflow-hidden backdrop-blur-xl bg-white/10 hover:bg-white/20 transition-all duration-500"
-            >
-              {/* Glassmorphism effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Animated gradient border */}
-              <motion.div 
-                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `linear-gradient(135deg, transparent, ${s.color.split(' ')[1]}, transparent)`,
-                  padding: "2px",
-                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude"
-                }}
-              />
-              
-              {/* Icon with bounce animation */}
-              <motion.div 
-                className={`relative inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${s.color} text-white mb-6 shadow-2xl`}
-                whileHover={{ 
-                  rotate: [0, -10, 10, -10, 0],
-                  scale: 1.15
-                }}
-                transition={{ duration: 0.6 }}
-              >
-                <s.icon className="h-10 w-10" />
-                
-                {/* Glow effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-2xl bg-white/30"
-                  animate={{ 
-                    scale: [1, 1.3, 1],
-                    opacity: [0.5, 0, 0.5]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </motion.div>
-
-              <div className="relative">
-                <div className="text-xs uppercase tracking-widest text-primary font-bold mb-3 flex items-center gap-2">
-                  <motion.span 
-                    className="h-px w-8 bg-primary/60"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: 32 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.15 + 0.3, duration: 0.5 }}
-                  />
-                  {s.grades}
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300`} />
+                <div className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                  <s.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-display text-2xl text-secondary mb-4 group-hover:text-primary transition-colors duration-300">
-                  {s.stage}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {s.desc}
-                </p>
-              </div>
-
-              {/* Shine effect */}
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
-                whileHover={{ translateX: "200%" }}
-                transition={{ duration: 0.8 }}
-              />
-            </motion.div>
-          ))}
+                <div className="font-display text-3xl md:text-4xl font-bold text-gradient-saffron leading-none">
+                  <AnimatedNumber value={s.value} />
+                </div>
+                <div className="text-xs text-muted-foreground leading-snug max-w-[8rem]">{t(`academics.${s.key}`)}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Streams of Knowledge - Neon Glow Cards */}
-      <section className="bg-gradient-to-br from-background via-muted/30 to-background py-24 relative overflow-hidden">
-        {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)`,
-            backgroundSize: "40px 40px"
-          }} />
-        </div>
+      {/* ── Four Pillars ── */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Dark rich background */}
+        <div className="absolute inset-0 bg-[hsl(20_35%_18%)]" />
+        {/* Saffron radial bloom */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[hsl(22_88%_52%/0.13)] blur-[100px] pointer-events-none" />
+        {/* Fine grid */}
+        <div className="absolute inset-0 opacity-[0.035]"
+          style={{ backgroundImage: "linear-gradient(hsl(43 78% 52%) 1px,transparent 1px),linear-gradient(90deg,hsl(43 78% 52%) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
+        {/* Gold rules */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-30" />
 
         <div className="container-narrow relative z-10">
+
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <SectionHeader 
-              eyebrow="॥ विद्याशाखाः ॥" 
-              title="Streams of Knowledge" 
-              subtitle="Six branches of the kalpavriksha — choose your path to excellence" 
-            />
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 font-sanskrit text-xs tracking-[0.22em] text-gold mb-5">
+              {t("academics.pillarsEyebrow")}
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-white leading-tight">
+              {t("academics.pillarsTitle")}
+            </h2>
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <span className="h-px w-20 bg-gradient-to-r from-transparent to-gold/60" />
+              <span className="text-gold text-base">✦</span>
+              <span className="h-px w-20 bg-gradient-to-l from-transparent to-gold/60" />
+            </div>
+            <p className="mt-5 text-white/60 max-w-xl mx-auto leading-relaxed">
+              {t("academics.pillarsSubtitle")}
+            </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-            {streams.map((s, i) => (
-              <motion.div
-                key={s.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ scale: 1.08, y: -15 }}
-                className={`group relative rounded-3xl bg-card p-8 border-2 border-transparent hover:border-primary/50 shadow-xl ${s.glow} transition-all duration-500 cursor-pointer overflow-hidden`}
-              >
-                {/* Neon glow border effect */}
-                <motion.div 
-                  className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`}
-                />
-                
-                {/* Icon with rotation */}
-                <motion.div 
-                  className="relative inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-muted to-card text-primary mb-6 shadow-lg group-hover:shadow-2xl transition-shadow duration-500"
-                  whileHover={{ 
-                    rotate: 360,
-                    scale: 1.2
-                  }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
+          {/* Cards grid */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((p, i) => {
+              const m = pillarsMeta[i];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.13, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                  className={`group relative flex flex-col overflow-hidden rounded-2xl border ${m.borderClass} bg-white/[0.07] backdrop-blur-sm hover:bg-white/[0.11] hover:-translate-y-2 transition-all duration-400`}
+                  style={{ boxShadow: `0 0 0 1px ${m.accent}22, 0 8px 40px hsl(20 40% 4% / 0.6)` }}
                 >
-                  <s.icon className="h-10 w-10" />
-                  
-                  {/* Rotating ring */}
-                  <motion.div
-                    className={`absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-100`}
-                    style={{
-                      WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                      padding: "2px"
-                    }}
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  />
+                  {/* Accent top bar */}
+                  <div className={`h-[3px] w-full shrink-0 bg-gradient-to-r ${m.barClass}`} />
+
+                  {/* Hover glow */}
+                  <div className={`absolute inset-0 bg-gradient-to-b ${m.glowClass} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+
+                  <div className="relative z-10 flex flex-col flex-1 p-6 md:p-7">
+
+                    {/* Top row: tag + devanagari */}
+                    <div className="flex items-center justify-between mb-6">
+                      <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-[0.18em] uppercase ${m.tagClass}`}>
+                        {m.tag}
+                      </span>
+                      <span className={`font-sanskrit text-4xl font-bold leading-none opacity-20 ${m.accentClass}`}>
+                        {m.devanagari}
+                      </span>
+                    </div>
+
+                    {/* Icon */}
+                    <div
+                      className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${m.barClass} text-white shadow-lg mb-5 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <p.Icon className="h-7 w-7" />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-display text-xl md:text-2xl text-white mb-3 leading-snug">
+                      {p.title}
+                    </h3>
+
+                    {/* Animated reveal line */}
+                    <div className="relative h-px w-full mb-4 overflow-hidden rounded-full bg-white/10">
+                      <motion.div
+                        className={`absolute inset-y-0 left-0 bg-gradient-to-r ${m.barClass}`}
+                        initial={{ width: "0%" }}
+                        whileInView={{ width: "60%" }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.13 + 0.4, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-white/60 leading-relaxed flex-1">
+                      {p.desc}
+                    </p>
+
+                    {/* Bottom step number */}
+                    <div className="mt-6 pt-4 border-t border-white/[0.07] flex items-center justify-between">
+                      <span className="text-[10px] font-semibold tracking-[0.2em] text-white/25 uppercase">
+                        Pillar {m.num}
+                      </span>
+                      <div className={`h-6 w-6 rounded-full border ${m.borderClass} flex items-center justify-center`}>
+                        <div className={`h-2 w-2 rounded-full bg-gradient-to-br ${m.barClass}`} />
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
+              );
+            })}
+          </div>
 
-                <div className="relative">
-                  <h3 className="font-display text-2xl text-secondary mb-3 group-hover:text-primary transition-colors duration-300">
-                    {s.name}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {s.desc}
-                  </p>
-                </div>
+        </div>
+      </section>
 
-                {/* Background shift effect */}
-                <motion.div 
-                  className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                />
+      {/* ── Programs — Interactive Tabs ── */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Warm temple background */}
+        <div className="absolute inset-0 bg-gradient-temple" />
+        <MandalaBg className="absolute -left-40 bottom-0 h-[30rem] w-[30rem] opacity-10 hidden lg:block z-0" />
+        <MandalaBg className="absolute -right-40 top-0 h-[24rem] w-[24rem] opacity-8 hidden lg:block z-0" spin={false} />
+        <div className="container-narrow relative z-10">
+          <SectionHeader
+            eyebrow={t("academics.programsEyebrow")}
+            title={t("academics.programsTitle")}
+            subtitle={t("academics.programsSubtitle")}
+          />
 
-                {/* Shine sweep */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
-                  whileHover={{ translateX: "200%" }}
-                  transition={{ duration: 1 }}
-                />
-              </motion.div>
+          {/* Tab selector */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {programs.map((p, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveProgram(i)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300 ${
+                  activeProgram === i
+                    ? "bg-gradient-saffron text-white border-transparent shadow-gold scale-105"
+                    : "border-gold/30 text-muted-foreground hover:border-primary/40 hover:text-foreground bg-white/70"
+                }`}
+              >
+                <span className="mr-1.5">{p.emoji}</span>
+                {p.level}
+              </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Subjects Grid - Interactive Tiles */}
-      <section className="container-narrow py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionHeader 
-            eyebrow="॥ विषयाः ॥" 
-            title="Core Subjects" 
-            subtitle="Building strong foundations across all disciplines" 
-          />
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-          {subjects.map((subject, i) => (
-            <motion.div
-              key={subject.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.05, y: -8 }}
-              className="group relative rounded-2xl bg-card p-7 border border-border hover:border-transparent shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden"
-            >
-              {/* Glow border on hover */}
-              <motion.div 
-                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${subject.gradient} opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500`}
-                style={{ zIndex: -1 }}
-              />
-              
-              <div className="relative flex items-start gap-5">
-                <motion.div 
-                  className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${subject.gradient} text-white shadow-lg`}
-                  whileHover={{ 
-                    rotate: [0, -15, 15, -15, 0],
-                    scale: 1.15
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <subject.icon className="h-8 w-8" />
-                </motion.div>
-                
-                <div className="flex-1">
-                  <h4 className="font-display text-xl text-secondary mb-2 group-hover:text-primary transition-colors">
-                    {subject.name}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {subject.desc}
-                  </p>
-                </div>
-              </div>
-
-              {/* Background shift */}
-              <motion.div 
-                className={`absolute inset-0 bg-gradient-to-br ${subject.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-              />
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Facilities Section - Split Layout with Scroll Reveal */}
-      <section className="bg-gradient-temple py-24 relative overflow-hidden">
-        <div className="container-narrow">
+          {/* Active program card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            key={activeProgram}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-3xl overflow-hidden shadow-temple border border-gold/20"
           >
-            <SectionHeader 
-              eyebrow="॥ सुविधाएं ॥" 
-              title="World-Class Facilities" 
-              subtitle="Modern infrastructure for holistic development" 
-            />
-          </motion.div>
-
-          <div className="space-y-12 mt-16">
-            {facilities.map((facility, i) => (
-              <motion.div
-                key={facility.title}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -80 : 80 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`group relative rounded-3xl bg-card p-10 border border-gold/30 shadow-2xl hover:shadow-temple transition-all duration-500 ${i % 2 === 0 ? '' : 'ml-auto'}`}
-              >
-                <div className={`flex gap-8 items-center ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                  <motion.div 
-                    className={`flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${facility.gradient} text-white shadow-2xl`}
-                    whileHover={{ scale: 1.15, rotate: 10 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <facility.icon className="h-12 w-12" />
-                  </motion.div>
-                  
-                  <div className="flex-1">
-                    <h4 className="font-display text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">
-                      {facility.title}
-                    </h4>
-                    <p className="text-muted-foreground leading-relaxed text-lg">
-                      {facility.desc}
-                    </p>
+            {/* Festive top bar */}
+            <div className="h-1.5 w-full bg-gradient-festive" />
+            <div className="grid md:grid-cols-2 gap-0 bg-white">
+              {/* Left */}
+              <div className={`p-8 md:p-10 border-b md:border-b-0 md:border-r border-gold/15 bg-gradient-to-br ${programs[activeProgram].color}`}>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 border border-gold/20 shadow-soft text-4xl">
+                    {programs[activeProgram].emoji}
+                  </div>
+                  <div>
+                    <h3 className="font-display text-2xl md:text-3xl text-secondary">{programs[activeProgram].level}</h3>
+                    <span className={`text-sm font-semibold ${programs[activeProgram].accent}`}>
+                      {programs[activeProgram].grades}
+                    </span>
                   </div>
                 </div>
+                <p className="text-foreground/80 leading-relaxed text-base md:text-lg mb-6">
+                  {programs[activeProgram].desc}
+                </p>
+                <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${programs[activeProgram].badge}`}>
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  {t("academics.cbseAffiliated")}
+                </span>
+              </div>
+              {/* Right */}
+              <div className="p-8 md:p-10 bg-white">
+                <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-5 flex items-center gap-2">
+                  <span className="h-px flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
+                  {t("academics.keyHighlights")}
+                  <span className="h-px flex-1 bg-gradient-to-l from-primary/30 to-transparent" />
+                </p>
+                <ul className="space-y-3">
+                  {programs[activeProgram].highlights.map((h, j) => (
+                    <motion.li
+                      key={j}
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: j * 0.08 }}
+                      className="flex items-center gap-3 rounded-xl bg-[hsl(38_55%_97%)] border border-gold/20 px-4 py-3 hover:border-gold/40 hover:shadow-soft transition-all duration-200"
+                    >
+                      <div className="h-2 w-2 rounded-full bg-gradient-saffron shadow-gold shrink-0" />
+                      <span className="text-sm font-medium text-foreground/85">{h}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
 
-                {/* Animated progress line */}
-                <motion.div 
-                  className={`absolute bottom-0 ${i % 2 === 0 ? 'left-10 right-10' : 'left-10 right-10'} h-1 bg-gradient-to-r ${facility.gradient} rounded-full`}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  style={{ transformOrigin: i % 2 === 0 ? 'left' : 'right' }}
-                />
-              </motion.div>
+          {/* Dot nav */}
+          <div className="flex justify-center gap-2 mt-6">
+            {programs.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveProgram(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeProgram === i ? "w-8 bg-primary" : "w-2 bg-gold/40 hover:bg-gold/70"
+                }`}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section - High Conversion with Pulse Animation */}
-      <section className="container-narrow py-24">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative rounded-[2rem] bg-gradient-to-br from-primary via-gold to-secondary p-16 md:p-20 text-center overflow-hidden shadow-2xl"
-        >
-          {/* Animated background blobs */}
-          <motion.div 
-            className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"
-            animate={{ 
-              x: [0, 100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"
-            animate={{ 
-              x: [0, -100, 0],
-              y: [0, 50, 0],
-              scale: [1.2, 1, 1.2]
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          />
+      {/* ── Subjects Grid ── */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Warm parchment background */}
+        <div className="absolute inset-0 bg-[hsl(38_55%_95%)]" />
+        {/* Faint lotus dot pattern */}
+        <div className="absolute inset-0 opacity-[0.045]"
+          style={{ backgroundImage: "radial-gradient(hsl(22 88% 45%) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        {/* Gold rules */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
-          <div className="relative z-10">
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-8"
-            >
-              <GraduationCap className="h-12 w-12 text-white" />
-            </motion.div>
+        <div className="container-narrow relative z-10">
 
-            <motion.h2 
-              className="font-display text-4xl md:text-5xl text-white mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              Ready to Begin Your Journey?
-            </motion.h2>
-            <motion.p 
-              className="text-white/95 text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              Join our community of learners and experience education that blends tradition with innovation.
-            </motion.p>
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 font-sanskrit text-xs tracking-[0.22em] text-primary mb-5">
+              {t("academics.subjectsEyebrow")}
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-secondary leading-tight">
+              {t("academics.subjectsTitle")}
+            </h2>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <span className="h-px w-20 bg-gradient-to-r from-transparent to-gold/60" />
+              <span className="text-primary text-base">✦</span>
+              <span className="h-px w-20 bg-gradient-to-l from-transparent to-gold/60" />
+            </div>
+            <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              {t("academics.subjectsSubtitle")}
+            </p>
+          </motion.div>
 
-            <Link to="/admissions">
-              <motion.div 
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block"
+          {/* Cards */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {subjects.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative overflow-hidden rounded-2xl bg-white border border-gold/25 shadow-[0_2px_16px_hsl(43_78%_52%/0.08)] hover:shadow-[0_8px_32px_hsl(43_78%_52%/0.18)] hover:-translate-y-1.5 transition-all duration-300 cursor-default"
               >
-                <Button 
-                  size="lg" 
-                  className="relative bg-white text-primary hover:bg-white/95 shadow-2xl text-xl px-12 py-8 rounded-2xl group overflow-hidden"
-                >
-                  {/* Pulse effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-white/30 rounded-2xl"
-                    animate={{ 
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 0, 0.5]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  
-                  <span className="relative z-10 flex items-center gap-3 font-semibold">
-                    Apply for Admission
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ChevronRight className="h-6 w-6" />
-                    </motion.div>
-                  </span>
+                {/* Coloured top bar */}
+                <div className={`h-[3px] w-full bg-gradient-to-r ${s.color}`} />
 
-                  {/* Ripple on hover */}
-                  <motion.div
-                    className="absolute inset-0 bg-primary/10 rounded-2xl"
-                    initial={{ scale: 0, opacity: 1 }}
-                    whileHover={{ scale: 2, opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                  />
-                </Button>
+                {/* Hover tint */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-[0.05] transition-opacity duration-300 pointer-events-none`} />
+
+                <div className="relative z-10 p-5">
+                  {/* Top row: ritual emoji + ritual label */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl leading-none">{s.ritual}</span>
+                    <span className="font-sanskrit text-[10px] tracking-[0.14em] text-primary/60 bg-primary/8 border border-primary/15 rounded-full px-2.5 py-0.5">
+                      {s.ritualLabel}
+                    </span>
+                  </div>
+
+                  {/* Icon */}
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-md mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <s.Icon className="h-5 w-5" />
+                  </div>
+
+                  {/* Sanskrit name */}
+                  <p className="font-sanskrit text-xs text-primary/70 mb-0.5 tracking-wide">{s.sanskritName}</p>
+
+                  {/* English name */}
+                  <h4 className="font-display text-base md:text-lg text-secondary mb-2 leading-snug">{s.name}</h4>
+
+                  {/* Divider */}
+                  <div className={`h-px w-8 bg-gradient-to-r ${s.color} mb-3 opacity-60`} />
+
+                  {/* Description */}
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
+
+                {/* Bottom slide-in accent */}
+                <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${s.color} scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left`} />
               </motion.div>
-            </Link>
+            ))}
           </div>
-        </motion.div>
+
+        </div>
+      </section>
+
+      {/* ── Sanskrit Quote Banner ── */}
+      <section className="relative bg-gradient-festive text-primary-foreground overflow-hidden">
+        <MandalaBg className="absolute -left-32 -top-32 w-[500px] h-[500px] opacity-15" />
+        <MandalaBg className="absolute -right-40 -bottom-40 w-[500px] h-[500px] opacity-15" spin={false} />
+        <div className="container-narrow relative py-16 text-center">
+          <Sparkles className="h-9 w-9 text-gold mx-auto mb-4" />
+          <p className="font-sanskrit text-2xl md:text-3xl mb-3 text-gold">
+            विद्या ददाति विनयं, विनयाद् याति पात्रताम्
+          </p>
+          <p className="text-base md:text-lg max-w-2xl mx-auto opacity-85">
+            {t("academics.quoteTrans")}
+          </p>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="container-narrow py-20">
+        <div className="relative overflow-hidden rounded-3xl shadow-temple">
+          {/* Background */}
+          <div className="absolute inset-0 bg-[hsl(20_40%_10%)]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[hsl(22_88%_52%/0.18)] blur-[80px] pointer-events-none" />
+          <div className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: "linear-gradient(hsl(43 78% 52%) 1px,transparent 1px),linear-gradient(90deg,hsl(43 78% 52%) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-60" />
+          <MandalaBg className="absolute -right-16 -top-16 w-72 h-72 opacity-10" spin={false} />
+
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-14">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-gold mb-5">
+                <GraduationCap className="h-3.5 w-3.5" />
+                {t("academics.ctaBadge")}
+              </div>
+              <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
+                {t("academics.ctaTitle")}
+              </h3>
+              <p className="text-white/55 max-w-lg leading-relaxed">
+                {t("academics.ctaSubtitle")}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              <Button asChild variant="hero" size="lg">
+                <Link to="/admissions">
+                  {t("academics.ctaApply")} <ArrowRight className="h-4 w-4 ml-1" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" className="border border-white/20 bg-white/10 hover:bg-white/20 text-white">
+                <Link to="/contact">{t("academics.ctaContact")}</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );
