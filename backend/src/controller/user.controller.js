@@ -48,7 +48,7 @@ const registerUser = asyncHandler(async(req,res)=>{
       const userData = {
         username,
         password,
-        fullName,
+        username,
         role : secretKey && userRoles.ADMIN ,
         email
       }
@@ -73,7 +73,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 
     const { email, password } = req.body
 
-    const user = await User.findOne(email)
+    const user = await User.findOne({email})
 
     fieldNotFound(user)
 
@@ -92,7 +92,7 @@ const loginUser = asyncHandler(async(req,res)=>{
   return res.status(200)
   .cookie("accessToken", accessToken, options)
   .cookie("refreshToken", refreshToken, options)
-  .json(new ApiResponse(200, login, "Admin login successfully"))
+  .json(new ApiResponse(200,  {}, "Admin login successfully"))
 })
 
 const logoutUser = asyncHandler(async(req,res)=>{

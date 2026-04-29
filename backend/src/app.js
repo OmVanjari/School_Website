@@ -23,7 +23,7 @@ app.use(cookieParser())
 
 // import routers
 import { authLimiter, globalLimiter } from './middleware/rateLimiter.middleware.js'
-import authRouter from './routes/auth.router.js'
+import authRouter from './routes/auth.route.js'
 
 
 

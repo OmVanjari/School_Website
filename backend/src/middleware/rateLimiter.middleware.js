@@ -1,5 +1,5 @@
 import rateLimit from 'express-rate-limit';
-import ApiError from '../utils/ApiError';
+import ApiError from '../utils/ApiError.js';
 
 // Common handler
 const limiterHandler = (req, res, next, options) => {
