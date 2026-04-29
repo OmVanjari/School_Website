@@ -52,7 +52,39 @@ type TranslationKey =
   | "cal.until" | "cal.noEvents"
   | "cal.cta.title" | "cal.cta.sub"
   // footer
-  | "footer.tagline" | "footer.quicklinks" | "footer.visit" | "footer.copyright" | "footer.blessing";
+  | "footer.tagline" | "footer.quicklinks" | "footer.visit" | "footer.copyright" | "footer.blessing"
+  // about page
+  | "about.heroTitle" | "about.heroSanskrit" | "about.heroSubtitle"
+  | "about.mvv.eyebrow" | "about.mvv.title" | "about.mvv.subtitle"
+  | "about.mission.title" | "about.mission.desc" | "about.mission.footer"
+  | "about.vision.title" | "about.vision.desc" | "about.vision.footer"
+  | "about.values.title" | "about.values.desc" | "about.values.footer"
+  | "about.timeline.eyebrow" | "about.timeline.title" | "about.timeline.subtitle"
+  | "about.timeline.2005.title" | "about.timeline.2005.desc"
+  | "about.timeline.2012.title" | "about.timeline.2012.desc"
+  | "about.timeline.2018.title" | "about.timeline.2018.desc"
+  | "about.timeline.2023.title" | "about.timeline.2023.desc"
+  | "about.achievements.eyebrow" | "about.achievements.title" | "about.achievements.subtitle"
+  | "about.achievement1.title" | "about.achievement1.desc"
+  | "about.achievement2.title" | "about.achievement2.desc"
+  | "about.achievement3.title" | "about.achievement3.desc"
+  | "about.achievement4.title" | "about.achievement4.desc"
+  | "about.facilities.eyebrow" | "about.facilities.title" | "about.facilities.subtitle"
+  | "about.facility1.title" | "about.facility1.desc"
+  | "about.facility2.title" | "about.facility2.desc"
+  | "about.facility3.title" | "about.facility3.desc"
+  | "about.facility4.title" | "about.facility4.desc"
+  | "about.facility5.title" | "about.facility5.desc"
+  | "about.facility6.title" | "about.facility6.desc"
+  | "about.principal.quote"
+  | "about.principal.name" | "about.principal.role"
+  | "about.team.eyebrow" | "about.team.title" | "about.team.subtitle"
+  | "about.team1.name" | "about.team1.role" | "about.team1.expertise"
+  | "about.team2.name" | "about.team2.role" | "about.team2.expertise"
+  | "about.team3.name" | "about.team3.role" | "about.team3.expertise"
+  | "about.team4.name" | "about.team4.role" | "about.team4.expertise"
+  | "about.team5.name" | "about.team5.role" | "about.team5.expertise"
+  | "about.team6.name" | "about.team6.role" | "about.team6.expertise";
 
 // ─── translations ──────────────────────────────────────────────────────────────
 const messages: Record<Language, Record<TranslationKey, string>> = {
@@ -163,6 +195,83 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "footer.visit": "Visit Us",
     "footer.copyright": "All rights reserved",
     "footer.blessing": "शुभम् भवतु · सर्वे भवन्तु सुखिनः",
+    // about page
+    "about.heroTitle": "About Our Vidyalaya",
+    "about.heroSanskrit": "॥ सत्यं शिवं सुन्दरम् ॥",
+    "about.heroSubtitle": "For over two decades, our school has nurtured character, scholarship, and seva through a joyful blend of Bharatiya tradition and modern learning.",
+    "about.mvv.eyebrow": "॥ प्रेरणा ॥",
+    "about.mvv.title": "Mission, Vision & Values",
+    "about.mvv.subtitle": "The guiding principles behind our classrooms, assemblies, and community life.",
+    "about.mission.title": "Mission",
+    "about.mission.desc": "To nurture holistic excellence through inclusive education that honours our heritage and embraces innovation.",
+    "about.mission.footer": "Learning with purpose, compassion, and confidence.",
+    "about.vision.title": "Vision",
+    "about.vision.desc": "A future-ready learning community rooted in Indian ethos, shaping global citizens with dharmic values.",
+    "about.vision.footer": "Growing students who lead with clarity and character.",
+    "about.values.title": "Values",
+    "about.values.desc": "Respect, Integrity, Curiosity, Compassion — the four pillars of every Vidyalaya child.",
+    "about.values.footer": "The daily culture that shapes every step.",
+    "about.timeline.eyebrow": "॥ इतिहासः ॥",
+    "about.timeline.title": "Our Journey",
+    "about.timeline.subtitle": "Milestones along our two-decade path of dharmic education.",
+    "about.timeline.2005.title": "Founding",
+    "about.timeline.2005.desc": "Vidyalaya was founded with 60 students and a single banyan tree.",
+    "about.timeline.2012.title": "Campus Expansion",
+    "about.timeline.2012.desc": "Added Saraswati Block — labs, library and a temple courtyard.",
+    "about.timeline.2018.title": "National Recognition",
+    "about.timeline.2018.desc": "Awarded 'Best Heritage School' by Bharat Education Council.",
+    "about.timeline.2023.title": "Digital Transformation",
+    "about.timeline.2023.desc": "Smart classrooms, robotics labs and a Vedic mathematics centre.",
+    "about.achievements.eyebrow": "॥ उपलब्धयः ॥",
+    "about.achievements.title": "Achievements & Recognition",
+    "about.achievements.subtitle": "Recognized excellence across academics, sports and culture.",
+    "about.achievement1.title": "100% Pass Rate",
+    "about.achievement1.desc": "Consistent 100% pass rate in board examinations for the past 5 years.",
+    "about.achievement2.title": "National Awards",
+    "about.achievement2.desc": "Multiple national awards for academic excellence and cultural programs.",
+    "about.achievement3.title": "Global Reach",
+    "about.achievement3.desc": "Alumni studying and working across 25+ countries worldwide.",
+    "about.achievement4.title": "Innovation Hub",
+    "about.achievement4.desc": "2nd position in National Science Olympiad for three consecutive years.",
+    "about.facilities.eyebrow": "॥ सुविधाः ॥",
+    "about.facilities.title": "Campus Facilities",
+    "about.facilities.subtitle": "Modern infrastructure designed for holistic learning.",
+    "about.facility1.title": "Smart Classrooms",
+    "about.facility1.desc": "Interactive boards, projectors and high-speed internet in every room.",
+    "about.facility2.title": "Science & Tech Labs",
+    "about.facility2.desc": "State-of-the-art physics, chemistry, biology and computer labs.",
+    "about.facility3.title": "Sports Complex",
+    "about.facility3.desc": "Olympic-standard facilities for cricket, badminton, kabaddi and yoga.",
+    "about.facility4.title": "Digital Library",
+    "about.facility4.desc": "50,000+ books, digital archives and e-learning resources.",
+    "about.facility5.title": "Auditorium",
+    "about.facility5.desc": "3000-seat capacity venue with sound system for events and performances.",
+    "about.facility6.title": "Cafeteria",
+    "about.facility6.desc": "Nutritious meals prepared fresh daily following health guidelines.",
+    "about.principal.quote": "Education is the sacred flame that illuminates the path of dharma. At our Vidyalaya, we strive to nurture not just the mind, but the soul and character of every student.",
+    "about.principal.name": "Dr. Arvind Krishnan",
+    "about.principal.role": "Principal · Vidyalaya",
+    "about.team.eyebrow": "॥ नेतृत्वम् ॥",
+    "about.team.title": "Leadership Team",
+    "about.team.subtitle": "Dedicated educators shaping the future of our students.",
+    "about.team1.name": "Dr. Arvind Krishnan",
+    "about.team1.role": "Principal",
+    "about.team1.expertise": "Education & Leadership",
+    "about.team2.name": "Ms. Priya Sharma",
+    "about.team2.role": "Vice Principal (Academics)",
+    "about.team2.expertise": "Curriculum Design",
+    "about.team3.name": "Mr. Rajesh Kumar",
+    "about.team3.role": "Head of Science",
+    "about.team3.expertise": "STEM Education",
+    "about.team4.name": "Mrs. Sneha Patel",
+    "about.team4.role": "Head of Languages",
+    "about.team4.expertise": "Linguistic Excellence",
+    "about.team5.name": "Mr. Vikram Singh",
+    "about.team5.role": "Sports Director",
+    "about.team5.expertise": "Holistic Development",
+    "about.team6.name": "Ms. Anjali Verma",
+    "about.team6.role": "Counselor",
+    "about.team6.expertise": "Student Wellbeing",
   },
 
   hi: {
@@ -272,10 +381,85 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "footer.visit": "हमसे मिलें",
     "footer.copyright": "सर्वाधिकार सुरक्षित",
     "footer.blessing": "शुभम् भवतु · सर्वे भवन्तु सुखिनः",
+    // about page
+    "about.heroTitle": "हमारे विद्यालय के बारे में",
+    "about.heroSanskrit": "॥ सत्यं शिवं सुन्दरम् ॥",
+    "about.heroSubtitle": "बीस वर्षों से अधिक समय से, हमारा विद्यालय भारतीय परंपरा और आधुनिक शिक्षा के आनंदमय मिश्रण के माध्यम से चरित्र, विद्या और सेवा का पोषण करता है।",
+    "about.mvv.eyebrow": "॥ प्रेरणा ॥",
+    "about.mvv.title": "मिशन, विजन एवं मूल्य",
+    "about.mvv.subtitle": "हमारे कक्षाओं, सभाओं और समुदाय जीवन के पीछे मार्गदर्शक सिद्धांत।",
+    "about.mission.title": "मिशन",
+    "about.mission.desc": "हमारी विरासत का सम्मान करने और नवाचार को अपनाने वाली समावेशी शिक्षा के माध्यम से समग्र उत्कृष्टता का पोषण करना।",
+    "about.mission.footer": "उद्देश्य, करुणा और आत्मविश्वास के साथ सीखना।",
+    "about.vision.title": "विजन",
+    "about.vision.desc": "भारतीय मूल्यों में जड़ित भविष्य-तैयार सीखने वाला समुदाय, जो धर्मिक मूल्यों के साथ वैश्विक नागरिकों का निर्माण करता है।",
+    "about.vision.footer": "स्पष्टता और चरित्र के साथ नेतृत्व करने वाले विद्यार्थियों का विकास।",
+    "about.values.title": "मूल्य",
+    "about.values.desc": "सम्मान, ईमानदारी, जिज्ञासा, करुणा — हर विद्यालय बच्चे के चार स्तंभ।",
+    "about.values.footer": "दैनिक संस्कृति जो हर कदम को आकार देती है।",
+    "about.timeline.eyebrow": "॥ इतिहासः ॥",
+    "about.timeline.title": "हमारी यात्रा",
+    "about.timeline.subtitle": "धर्मिक शिक्षा की हमारी दो दशकों की यात्रा में मील के पत्थर।",
+    "about.timeline.2005.title": "स्थापना",
+    "about.timeline.2005.desc": "विद्यालय की स्थापना 60 विद्यार्थियों और एक बरगद के पेड़ के साथ हुई।",
+    "about.timeline.2012.title": "परिसर विस्तार",
+    "about.timeline.2012.desc": "सरस्वती ब्लॉक जोड़ा गया — प्रयोगशालाएँ, पुस्तकालय और मंदिर का आंगन।",
+    "about.timeline.2018.title": "राष्ट्रीय मान्यता",
+    "about.timeline.2018.desc": "भारत शिक्षा परिषद द्वारा 'सर्वश्रेष्ठ विरासत विद्यालय' पुरस्कार प्राप्त।",
+    "about.timeline.2023.title": "डिजिटल परिवर्तन",
+    "about.timeline.2023.desc": "स्मार्ट कक्षाएँ, रोबोटिक्स प्रयोगशालाएँ और वेदिक गणित केंद्र।",
+    "about.achievements.eyebrow": "॥ उपलब्धयः ॥",
+    "about.achievements.title": "उपलब्धियाँ एवं मान्यता",
+    "about.achievements.subtitle": "शैक्षणिक, खेलकूद और संस्कृति में मान्यता प्राप्त उत्कृष्टता।",
+    "about.achievement1.title": "100% पास दर",
+    "about.achievement1.desc": "पिछले 5 वर्षों में बोर्ड परीक्षाओं में निरंतर 100% पास दर।",
+    "about.achievement2.title": "राष्ट्रीय पुरस्कार",
+    "about.achievement2.desc": "शैक्षणिक उत्कृष्टता और सांस्कृतिक कार्यक्रमों के लिए कई राष्ट्रीय पुरस्कार।",
+    "about.achievement3.title": "वैश्विक पहुँच",
+    "about.achievement3.desc": "पूरे विश्व में 25+ देशों में अध्ययन और कार्य करने वाले पूर्व विद्यार्थी।",
+    "about.achievement4.title": "नवाचार केंद्र",
+    "about.achievement4.desc": "तीन लगातार वर्षों में राष्ट्रीय विज्ञान ओलंपियाड में दूसरा स्थान।",
+    "about.facilities.eyebrow": "॥ सुविधाः ॥",
+    "about.facilities.title": "परिसर सुविधाएँ",
+    "about.facilities.subtitle": "समग्र शिक्षा के लिए डिज़ाइन की गई आधुनिक बुनियादी ढाँचा।",
+    "about.facility1.title": "स्मार्ट कक्षाएँ",
+    "about.facility1.desc": "प्रत्येक कक्ष में इंटरएक्टिव बोर्ड, प्रोजेक्टर और उच्च-गति इंटरनेट।",
+    "about.facility2.title": "विज्ञान एवं प्रौद्योगिकी प्रयोगशालाएँ",
+    "about.facility2.desc": "भौतिकी, रसायन विज्ञान, जीव विज्ञान और कंप्यूटर प्रयोगशालाओं की अत्याधुनिक सुविधाएँ।",
+    "about.facility3.title": "खेल परिसर",
+    "about.facility3.desc": "क्रिकेट, बैडमिंटन, कबड्डी और योग के लिए ओलंपिक-मानक सुविधाएँ।",
+    "about.facility4.title": "डिजिटल पुस्तकालय",
+    "about.facility4.desc": "50,000+ पुस्तकें, डिजिटल अभिलेख और ई-लर्निंग संसाधन।",
+    "about.facility5.title": "सभागार",
+    "about.facility5.desc": "कार्यक्रमों और प्रस्तुतियों के लिए ध्वनि प्रणाली के साथ 3000 सीटों की क्षमता वाला स्थान।",
+    "about.facility6.title": "कैफेटेरिया",
+    "about.facility6.desc": "स्वास्थ्य दिशानिर्देशों का पालन करते हुए प्रतिदिन ताजा तैयार पौष्टिक भोजन।",
+    "about.principal.quote": "शिक्षा वह पवित्र ज्योति है जो धर्म के मार्ग को प्रकाशित करती है। हमारे विद्यालय में, हम न केवल मन का, बल्कि प्रत्येक विद्यार्थी की आत्मा और चरित्र का पोषण करने का प्रयास करते हैं।",
+    "about.principal.name": "डॉ. अरविंद कृष्णन",
+    "about.principal.role": "प्रधानाचार्य · विद्यालय",
+    "about.team.eyebrow": "॥ नेतृत्वम् ॥",
+    "about.team.title": "नेतृत्व दल",
+    "about.team.subtitle": "हमारे विद्यार्थियों के भविष्य को आकार देने वाले समर्पित शिक्षक।",
+    "about.team1.name": "डॉ. अरविंद कृष्णन",
+    "about.team1.role": "प्रधानाचार्य",
+    "about.team1.expertise": "शिक्षा एवं नेतृत्व",
+    "about.team2.name": "श्रीमती प्रिया शर्मा",
+    "about.team2.role": "उप प्रधानाचार्य (शैक्षणिक)",
+    "about.team2.expertise": "पाठ्यक्रम डिजाइन",
+    "about.team3.name": "श्री राजेश कुमार",
+    "about.team3.role": "विज्ञान विभाग प्रमुख",
+    "about.team3.expertise": "एसटीईएम शिक्षा",
+    "about.team4.name": "श्रीमती स्नेहा पटेल",
+    "about.team4.role": "भाषा विभाग प्रमुख",
+    "about.team4.expertise": "भाषाई उत्कृष्टता",
+    "about.team5.name": "श्री विक्रम सिंह",
+    "about.team5.role": "खेल निदेशक",
+    "about.team5.expertise": "समग्र विकास",
+    "about.team6.name": "श्रीमती अंजलि वर्मा",
+    "about.team6.role": "परामर्शदाता",
+    "about.team6.expertise": "विद्यार्थी कल्याण",
   },
 };
-
-// ─── context ───────────────────────────────────────────────────────────────────
 interface LanguageContextValue {
   language: Language;
   setLanguage: (language: Language) => void;
