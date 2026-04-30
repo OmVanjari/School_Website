@@ -68,7 +68,7 @@ const AdminAbout = () => {
     setTimeout(() => setSaved(null), 2000);
   };
 
-  const translate = async (key: SectionKey, fields: Record<string, string>, hiKeys: Record<string, keyof AboutForm>) => {
+  const translate = async (key: SectionKey, fields: Record<string, string>, hiKeys: Record<string, keyof AboutContent>) => {
     setTranslating(key);
     const result = await translateFields(fields);
     setForm(f => {
@@ -182,7 +182,7 @@ const AdminAbout = () => {
                 { label: "School History", key: "historyHi", value: form.historyHi, rows: 4 },
                 { label: "Core Values", key: "valuesHi", value: form.valuesHi },
               ]}
-              onChange={(k, v) => set(k as keyof AboutForm, v)}
+              onChange={(k, v) => set(k as keyof AboutContent, v)}
             />
           )}
         </SectionCard>
@@ -210,7 +210,7 @@ const AdminAbout = () => {
                 { label: "Mission", key: "missionHi", value: form.missionHi, rows: 3 },
                 { label: "Vision",  key: "visionHi",  value: form.visionHi,  rows: 3 },
               ]}
-              onChange={(k, v) => set(k as keyof AboutForm, v)}
+              onChange={(k, v) => set(k as keyof AboutContent, v)}
             />
           )}
         </SectionCard>
@@ -245,7 +245,7 @@ const AdminAbout = () => {
                 { label: "Principal Name", key: "principalNameHi",    value: form.principalNameHi },
                 { label: "Message",        key: "principalMessageHi", value: form.principalMessageHi, rows: 4 },
               ]}
-              onChange={(k, v) => set(k as keyof AboutForm, v)}
+              onChange={(k, v) => set(k as keyof AboutContent, v)}
             />
           )}
         </SectionCard>
