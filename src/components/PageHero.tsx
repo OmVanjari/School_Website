@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PageHeroProps {
   title: string;
@@ -13,7 +14,11 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => (
+export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => {
+  const { language } = useLanguage();
+  const isHindi = language === "hi";
+
+  return (
   <section className={`relative w-full overflow-x-clip bg-gradient-temple flex items-center ${
     size === "full"
       ? "min-h-[100svh] md:min-h-[88vh]"
@@ -73,18 +78,39 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
           </motion.div>
         )}
 
-        <h1 className={`font-display font-bold leading-tight drop-shadow-[0_10px_24px_hsl(20_40%_12%/0.62)] ${
-          size === "compact" ? "text-3xl md:text-5xl lg:text-[3.4rem]" : "text-4xl md:text-6xl lg:text-[4rem]"
-        }`}>
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, hsl(43 95% 86%) 0%, hsl(38 90% 68%) 28%, hsl(22 88% 58%) 55%, hsl(43 95% 86%) 100%)",
-            }}
-          >
-            {title}
-          </span>
+        <h1
+          className={`font-bold drop-shadow-[0_10px_24px_hsl(20_40%_12%/0.62)] ${
+            isHindi ? "font-sanskrit" : "font-display"
+          } ${
+            size === "compact" ? "text-3xl md:text-5xl lg:text-[3.4rem]" : "text-4xl md:text-6xl lg:text-[4rem]"
+          }`}
+          style={{ lineHeight: isHindi ? 1.45 : 1.2 }}
+        >
+          {isHindi ? (
+            <span
+              style={{
+                background: "linear-gradient(90deg, hsl(43 95% 86%) 0%, hsl(38 90% 68%) 28%, hsl(22 88% 58%) 55%, hsl(43 95% 86%) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                display: "inline",
+                paddingTop: "0.15em",
+                paddingBottom: "0.05em",
+              }}
+            >
+              {title}
+            </span>
+          ) : (
+            <span
+              className="bg-clip-text text-transparent inline-block pb-1"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, hsl(43 95% 86%) 0%, hsl(38 90% 68%) 28%, hsl(22 88% 58%) 55%, hsl(43 95% 86%) 100%)",
+              }}
+            >
+              {title}
+            </span>
+          )}
         </h1>
 
         {/* Animated divider with sparkle */}
@@ -92,7 +118,7 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className={`mt-6 flex items-center gap-3 ${align === "center" ? "justify-center" : ""}`}
+          className={`${isHindi ? "mt-2" : "mt-6"} flex items-center gap-3 ${align === "center" ? "justify-center" : ""}`}
         >
           <span className="h-px w-12 bg-gradient-to-r from-transparent to-gold" />
           <span className="text-gold animate-flame text-lg">✦</span>
@@ -105,7 +131,9 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
             className={`text-white/90 leading-relaxed drop-shadow-[0_4px_14px_rgba(0,0,0,0.8)] ${
-              size === "compact" ? "mt-5 text-base md:text-lg" : "mt-6 text-lg md:text-xl"
+              size === "compact"
+                ? `${isHindi ? "mt-2" : "mt-5"} text-base md:text-lg`
+                : `${isHindi ? "mt-3" : "mt-6"} text-lg md:text-xl`
             }`}
           >
             {subtitle}
@@ -137,4 +165,5 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
       </svg>
     </div>
   </section>
-);
+  );
+};
