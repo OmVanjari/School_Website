@@ -1,7 +1,6 @@
 
 export const emailRegex = [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Email format is incorrect. Use a valid format such as name@example.com (e.g., jane.smith@gmail.com) .']
 
-
 export const userRoles = {
     ADMIN : "Admin"
 }
@@ -34,8 +33,35 @@ export const eventCategory = {
 export const eventCategoryEnums = Object.values(eventCategory)
 
 
+export const admissionStatus = {
+  PENDING : "Pending",
+  ACCEPT : "Accept",
+  REJECT : "Reject",
+  REVIEWED : "Reviewed"
+}
+
+export const admissionStatusEnums = Object.values(admissionStatus)
 
 
+export const galleryCategory = {
+  CAMPUS : "Campus",
+  ACADEMICS : "Academics",
+  ADMISSIONS : "Admissions",
+  EVENTS : "Events",
+  COMMUNITY : "Community",
+  SPORTS : "Sports"
+}
+
+export const galleryCategoryEnums = Object.values(galleryCategory)
+
+
+export const noticeCategory = {
+  SCHOOL_NOTICE : "School Notice",
+  GOVERNMENT_NOTICE : "Government Notice",
+  URGENT_NOTICE : "Urgent Notice"
+}
+
+export const noticeCategoryEnums = Object.values(noticeCategory)
 
 
 

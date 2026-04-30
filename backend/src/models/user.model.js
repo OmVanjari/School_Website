@@ -87,7 +87,6 @@ userSchema.methods.generateRefreshToken = function(){
     })
 }
 
-
 userSchema.methods.generateTemporaryToken = function(){
 
   const unHashToken = crypto.randomBytes(20).toString("hex")
