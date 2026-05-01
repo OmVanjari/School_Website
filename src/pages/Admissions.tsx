@@ -305,7 +305,7 @@ const Admissions = () => {
 
                   {/* Title */}
                   <h3 className="font-display text-xl text-secondary mb-2 leading-snug">
-                    {t(`admissions.step${i + 1}Title`)}
+                    {t((["admissions.step1Title","admissions.step2Title","admissions.step3Title","admissions.step4Title"] as const)[i])}
                   </h3>
 
                   {/* Divider */}
@@ -313,7 +313,7 @@ const Admissions = () => {
 
                   {/* Description */}
                   <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    {t(`admissions.step${i + 1}Desc`)}
+                    {t((["admissions.step1Desc","admissions.step2Desc","admissions.step3Desc","admissions.step4Desc"] as const)[i])}
                   </p>
 
                   {/* Connector arrow (not last, desktop) */}
@@ -399,11 +399,11 @@ const Admissions = () => {
                   <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${item.color} text-white shadow-md mb-5 group-hover:scale-110 transition-transform duration-300`}>
                     <item.icon className="h-6 w-6" />
                   </div>
-                  <h3 className="font-display text-lg text-secondary mb-2">{t(`admissions.why${i + 1}Title`)}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">{t(`admissions.why${i + 1}Desc`)}</p>
+                  <h3 className="font-display text-lg text-secondary mb-2">{t((["admissions.why1Title","admissions.why2Title","admissions.why3Title","admissions.why4Title"] as const)[i])}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">{t((["admissions.why1Desc","admissions.why2Desc","admissions.why3Desc","admissions.why4Desc"] as const)[i])}</p>
                   <div className="flex items-end gap-2 border-t border-gold/15 pt-4">
                     <span className="font-display text-2xl font-bold text-gradient-saffron">{item.stat}</span>
-                    <span className="text-xs text-muted-foreground pb-0.5">{t(`admissions.why${i + 1}StatLabel`)}</span>
+                    <span className="text-xs text-muted-foreground pb-0.5">{t((["admissions.why1StatLabel","admissions.why2StatLabel","admissions.why3StatLabel","admissions.why4StatLabel"] as const)[i])}</span>
                   </div>
                 </div>
               </motion.div>
@@ -449,7 +449,7 @@ const Admissions = () => {
                     <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-saffron text-white mt-0.5">
                       <CheckCircle2 className="h-3.5 w-3.5" />
                     </div>
-                    <span className="text-sm text-foreground/80">{t(`admissions.${key}`)}</span>
+                    <span className="text-sm text-foreground/80">{t((["admissions.doc1","admissions.doc2","admissions.doc3","admissions.doc4","admissions.doc5","admissions.doc6"] as const)[docKeys.indexOf(key)])}</span>
                   </motion.li>
                 ))}
               </ul>
@@ -727,8 +727,8 @@ const Admissions = () => {
                 <FaqItem
                   key={n}
                   index={i}
-                  question={t(`admissions.faq${n}Q`)}
-                  answer={t(`admissions.faq${n}A`)}
+                  question={t((["admissions.faq1Q","admissions.faq2Q","admissions.faq3Q","admissions.faq4Q","admissions.faq5Q","admissions.faq6Q","admissions.faq7Q"] as const)[i])}
+                  answer={t((["admissions.faq1A","admissions.faq2A","admissions.faq3A","admissions.faq4A","admissions.faq5A","admissions.faq6A","admissions.faq7A"] as const)[i])}
                 />
               ))}
             </div>
