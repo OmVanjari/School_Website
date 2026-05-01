@@ -201,7 +201,7 @@ const Admissions = () => {
         sanskrit="॥ स्वागतम् ॥"
         subtitle={t("admissions.heroSubtitle")}
         image={heroAdmissions}
-        size="full"
+        size="default"
       />
 
       {/* ── Process Steps ── */}
