@@ -23,8 +23,8 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
     size === "full"
       ? "min-h-[80svh] md:min-h-[82vh]"
       : size === "compact"
-      ? "min-h-[44vh] md:min-h-[52vh]"
-      : "min-h-[52vh] md:min-h-[60vh]"
+      ? "min-h-[65vh] md:min-h-[68vh]"
+      : "min-h-[72vh] md:min-h-[75vh]"
   }`}>
     {/* Background image */}
     <div className="absolute inset-0 w-full h-full">
