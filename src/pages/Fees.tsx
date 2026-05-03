@@ -3,7 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { feeRecords } from "@/data/schoolData";
 import { Wallet, Info, CheckCircle2 } from "lucide-react";
-import heroFees from "@/assets/feestructure.png";
+import heroAdmissions from "@/assets/hero-admissions.jpg";
 
 const paymentModes = [
   "Cash payment at school office (Mon–Sat, 9 AM – 2 PM)",
@@ -18,9 +18,11 @@ const Fees = () => (
       title="Fee Structure"
       sanskrit="॥ शुल्क विवरण ॥"
       subtitle="Clear, class-wise fee details for 2025–26. No hidden charges — just transparent pricing covering tuition, activities, and facilities. Scholarships and sibling discounts available."
-      image={heroFees}
+      image={heroAdmissions}
       size="full"
     />
+
+    <section className="container-narrow py-16">
       <SectionHeader
         eyebrow="॥ शुल्काः ॥"
         title="Class-wise Fee Details"

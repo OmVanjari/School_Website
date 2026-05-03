@@ -35,10 +35,10 @@ const stepsMeta = [
   },
   {
     num: "03", devanagari: "३",
-    accent: "hsl(358 65% 32%)",
-    accentMuted: "hsl(358 65% 32% / 0.08)",
-    accentBorder: "hsl(358 65% 32% / 0.25)",
-    iconBg: "from-secondary to-rose-500",
+    accent: "hsl(22 88% 52%)",
+    accentMuted: "hsl(22 88% 52% / 0.10)",
+    accentBorder: "hsl(22 88% 52% / 0.30)",
+    iconBg: "from-orange-500 to-amber-500",
   },
   {
     num: "04", devanagari: "४",
@@ -50,9 +50,9 @@ const stepsMeta = [
 ] as const;
 
 const whyMeta = [
-  { icon: Heart,    stat: "100%", color: "from-rose-500 to-pink-500" },
-  { icon: Users,    stat: "40+",  color: "from-blue-500 to-indigo-500" },
-  { icon: BookOpen, stat: "CBSE", color: "from-primary to-orange-400" },
+  { icon: Heart,    stat: "100%", color: "from-primary to-orange-400" },
+  { icon: Users,    stat: "40+",  color: "from-amber-500 to-orange-500" },
+  { icon: BookOpen, stat: "CBSE", color: "from-amber-600 to-primary" },
   { icon: Trophy,   stat: "98%",  color: "from-gold to-amber-500" },
 ] as const;
 
