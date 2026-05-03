@@ -17,15 +17,15 @@ import heroAcademics from "@/assets/acdemics.png";
 const statsMeta = [
   { key: "statsPassRate" as const, value: "98%", icon: Star, color: "from-amber-500 to-orange-500" },
   { key: "statsUniversity" as const, value: "150+", icon: GraduationCap, color: "from-primary to-orange-400" },
-  { key: "statsExperts" as const, value: "40+", icon: Users, color: "from-secondary to-red-400" },
+  { key: "statsExperts" as const, value: "40+", icon: Users, color: "from-amber-600 to-primary" },
   { key: "statsOlympiad" as const, value: "25+", icon: Trophy, color: "from-gold to-amber-400" },
 ] as const;
 
 const programsMeta = [
-  { idx: 1, emoji: "🌱", color: "from-emerald-500/20 to-teal-500/10", border: "border-emerald-400/30", accent: "text-emerald-600", badge: "bg-emerald-50 text-emerald-700 border-emerald-200" },
-  { idx: 2, emoji: "📚", color: "from-blue-500/20 to-indigo-500/10", border: "border-blue-400/30", accent: "text-blue-600", badge: "bg-blue-50 text-blue-700 border-blue-200" },
-  { idx: 3, emoji: "🎯", color: "from-primary/20 to-orange-500/10", border: "border-primary/30", accent: "text-primary", badge: "bg-orange-50 text-orange-700 border-orange-200" },
-  { idx: 4, emoji: "🏛️", color: "from-secondary/20 to-red-500/10", border: "border-secondary/30", accent: "text-secondary", badge: "bg-red-50 text-red-700 border-red-200" },
+  { idx: 1, emoji: "🌱", color: "from-amber-500/15 to-orange-400/10", border: "border-amber-400/30", accent: "text-amber-700", badge: "bg-amber-50 text-amber-700 border-amber-200" },
+  { idx: 2, emoji: "📚", color: "from-primary/15 to-orange-500/10", border: "border-primary/30", accent: "text-primary", badge: "bg-orange-50 text-orange-700 border-orange-200" },
+  { idx: 3, emoji: "🎯", color: "from-orange-500/15 to-amber-400/10", border: "border-orange-400/30", accent: "text-orange-700", badge: "bg-orange-50 text-orange-700 border-orange-200" },
+  { idx: 4, emoji: "🏛️", color: "from-secondary/15 to-primary/10", border: "border-secondary/25", accent: "text-secondary", badge: "bg-red-50 text-secondary border-secondary/20" },
 ] as const;
 
 const pillarIcons = [Brain, Atom, Lightbulb, Sparkles] as const;
@@ -74,14 +74,14 @@ const pillarsMeta = [
 ] as const;
 
 const subjectsMeta = [
-  { icon: BookOpen,    color: "from-amber-500 to-orange-500",   ritual: "🪔", sanskritName: "वाक् विद्या",    ritualLabel: "Saraswati Puja" },
-  { icon: Calculator,  color: "from-blue-500 to-indigo-500",    ritual: "🔢", sanskritName: "गणित शास्त्र",   ritualLabel: "Vedic Ganit" },
-  { icon: FlaskConical,color: "from-emerald-500 to-teal-500",   ritual: "🌿", sanskritName: "प्रकृति विज्ञान", ritualLabel: "Pancha Bhuta" },
-  { icon: Globe,       color: "from-primary to-orange-400",     ritual: "🗺️", sanskritName: "भूगोल इतिहास",  ritualLabel: "Dharti Mata" },
-  { icon: Code,        color: "from-violet-500 to-purple-500",  ritual: "⚙️", sanskritName: "संगणक विद्या",   ritualLabel: "Yantra Shastra" },
-  { icon: Palette,     color: "from-pink-500 to-rose-500",      ritual: "🎨", sanskritName: "चित्र कला",      ritualLabel: "Shilpa Shastra" },
-  { icon: Music,       color: "from-secondary to-red-400",      ritual: "🎵", sanskritName: "संगीत नृत्य",    ritualLabel: "Gandharva Veda" },
-  { icon: Dumbbell,    color: "from-gold to-amber-500",         ritual: "🧘", sanskritName: "शारीरिक शिक्षा", ritualLabel: "Sharir Dharma" },
+  { icon: BookOpen,    color: "from-amber-500 to-orange-500",  ritual: "🪔", sanskritName: "वाक् विद्या",    ritualLabel: "Saraswati Puja" },
+  { icon: Calculator,  color: "from-primary to-orange-400",    ritual: "🔢", sanskritName: "गणित शास्त्र",   ritualLabel: "Vedic Ganit" },
+  { icon: FlaskConical,color: "from-amber-600 to-primary",     ritual: "🌿", sanskritName: "प्रकृति विज्ञान", ritualLabel: "Pancha Bhuta" },
+  { icon: Globe,       color: "from-orange-500 to-amber-400",  ritual: "🗺️", sanskritName: "भूगोल इतिहास",  ritualLabel: "Dharti Mata" },
+  { icon: Code,        color: "from-primary to-amber-500",     ritual: "⚙️", sanskritName: "संगणक विद्या",   ritualLabel: "Yantra Shastra" },
+  { icon: Palette,     color: "from-secondary to-primary",     ritual: "🎨", sanskritName: "चित्र कला",      ritualLabel: "Shilpa Shastra" },
+  { icon: Music,       color: "from-amber-500 to-secondary",   ritual: "🎵", sanskritName: "संगीत नृत्य",    ritualLabel: "Gandharva Veda" },
+  { icon: Dumbbell,    color: "from-gold to-amber-500",        ritual: "🧘", sanskritName: "शारीरिक शिक्षा", ritualLabel: "Sharir Dharma" },
 ] as const;
 
 /* ─── Animated number ───────────────────────────────────── */
