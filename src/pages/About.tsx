@@ -4,31 +4,15 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { MandalaBg } from "@/components/MandalaBg";
 import { Heart, Eye, Star, Users, Award, Zap, Book, Globe, CheckCircle2 } from "lucide-react";
-import heroAbout from "@/assets/hero-about.jpg";
-import { defaultFacilities, loadAboutFacilities } from "@/lib/aboutContent";
-
-const timeline = [
-  { year: "2005", title: "Founding", desc: "Vidyalaya was founded with 60 students and a single banyan tree." },
-  { year: "2012", title: "Campus Expansion", desc: "Added Saraswati Block — labs, library and a temple courtyard." },
-  { year: "2018", title: "National Recognition", desc: "Awarded 'Best Heritage School' by Bharat Education Council." },
-  { year: "2023", title: "Digital Transformation", desc: "Smart classrooms, robotics labs and a Vedic mathematics centre." },
-];
-
-const achievements = [
-  { icon: Award, title: "100% Pass Rate", desc: "Consistent 100% pass rate in board examinations for the past 5 years." },
-  { icon: Star, title: "National Awards", desc: "Multiple national awards for academic excellence and cultural programs." },
-  { icon: Globe, title: "Global Reach", desc: "Alumni studying and working across 25+ countries worldwide." },
-  { icon: Zap, title: "Innovation Hub", desc: "2nd position in National Science Olympiad for three consecutive years." },
-];
-
-const team = [
-  { name: "Dr. Arvind Krishnan", role: "Principal", expertise: "Education & Leadership" },
-  { name: "Ms. Priya Sharma", role: "Vice Principal (Academics)", expertise: "Curriculum Design" },
-  { name: "Mr. Rajesh Kumar", role: "Head of Science", expertise: "STEM Education" },
-  { name: "Mrs. Sneha Patel", role: "Head of Languages", expertise: "Linguistic Excellence" },
-  { name: "Mr. Vikram Singh", role: "Sports Director", expertise: "Holistic Development" },
-  { name: "Ms. Anjali Verma", role: "Counselor", expertise: "Student Wellbeing" },
-];
+import heroAbout from "@/assets/aboutus.png";
+import heroAcademics from "@/assets/acdemics.png";
+import heroAdmissions from "@/assets/admission.png";
+import heroCalendar from "@/assets/calenderpage.png";
+import heroContact from "@/assets/conatctus.png";
+import heroHome from "@/assets/hero-home.jpg";
+import schoolHome from "@/assets/schoolhome.png";
+import { defaultFacilities, loadAboutFacilities, loadAboutContent, defaultAboutContent, type AboutContent } from "@/lib/aboutContent";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const getInitials = (name: string) =>
   name
@@ -39,18 +23,57 @@ const getInitials = (name: string) =>
     .join("");
 
 const About = () => {
+  const { t, language } = useLanguage();
   const [facilities, setFacilities] = useState(defaultFacilities);
+  const [content, setContent] = useState<AboutContent>(defaultAboutContent);
+
+  // helpers to pick the right language variant
+  const c = (enKey: keyof AboutContent, hiKey: keyof AboutContent) =>
+    language === "hi" ? (content[hiKey] as string) || (content[enKey] as string) : (content[enKey] as string);
+
+  const timeline = [
+    { year: "2005", title: t("about.timeline.2005.title"), desc: t("about.timeline.2005.desc") },
+    { year: "2012", title: t("about.timeline.2012.title"), desc: t("about.timeline.2012.desc") },
+    { year: "2018", title: t("about.timeline.2018.title"), desc: t("about.timeline.2018.desc") },
+    { year: "2023", title: t("about.timeline.2023.title"), desc: t("about.timeline.2023.desc") },
+  ];
+
+  const achievements = [
+    { icon: Award, title: t("about.achievement1.title"), desc: t("about.achievement1.desc") },
+    { icon: Star, title: t("about.achievement2.title"), desc: t("about.achievement2.desc") },
+    { icon: Globe, title: t("about.achievement3.title"), desc: t("about.achievement3.desc") },
+    { icon: Zap, title: t("about.achievement4.title"), desc: t("about.achievement4.desc") },
+  ];
+
+  const translatedFacilities = [
+    { title: t("about.facility1.title"), desc: t("about.facility1.desc"), image: heroAcademics },
+    { title: t("about.facility2.title"), desc: t("about.facility2.desc"), image: heroAdmissions },
+    { title: t("about.facility3.title"), desc: t("about.facility3.desc"), image: heroHome },
+    { title: t("about.facility4.title"), desc: t("about.facility4.desc"), image: heroCalendar },
+    { title: t("about.facility5.title"), desc: t("about.facility5.desc"), image: heroContact },
+    { title: t("about.facility6.title"), desc: t("about.facility6.desc"), image: schoolHome },
+  ];
+
+  const team = [
+    { name: t("about.team1.name"), role: t("about.team1.role"), expertise: t("about.team1.expertise") },
+    { name: t("about.team2.name"), role: t("about.team2.role"), expertise: t("about.team2.expertise") },
+    { name: t("about.team3.name"), role: t("about.team3.role"), expertise: t("about.team3.expertise") },
+    { name: t("about.team4.name"), role: t("about.team4.role"), expertise: t("about.team4.expertise") },
+    { name: t("about.team5.name"), role: t("about.team5.role"), expertise: t("about.team5.expertise") },
+    { name: t("about.team6.name"), role: t("about.team6.role"), expertise: t("about.team6.expertise") },
+  ];
 
   useEffect(() => {
     setFacilities(loadAboutFacilities());
+    setContent(loadAboutContent());
   }, []);
 
   return (
     <>
     <PageHero
-      title="About Our Vidyalaya"
-      sanskrit="॥ सत्यं शिवं सुन्दरम् ॥"
-      subtitle="For over two decades, our school has nurtured character, scholarship, and seva through a joyful blend of Bharatiya tradition and modern learning."
+      title={t("about.heroTitle")}
+      sanskrit={t("about.heroSanskrit")}
+      subtitle={t("about.heroSubtitle")}
       image={heroAbout}
       size="full"
     />
@@ -59,34 +82,34 @@ const About = () => {
     <section className="container-narrow py-20 relative">
       <MandalaBg className="absolute left-0 top-10 w-80 h-80 opacity-10" />
       <div className="relative z-10">
-        <SectionHeader
-          eyebrow="॥ प्रेरणा ॥"
-          title="Mission, Vision & Values"
-          subtitle="The guiding principles behind our classrooms, assemblies, and community life."
-        />
+      <SectionHeader
+        eyebrow={t("about.mvv.eyebrow")}
+        title={t("about.mvv.title")}
+        subtitle={t("about.mvv.subtitle")}
+      />
       </div>
       <div className="grid gap-6 md:grid-cols-3 relative z-10">
         {[
           {
             icon: Heart,
             label: "01",
-            title: "Mission",
-            desc: "To nurture holistic excellence through inclusive education that honours our heritage and embraces innovation.",
-            footer: "Learning with purpose, compassion, and confidence.",
+            title: t("about.mission.title"),
+            desc: c("mission", "missionHi"),
+            footer: t("about.mission.footer"),
           },
           {
             icon: Eye,
             label: "02",
-            title: "Vision",
-            desc: "A future-ready learning community rooted in Indian ethos, shaping global citizens with dharmic values.",
-            footer: "Growing students who lead with clarity and character.",
+            title: t("about.vision.title"),
+            desc: c("vision", "visionHi"),
+            footer: t("about.vision.footer"),
           },
           {
             icon: Star,
             label: "03",
-            title: "Values",
-            desc: "Respect, Integrity, Curiosity, Compassion — the four pillars of every Vidyalaya child.",
-            footer: "The daily culture that shapes every step.",
+            title: t("about.values.title"),
+            desc: c("values", "valuesHi"),
+            footer: t("about.values.footer"),
           },
         ].map((m, i) => (
           <motion.div
@@ -127,7 +150,7 @@ const About = () => {
     {/* Timeline */}
     <section className="bg-gradient-temple py-20">
       <div className="container-narrow">
-        <SectionHeader eyebrow="॥ इतिहासः ॥" title="Our Journey" subtitle="Milestones along our two-decade path of dharmic education." />
+        <SectionHeader eyebrow={t("about.timeline.eyebrow")} title={t("about.timeline.title")} subtitle={t("about.timeline.subtitle")} />
         <div className="relative mx-auto max-w-4xl pl-8 sm:pl-10">
           <div className="absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-primary via-gold to-secondary" />
           {timeline.map((item, i) => (
@@ -155,7 +178,7 @@ const About = () => {
 
     {/* Achievements */}
     <section className="container-narrow py-20 relative">
-      <SectionHeader eyebrow="॥ उपलब्धयः ॥" title="Achievements & Recognition" subtitle="Recognized excellence across academics, sports and culture." />
+      <SectionHeader eyebrow={t("about.achievements.eyebrow")} title={t("about.achievements.title")} subtitle={t("about.achievements.subtitle")} />
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 relative z-10">
         {achievements.map((achievement, i) => (
           <motion.div
@@ -197,10 +220,10 @@ const About = () => {
     {/* Facilities */}
     <section className="bg-gradient-temple py-20">
       <div className="container-narrow">
-        <SectionHeader eyebrow="॥ सुविधाः ॥" title="Campus Facilities" subtitle="Modern infrastructure designed for holistic learning." />
+        <SectionHeader eyebrow={t("about.facilities.eyebrow")} title={t("about.facilities.title")} subtitle={t("about.facilities.subtitle")} />
         <div className="mb-7 overflow-hidden rounded-2xl border border-gold/30 bg-card/70 p-3 md:p-4 shadow-soft">
           <div className="facility-image-marquee-track">
-            {[...facilities, ...facilities].map((facility, i) => (
+            {[...translatedFacilities, ...translatedFacilities].map((facility, i) => (
               <div key={`${facility.title}-${i}`} className="facility-image-marquee-item">
                 <img
                   src={facility.image}
@@ -218,7 +241,7 @@ const About = () => {
           </div>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {facilities.map((facility, i) => (
+          {translatedFacilities.map((facility, i) => (
             <motion.div
               key={facility.title}
               initial={{ opacity: 0, y: 30 }}
@@ -253,8 +276,8 @@ const About = () => {
               <div className="relative w-48">
                 <div className="rounded-2xl overflow-hidden border border-gold/30 shadow-lg bg-muted">
                   <img
-                    src="/assets/principal-placeholder.jpg"
-                    alt="Dr. Arvind Krishnan"
+                    src={content.principalPhoto || "/assets/principal-placeholder.jpg"}
+                    alt={content.principalName}
                     className="w-full h-60 object-cover object-top"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
@@ -272,11 +295,11 @@ const About = () => {
               <div className="w-full">
                 <div className="text-primary/60 text-5xl font-serif leading-none mb-1">"</div>
                 <p className="text-foreground/85 italic text-lg md:text-xl leading-relaxed">
-                  Education is the sacred flame that illuminates the path of dharma. At our Vidyalaya, we strive to nurture not just the mind, but the soul and character of every student.
+                  {c("principalMessage", "principalMessageHi")}
                 </p>
                 <div className="mt-8 border-t border-gold/20 pt-5">
-                  <div className="text-primary font-semibold text-base md:text-lg">Dr. Arvind Krishnan</div>
-                  <div className="text-xs text-muted-foreground mt-1">Principal · Vidyalaya</div>
+                  <div className="text-primary font-semibold text-base md:text-lg">{c("principalName", "principalNameHi")}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{t("about.principal.role")}</div>
                 </div>
               </div>
             </div>
@@ -286,7 +309,7 @@ const About = () => {
     </section>
     {/* Leadership Team */}
     <section className="container-narrow py-20 relative">
-      <SectionHeader eyebrow="॥ नेतृत्वम् ॥" title="Leadership Team" subtitle="Dedicated educators shaping the future of our students." />
+      <SectionHeader eyebrow={t("about.team.eyebrow")} title={t("about.team.title")} subtitle={t("about.team.subtitle")} />
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
         {team.map((member, i) => (
           <motion.div

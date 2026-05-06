@@ -3,20 +3,21 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Megaphone, CalendarDays, Info, BookOpen,
   ClipboardList, MessageSquare, FileText, Wallet, LogOut,
-  GraduationCap, X,
+  GraduationCap, X, Images,
 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 const navItems = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { to: "/admin",            label: "Dashboard",      icon: LayoutDashboard, end: true },
   { to: "/admin/announcements", label: "Announcements", icon: Megaphone },
-  { to: "/admin/calendar", label: "Calendar Events", icon: CalendarDays },
-  { to: "/admin/about", label: "About Us", icon: Info },
-  { to: "/admin/academics", label: "Academics", icon: BookOpen },
-  { to: "/admin/admissions", label: "Admissions", icon: ClipboardList },
-  { to: "/admin/inquiries", label: "Inquiries", icon: MessageSquare },
-  { to: "/admin/notices", label: "Notices", icon: FileText },
-  { to: "/admin/fees", label: "Fee Structure", icon: Wallet },
+  { to: "/admin/calendar",   label: "Calendar Events", icon: CalendarDays },
+  { to: "/admin/gallery",    label: "Gallery",         icon: Images },
+  { to: "/admin/about",      label: "About Us",        icon: Info },
+  { to: "/admin/academics",  label: "Academics",       icon: BookOpen },
+  { to: "/admin/admissions", label: "Admissions",      icon: ClipboardList },
+  { to: "/admin/inquiries",  label: "Inquiries",       icon: MessageSquare },
+  { to: "/admin/notices",    label: "Notices",         icon: FileText },
+  { to: "/admin/fees",       label: "Fee Structure",   icon: Wallet },
 ];
 
 interface AdminSidebarProps {

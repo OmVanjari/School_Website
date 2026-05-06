@@ -4,17 +4,26 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { notices } from "@/data/schoolData";
 import { FileText, Download, AlertTriangle, Building2, School } from "lucide-react";
-import heroCalendar from "@/assets/hero-calendar.jpg";
+import heroNotices from "@/assets/notice.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Category = "All" | "School Notice" | "Government Notice" | "Urgent Notice";
 
 const CATEGORY_CONFIG = {
-  "School Notice":      { color: "bg-blue-100 text-blue-700 border-blue-200",   icon: School,        badge: "bg-blue-50 text-blue-700" },
-  "Government Notice":  { color: "bg-green-100 text-green-700 border-green-200", icon: Building2,     badge: "bg-green-50 text-green-700" },
-  "Urgent Notice":      { color: "bg-red-100 text-red-700 border-red-200",       icon: AlertTriangle, badge: "bg-red-50 text-red-700" },
+  "School Notice":     { color: "bg-blue-100 text-blue-700 border-blue-200",   icon: School,        badge: "bg-blue-50 text-blue-700" },
+  "Government Notice": { color: "bg-green-100 text-green-700 border-green-200", icon: Building2,     badge: "bg-green-50 text-green-700" },
+  "Urgent Notice":     { color: "bg-red-100 text-red-700 border-red-200",       icon: AlertTriangle, badge: "bg-red-50 text-red-700" },
 };
 
+const filters: { value: Category; key: "notices.filterAll" | "notices.filterSchool" | "notices.filterGovt" | "notices.filterUrgent" }[] = [
+  { value: "All",               key: "notices.filterAll" },
+  { value: "School Notice",     key: "notices.filterSchool" },
+  { value: "Government Notice", key: "notices.filterGovt" },
+  { value: "Urgent Notice",     key: "notices.filterUrgent" },
+];
+
 const Notices = () => {
+  const { t, language } = useLanguage();
   const [filter, setFilter] = useState<Category>("All");
 
   const filtered = filter === "All" ? notices : notices.filter(n => n.category === filter);
@@ -22,32 +31,32 @@ const Notices = () => {
   return (
     <>
       <PageHero
-        title="Notices & Circulars"
+        title={t("notices.heroTitle")}
         sanskrit="॥ सूचना ॥"
-        subtitle="Official school notices, government circulars and urgent announcements — all in one place."
-        image={heroCalendar}
+        subtitle={t("notices.heroSubtitle")}
+        image={heroNotices}
+        size="full"
       />
 
       <section className="container-narrow py-16">
         <SectionHeader
-          eyebrow="॥ सूचनाः ॥"
-          title="Latest Notices"
-          subtitle="Stay informed with the latest updates from school administration and government."
+          title={t("notices.sectionTitle")}
+          subtitle={t("notices.sectionSub")}
         />
 
         {/* Filter tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {(["All", "School Notice", "Government Notice", "Urgent Notice"] as Category[]).map(cat => (
+          {filters.map(({ value, key }) => (
             <button
-              key={cat}
-              onClick={() => setFilter(cat)}
+              key={value}
+              onClick={() => setFilter(value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                filter === cat
+                filter === value
                   ? "bg-primary text-white border-primary"
                   : "border-gold/30 text-muted-foreground hover:border-primary/40 hover:text-foreground"
               }`}
             >
-              {cat}
+              {t(key)}
             </button>
           ))}
         </div>
@@ -75,8 +84,8 @@ const Notices = () => {
                     </span>
                     <span className="text-xs text-muted-foreground">{notice.date}</span>
                   </div>
-                  <h3 className="font-display text-lg text-secondary">{notice.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{notice.body}</p>
+                  <h3 className="font-display text-lg text-secondary">{language === "hi" && notice.titleHi ? notice.titleHi : notice.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{language === "hi" && notice.bodyHi ? notice.bodyHi : notice.body}</p>
                   {notice.attachment && (
                     <a
                       href={notice.attachment}
@@ -84,7 +93,7 @@ const Notices = () => {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 mt-3 text-sm text-primary hover:underline"
                     >
-                      <Download className="h-3.5 w-3.5" /> Download PDF
+                      <Download className="h-3.5 w-3.5" /> {t("notices.download")}
                     </a>
                   )}
                 </div>
@@ -95,7 +104,7 @@ const Notices = () => {
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-16 text-muted-foreground">No notices in this category.</div>
+          <div className="text-center py-16 text-muted-foreground">{t("notices.noNotices")}</div>
         )}
       </section>
     </>
@@ -103,4 +112,3 @@ const Notices = () => {
 };
 
 export default Notices;
-

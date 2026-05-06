@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export type Language = "en" | "hi";
 
+// ─── all translation keys ──────────────────────────────────────────────────────
 type TranslationKey =
   | "nav.home"
   | "nav.about"
@@ -75,8 +76,10 @@ type TranslationKey =
   | "fees.class4"
   | "fees.class5";
 
+// ─── translations ──────────────────────────────────────────────────────────────
 const messages: Record<Language, Record<TranslationKey, string>> = {
   en: {
+    // nav
     "nav.home": "Home",
     "nav.about": "About Us",
     "nav.academics": "Academics",
@@ -88,6 +91,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "nav.applyNow": "Apply Now",
     "lang.english": "EN",
     "lang.hindi": "हिंदी",
+    // hero
     "home.heroTitle": "A Gurukul Spirit for Modern Schooling",
     "home.heroSubtitle": "Our school blends Bharatiya sanskar, strong academics, and joyful learning to shape disciplined, compassionate, and confident students.",
     "home.beginJourney": "Begin the Journey",
@@ -149,7 +153,9 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "fees.class4": "Class IX – X",
     "fees.class5": "Class XI – XII",
   },
+
   hi: {
+    // nav
     "nav.home": "मुख्य पृष्ठ",
     "nav.about": "हमारे बारे में",
     "nav.academics": "शैक्षणिक",
@@ -161,6 +167,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "nav.applyNow": "अभी आवेदन करें",
     "lang.english": "EN",
     "lang.hindi": "हिंदी",
+    // hero
     "home.heroTitle": "आधुनिक शिक्षा में गुरुकुल की आत्मा",
     "home.heroSubtitle": "हमारा विद्यालय भारतीय संस्कार, सशक्त शिक्षा और आनंदमय सीख को साथ लेकर अनुशासित, करुणामय और आत्मविश्वासी विद्यार्थियों का निर्माण करता है।",
     "home.beginJourney": "यात्रा शुरू करें",
@@ -223,7 +230,6 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "fees.class5": "कक्षा XI – XII",
   },
 };
-
 interface LanguageContextValue {
   language: Language;
   setLanguage: (language: Language) => void;
@@ -237,9 +243,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     const stored = localStorage.getItem("vidyalaya-language");
-    if (stored === "en" || stored === "hi") {
-      setLanguageState(stored);
-    }
+    if (stored === "en" || stored === "hi") setLanguageState(stored);
   }, []);
 
   const setLanguage = (next: Language) => {
@@ -247,19 +251,16 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     localStorage.setItem("vidyalaya-language", next);
   };
 
-  const value = useMemo<LanguageContextValue>(() => ({
-    language,
-    setLanguage,
-    t: (key: TranslationKey) => messages[language][key],
-  }), [language]);
+  const value = useMemo<LanguageContextValue>(
+    () => ({ language, setLanguage, t: (key) => messages[language][key] }),
+    [language],
+  );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };
 
 export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error("useLanguage must be used inside LanguageProvider");
-  }
-  return context;
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLanguage must be used inside LanguageProvider");
+  return ctx;
 };

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import heroContact from "@/assets/hero-contact.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";

@@ -27,6 +27,8 @@ import AdminInquiries from "./pages/admin/Inquiries.tsx";
 import AdminNotices from "./pages/admin/Notices.tsx";
 import AdminFees from "./pages/admin/Fees.tsx";
 
+import AdminGallery from "./pages/admin/Gallery.tsx";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -60,6 +62,7 @@ const App = () => (
               <Route path="/admin/inquiries" element={<AdminInquiries />} />
               <Route path="/admin/notices" element={<AdminNotices />} />
               <Route path="/admin/fees" element={<AdminFees />} />
+              <Route path="/admin/gallery" element={<AdminGallery />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

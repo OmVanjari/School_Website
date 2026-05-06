@@ -4,29 +4,32 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { calendarEvents } from "@/data/schoolData";
 import { CalendarDays, MapPin } from "lucide-react";
-import heroCalendar from "@/assets/hero-calendar.jpg";
+import heroCalendar from "@/assets/calenderpage.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Filter = "All" | "Exam" | "Result" | "Holiday" | "Meeting" | "Event" | "Leave";
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Exam:    "bg-red-100 text-red-700 border-red-200",
-  Result:  "bg-blue-100 text-blue-700 border-blue-200",
-  Holiday: "bg-green-100 text-green-700 border-green-200",
-  Meeting: "bg-yellow-100 text-yellow-700 border-yellow-200",
-  Event:   "bg-purple-100 text-purple-700 border-purple-200",
-  Leave:   "bg-orange-100 text-orange-700 border-orange-200",
+const CATEGORY_COLORS: Record<string, { badge: string; bar: string; dot: string }> = {
+  Exam:    { badge: "bg-orange-100 text-orange-700 border-orange-200",    bar: "bg-orange-500",  dot: "bg-orange-500" },
+  Result:  { badge: "bg-amber-100 text-amber-700 border-amber-200",       bar: "bg-amber-500",   dot: "bg-amber-500" },
+  Holiday: { badge: "bg-yellow-100 text-yellow-700 border-yellow-200",    bar: "bg-yellow-500",  dot: "bg-yellow-500" },
+  Meeting: { badge: "bg-orange-50 text-orange-600 border-orange-100",     bar: "bg-orange-400",  dot: "bg-orange-400" },
+  Event:   { badge: "bg-amber-50 text-amber-600 border-amber-100",        bar: "bg-amber-600",   dot: "bg-amber-600" },
+  Leave:   { badge: "bg-orange-100 text-orange-500 border-orange-200",    bar: "bg-orange-300",  dot: "bg-orange-300" },
 };
 
-const HEADER_COLORS: Record<string, string> = {
-  Exam:    "bg-red-500",
-  Result:  "bg-blue-500",
-  Holiday: "bg-green-500",
-  Meeting: "bg-yellow-500",
-  Event:   "bg-purple-500",
-  Leave:   "bg-orange-500",
-};
+const filters: { value: Filter; key: "cal.filterAll" | "cal.filterExam" | "cal.filterResult" | "cal.filterHoliday" | "cal.filterMeeting" | "cal.filterEvent" | "cal.filterLeave" }[] = [
+  { value: "All",     key: "cal.filterAll" },
+  { value: "Exam",    key: "cal.filterExam" },
+  { value: "Result",  key: "cal.filterResult" },
+  { value: "Holiday", key: "cal.filterHoliday" },
+  { value: "Meeting", key: "cal.filterMeeting" },
+  { value: "Event",   key: "cal.filterEvent" },
+  { value: "Leave",   key: "cal.filterLeave" },
+];
 
 const Calendar = () => {
+  const { t } = useLanguage();
   const [filter, setFilter] = useState<Filter>("All");
 
   const filtered = filter === "All"
@@ -38,32 +41,33 @@ const Calendar = () => {
   return (
     <>
       <PageHero
-        title="Academic Calendar"
+        title={t("cal.heroTitle")}
         sanskrit="॥ काल एव परं बलम् ॥"
-        subtitle="Exams, results, holidays, meetings and events — your complete academic year at a glance."
+        subtitle={t("cal.heroSubtitle")}
         image={heroCalendar}
+        size="full"
       />
 
       <section className="container-narrow py-16">
         <SectionHeader
           eyebrow="॥ उत्सवाः ॥"
-          title="All Events"
-          subtitle="Filter by category to find what matters most to you."
+          title={t("cal.sectionTitle")}
+          subtitle={t("cal.sectionSub")}
         />
 
-        {/* Filter */}
+        {/* Filter pills */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {(["All", "Exam", "Result", "Holiday", "Meeting", "Event", "Leave"] as Filter[]).map(cat => (
+          {filters.map(({ value, key }) => (
             <button
-              key={cat}
-              onClick={() => setFilter(cat)}
+              key={value}
+              onClick={() => setFilter(value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                filter === cat
+                filter === value
                   ? "bg-primary text-white border-primary"
                   : "border-gold/30 text-muted-foreground hover:border-primary/40 hover:text-foreground"
               }`}
             >
-              {cat}
+              {t(key)}
             </button>
           ))}
         </div>
@@ -72,35 +76,64 @@ const Calendar = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {sorted.map((event, i) => {
             const dateObj = new Date(event.date);
-            const day = dateObj.getDate();
-            const month = dateObj.toLocaleString("en-IN", { month: "short" });
+            const day     = dateObj.getDate();
+            const month   = dateObj.toLocaleString("en-IN", { month: "short" });
+            const year    = dateObj.getFullYear();
+            const weekday = dateObj.toLocaleString("en-IN", { weekday: "short" });
+            const colors  = CATEGORY_COLORS[event.category] ?? { badge: "bg-muted text-muted-foreground border-border", bar: "bg-muted-foreground", dot: "bg-muted-foreground" };
             return (
               <motion.article
                 key={event.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.05 }}
                 transition={{ delay: (i % 6) * 0.07 }}
-                className="bg-card rounded-2xl border border-gold/20 overflow-hidden shadow-soft hover:shadow-warm hover:-translate-y-1 transition-all duration-300 flex"
+                className="group relative bg-card rounded-3xl border border-gold/20 overflow-hidden shadow-soft hover:shadow-warm hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
               >
-                {/* Date block */}
-                <div className="bg-yellow-400 text-red-700 text-center w-24 shrink-0 flex flex-col items-center justify-center py-4 px-2">
-                  <div className="font-display text-4xl font-bold leading-none">{day}</div>
-                  <div className="text-sm uppercase tracking-widest mt-1 font-semibold">{month}</div>
-                </div>
-                {/* Content */}
-                <div className="p-4 flex-1 min-w-0">
-                  <span className={`inline-block text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border font-medium ${CATEGORY_COLORS[event.category]}`}>
-                    {event.category}
-                  </span>
-                  <h3 className="font-display text-base text-secondary mt-1.5 leading-snug">{event.title}</h3>
+                {/* top colour bar */}
+                <div className={`h-1.5 w-full ${colors.bar}`} />
+
+                <div className="flex flex-col flex-1 p-5">
+                  {/* date + badge row */}
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    {/* big date block */}
+                    <div className="flex flex-col items-center justify-center rounded-2xl bg-gradient-to-b from-primary/10 to-gold/10 border border-gold/20 px-4 py-3 min-w-[64px] text-center">
+                      <span className="font-display text-3xl font-bold text-primary leading-none">{day}</span>
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">{month}</span>
+                      <span className="text-[10px] text-muted-foreground/70">{year}</span>
+                    </div>
+                    {/* badge + weekday */}
+                    <div className="flex flex-col items-end gap-1.5 pt-0.5">
+                      <span className={`inline-block text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border font-bold ${colors.badge}`}>
+                        {event.category}
+                      </span>
+                      <span className="text-xs text-muted-foreground font-medium">{weekday}</span>
+                    </div>
+                  </div>
+
+                  {/* title */}
+                  <h3 className="font-display text-lg font-semibold text-secondary leading-snug mb-2">
+                    {event.title}
+                  </h3>
+
+                  {/* end date */}
                   {event.endDate && (
-                    <p className="text-xs text-muted-foreground mt-0.5">Until {new Date(event.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</p>
+                    <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                      <span className={`inline-block h-1.5 w-1.5 rounded-full ${colors.dot}`} />
+                      {t("cal.until")} {new Date(event.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
                   )}
-                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{event.description}</p>
+
+                  {/* description */}
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1">
+                    {event.description}
+                  </p>
+
+                  {/* location */}
                   {event.location && (
-                    <div className="flex items-center gap-1 mt-1.5 text-xs text-muted-foreground">
-                      <MapPin className="h-3 w-3" /> {event.location}
+                    <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-gold/10 text-xs text-muted-foreground">
+                      <MapPin className="h-3.5 w-3.5 shrink-0 text-primary/60" />
+                      <span className="truncate">{event.location}</span>
                     </div>
                   )}
                 </div>
@@ -110,7 +143,7 @@ const Calendar = () => {
         </div>
 
         {sorted.length === 0 && (
-          <div className="text-center py-16 text-muted-foreground">No events in this category.</div>
+          <div className="text-center py-16 text-muted-foreground">{t("cal.noEvents")}</div>
         )}
       </section>
 
@@ -118,8 +151,8 @@ const Calendar = () => {
       <section className="container-narrow pb-20">
         <div className="rounded-3xl bg-gradient-festive text-primary-foreground p-10 text-center shadow-temple">
           <CalendarDays className="h-10 w-10 mx-auto text-gold mb-4" />
-          <h3 className="font-display text-3xl mb-2">Stay in the Loop</h3>
-          <p className="opacity-90 max-w-xl mx-auto">Subscribe for monthly newsletter with calendar updates, photo highlights and parent notes.</p>
+          <h3 className="font-display text-3xl mb-2">{t("cal.cta.title")}</h3>
+          <p className="opacity-90 max-w-xl mx-auto">{t("cal.cta.sub")}</p>
         </div>
       </section>
     </>
@@ -127,4 +160,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-

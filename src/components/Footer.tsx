@@ -1,38 +1,18 @@
 import { Link } from "react-router-dom";
-import { Flame, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const COMBO = 1;
 
-const combos: Record<number, { bg: string; text: string; muted: string; border: string }> = {
-  1: {
-    bg:     "linear-gradient(135deg,#f97316 0%,#fbbf24 45%,#fde68a 100%)",
-    text:   "#7c2d12",
-    muted:  "#9a3412",
-    border: "#7c2d1230",
-  },
-  2: {
-    bg:     "linear-gradient(135deg,#ef4444 0%,#f97316 45%,#fde68a 100%)",
-    text:   "#7f1d1d",
-    muted:  "#991b1b",
-    border: "#7f1d1d30",
-  },
-  3: {
-    bg:     "linear-gradient(135deg,#fbbf24 0%,#f97316 50%,#ef4444 100%)",
-    text:   "#7c2d12",
-    muted:  "#9a3412",
-    border: "#7c2d1230",
-  },
-  4: {
-    bg:     "linear-gradient(135deg,#60a5fa 0%,#f97316 50%,#fde68a 100%)",
-    text:   "#1e3a8a",
-    muted:  "#1e40af",
-    border: "#1e3a8a30",
-  },
-};
+const contact = [
+  { Icon: MapPin, val: "108, Saraswati Marg, Bengaluru – 560001" },
+  { Icon: Phone,  val: "+91 98765 43210" },
+  { Icon: Mail,   val: "hello@vidyalaya.in" },
+];
 
-const c = combos[COMBO];
+export const Footer = () => {
+  const { t } = useLanguage();
 
 export const Footer = () => {
   const { t } = useLanguage();
