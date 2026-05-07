@@ -214,6 +214,14 @@ const Admissions = () => {
         {/* Gold rules */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+        {/* Floating mandalas */}
+        <MandalaBg className="absolute -right-20 top-8 w-52 h-52 opacity-[0.07] hidden lg:block" spin={false} />
+        <MandalaBg className="absolute -left-16 bottom-8 w-44 h-44 opacity-[0.05] hidden lg:block" />
+        {/* Floating sparkle dots */}
+        <span className="absolute top-14 left-[12%] h-2 w-2 rounded-full bg-gold/50 animate-float hidden md:block" style={{ animationDelay: "0s" }} />
+        <span className="absolute top-28 right-[15%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-sparkle hidden md:block" style={{ animationDelay: "1s" }} />
+        <span className="absolute bottom-16 left-[20%] h-1 w-1 rounded-full bg-gold/60 animate-float-slow hidden md:block" style={{ animationDelay: "0.5s" }} />
+        <span className="absolute bottom-24 right-[18%] h-2 w-2 rounded-full bg-primary/20 animate-sparkle hidden md:block" style={{ animationDelay: "2.2s" }} />
 
         <div className="container-narrow relative z-10">
 
@@ -253,10 +261,10 @@ const Admissions = () => {
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-gold/25 bg-white shadow-[0_2px_16px_hsl(43_78%_52%/0.08)] hover:shadow-[0_8px_32px_hsl(43_78%_52%/0.16)] hover:-translate-y-1.5 transition-all duration-300"
                 style={{ boxShadow: `0 0 0 1px ${s.accentBorder}, 0 4px 16px hsl(43 78% 52% / 0.08)` }}
               >
-                {/* Accent top bar */}
+                {/* Accent top bar with shimmer */}
                 <div
-                  className="h-[3px] w-full shrink-0"
-                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
+                  className="h-[3px] w-full shrink-0 animate-shimmer"
+                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)`, backgroundSize: "200% auto" }}
                 />
 
                 {/* Glow on hover */}
@@ -279,28 +287,31 @@ const Admissions = () => {
                     </span>
                   </div>
 
-                  {/* Icon */}
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${s.iconBg} text-white shadow-lg mb-5 group-hover:scale-105 transition-transform duration-300`}>
-                    {i === 0 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" />
-                      </svg>
-                    )}
-                    {i === 1 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    )}
-                    {i === 2 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    )}
-                    {i === 3 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                      </svg>
-                    )}
+                  {/* Icon with ring-pulse */}
+                  <div className="relative mb-5">
+                    <span className={`absolute inset-0 rounded-xl bg-gradient-to-br ${s.iconBg} opacity-0 group-hover:opacity-30 animate-ring-pulse`} />
+                    <div className={`relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${s.iconBg} text-white shadow-gold group-hover:scale-105 transition-transform duration-300`}>
+                      {i === 0 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" />
+                        </svg>
+                      )}
+                      {i === 1 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      )}
+                      {i === 2 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      )}
+                      {i === 3 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                      )}
+                    </div>
                   </div>
 
                   {/* Title */}
@@ -356,6 +367,13 @@ const Admissions = () => {
           style={{ backgroundImage: "radial-gradient(hsl(22 88% 45%) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+        {/* Floating mandalas */}
+        <MandalaBg className="absolute -left-24 top-8 w-48 h-48 opacity-[0.07] hidden lg:block" />
+        <MandalaBg className="absolute -right-20 bottom-8 w-44 h-44 opacity-[0.06] hidden lg:block" spin={false} />
+        {/* Floating sparkles */}
+        <span className="absolute top-16 right-[14%] h-2 w-2 rounded-full bg-gold/50 animate-sparkle hidden md:block" style={{ animationDelay: "0.6s" }} />
+        <span className="absolute bottom-20 left-[16%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.4s" }} />
+        <span className="absolute top-1/3 left-[8%] h-1 w-1 rounded-full bg-gold/40 animate-float-slow hidden md:block" style={{ animationDelay: "0.9s" }} />
 
         <div className="container-narrow relative z-10">
           {/* Header */}
@@ -479,8 +497,8 @@ const Admissions = () => {
               transition={{ duration: 0.55 }}
               className="lg:col-span-3"
             >
-              <div className="rounded-3xl border border-gold/25 bg-white shadow-temple overflow-hidden">
-                <div className="h-1.5 w-full bg-gradient-festive" />
+              <div className="rounded-3xl border border-gold/25 bg-white shadow-temple overflow-hidden ornate-frame">
+                <div className="h-1.5 w-full bg-gradient-festive animate-shimmer" style={{ backgroundSize: "200% auto" }} />
                 <div className="p-8 md:p-10">
                   <AnimatePresence mode="wait">
                     {submitted ? (
@@ -639,6 +657,12 @@ const Admissions = () => {
           style={{ backgroundImage: "radial-gradient(hsl(22 88% 45%) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+        {/* Floating mandalas */}
+        <MandalaBg className="absolute -right-20 top-10 w-52 h-52 opacity-[0.07] hidden lg:block" spin={false} />
+        {/* Floating sparkles */}
+        <span className="absolute top-20 left-[10%] h-2 w-2 rounded-full bg-gold/50 animate-sparkle hidden md:block" style={{ animationDelay: "0.3s" }} />
+        <span className="absolute bottom-24 right-[12%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.6s" }} />
+        <span className="absolute top-1/2 left-[5%] h-1 w-1 rounded-full bg-gold/40 animate-float-slow hidden md:block" style={{ animationDelay: "0.7s" }} />
 
         <div className="container-narrow relative z-10">
 
