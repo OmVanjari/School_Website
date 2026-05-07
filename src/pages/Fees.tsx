@@ -44,7 +44,7 @@ const Fees = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.05 }}
-          className="bg-card rounded-2xl border border-gold/20 overflow-x-auto shadow-soft"
+          className="bg-card rounded-2xl border border-gold/20 overflow-x-auto shadow-soft ornate-frame"
         >
           <table className="w-full text-sm">
             <thead>
@@ -64,13 +64,17 @@ const Fees = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.05 }}
                   transition={{ delay: i * 0.06 }}
-                  className="hover:bg-muted/30 transition-colors"
+                  className="hover:bg-primary/[0.03] transition-colors group"
                 >
-                  <td className="px-5 py-4 font-display font-semibold text-secondary">{fee.className}</td>
-                  <td className="px-5 py-4 text-foreground/80">{fee.tuition}</td>
-                  <td className="px-5 py-4 text-foreground/80">{fee.admission}</td>
-                  <td className="px-5 py-4 text-foreground/80">{fee.exam}</td>
-                  <td className="px-5 py-4 text-foreground/80">{fee.other}</td>
+                  <td className="px-5 py-4">
+                    <span className="inline-flex items-center rounded-full bg-primary/8 border border-primary/15 px-3 py-0.5 text-xs font-semibold text-primary">
+                      {fee.className}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 font-semibold text-secondary">{fee.tuition}</td>
+                  <td className="px-5 py-4 text-foreground/70">{fee.admission}</td>
+                  <td className="px-5 py-4 text-foreground/70">{fee.exam}</td>
+                  <td className="px-5 py-4 text-foreground/70">{fee.other}</td>
                 </motion.tr>
               ))}
             </tbody>

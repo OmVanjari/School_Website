@@ -52,8 +52,8 @@ const Notices = () => {
               onClick={() => setFilter(value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 filter === value
-                  ? "bg-primary text-white border-primary"
-                  : "border-gold/30 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  ? "bg-primary text-white border-primary shadow-gold"
+                  : "border-gold/30 text-muted-foreground hover:border-primary/40 hover:text-foreground bg-card"
               }`}
             >
               {t(key)}
@@ -72,32 +72,35 @@ const Notices = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.05 }}
                 transition={{ delay: i * 0.06 }}
-                className="bg-card rounded-2xl border border-gold/20 p-5 md:p-6 flex items-start gap-4 hover:shadow-warm transition-all"
+                className="group bg-card rounded-2xl border border-gold/20 overflow-hidden shadow-soft hover:shadow-warm hover:-translate-y-0.5 transition-all duration-300"
               >
-                <div className={`p-3 rounded-xl border shrink-0 ${config.color}`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${config.badge}`}>
-                      {notice.category}
-                    </span>
-                    <span className="text-xs text-muted-foreground">{notice.date}</span>
+                {/* coloured left bar */}
+                <div className="flex items-start gap-4 p-5 md:p-6">
+                  <div className={`p-3 rounded-xl border shrink-0 ${config.color} group-hover:scale-105 transition-transform duration-300`}>
+                    <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="font-display text-lg text-secondary">{language === "hi" && notice.titleHi ? notice.titleHi : notice.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{language === "hi" && notice.bodyHi ? notice.bodyHi : notice.body}</p>
-                  {notice.attachment && (
-                    <a
-                      href={notice.attachment}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 mt-3 text-sm text-primary hover:underline"
-                    >
-                      <Download className="h-3.5 w-3.5" /> {t("notices.download")}
-                    </a>
-                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                      <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${config.badge}`}>
+                        {notice.category}
+                      </span>
+                      <span className="text-xs text-muted-foreground">{notice.date}</span>
+                    </div>
+                    <h3 className="font-display text-lg text-secondary leading-snug">
+                      {language === "hi" && notice.titleHi ? notice.titleHi : notice.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
+                      {language === "hi" && notice.bodyHi ? notice.bodyHi : notice.body}
+                    </p>
+                    {notice.attachment && (
+                      <a href={notice.attachment} target="_blank" rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 mt-3 text-sm text-primary hover:underline font-medium">
+                        <Download className="h-3.5 w-3.5" /> {t("notices.download")}
+                      </a>
+                    )}
+                  </div>
+                  <FileText className="h-4 w-4 text-muted-foreground/30 shrink-0 hidden md:block mt-1" />
                 </div>
-                <FileText className="h-4 w-4 text-muted-foreground/40 shrink-0 hidden md:block mt-1" />
               </motion.div>
             );
           })}

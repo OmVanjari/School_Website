@@ -60,27 +60,28 @@ const Contact = () => {
         </div>
 
         <div className="lg:col-span-3">
-          <div className="rounded-2xl bg-card p-8 md:p-10 border border-gold/30 shadow-temple">
+          <div className="rounded-3xl bg-card p-8 md:p-10 border border-gold/25 shadow-temple overflow-hidden">
+            <div className="h-1.5 w-full bg-gradient-festive -mx-8 md:-mx-10 mb-8 w-[calc(100%+4rem)] md:w-[calc(100%+5rem)]" style={{ marginTop: "-2rem", paddingTop: "0" }} />
             <h3 className="font-display text-2xl text-secondary mb-1">{t("contact.formTitle")}</h3>
             <p className="text-sm text-muted-foreground mb-6">{t("contact.formSubtitle")}</p>
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name">{t("contact.name")}</Label>
-                  <Input id="name" required className="mt-1.5" />
+                  <Input id="name" required className="mt-1.5 border-gold/25 focus:border-primary/50" />
                 </div>
                 <div>
                   <Label htmlFor="email">{t("contact.email")}</Label>
-                  <Input id="email" type="email" required className="mt-1.5" />
+                  <Input id="email" type="email" required className="mt-1.5 border-gold/25 focus:border-primary/50" />
                 </div>
               </div>
               <div>
                 <Label htmlFor="subject">{t("contact.subject")}</Label>
-                <Input id="subject" required className="mt-1.5" />
+                <Input id="subject" required className="mt-1.5 border-gold/25 focus:border-primary/50" />
               </div>
               <div>
                 <Label htmlFor="message">{t("contact.message")}</Label>
-                <Textarea id="message" rows={5} required className="mt-1.5" />
+                <Textarea id="message" rows={5} required className="mt-1.5 border-gold/25 focus:border-primary/50 resize-none" />
               </div>
               <Button type="submit" variant="hero" size="lg" className="w-full">{t("contact.send")}</Button>
             </form>

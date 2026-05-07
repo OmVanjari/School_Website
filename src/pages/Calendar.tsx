@@ -149,10 +149,13 @@ const Calendar = () => {
 
       {/* CTA */}
       <section className="container-narrow pb-20">
-        <div className="rounded-3xl bg-gradient-festive text-primary-foreground p-10 text-center shadow-temple">
-          <CalendarDays className="h-10 w-10 mx-auto text-gold mb-4" />
-          <h3 className="font-display text-3xl mb-2">{t("cal.cta.title")}</h3>
-          <p className="opacity-90 max-w-xl mx-auto">{t("cal.cta.sub")}</p>
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-festive text-primary-foreground p-10 text-center shadow-temple ornate-frame">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(43_95%_78%/0.15),transparent_55%)]" />
+          <div className="relative z-10">
+            <CalendarDays className="h-10 w-10 mx-auto text-gold mb-4" />
+            <h3 className="font-display text-3xl mb-2">{t("cal.cta.title")}</h3>
+            <p className="opacity-90 max-w-xl mx-auto">{t("cal.cta.sub")}</p>
+          </div>
         </div>
       </section>
     </>
