@@ -214,14 +214,6 @@ const Admissions = () => {
         {/* Gold rules */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        {/* Floating mandalas */}
-        <MandalaBg className="absolute -right-20 top-8 w-52 h-52 opacity-[0.07] hidden lg:block" spin={false} />
-        <MandalaBg className="absolute -left-16 bottom-8 w-44 h-44 opacity-[0.05] hidden lg:block" />
-        {/* Floating sparkle dots */}
-        <span className="absolute top-14 left-[12%] h-2 w-2 rounded-full bg-gold/50 animate-float hidden md:block" style={{ animationDelay: "0s" }} />
-        <span className="absolute top-28 right-[15%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-sparkle hidden md:block" style={{ animationDelay: "1s" }} />
-        <span className="absolute bottom-16 left-[20%] h-1 w-1 rounded-full bg-gold/60 animate-float-slow hidden md:block" style={{ animationDelay: "0.5s" }} />
-        <span className="absolute bottom-24 right-[18%] h-2 w-2 rounded-full bg-primary/20 animate-sparkle hidden md:block" style={{ animationDelay: "2.2s" }} />
 
         <div className="container-narrow relative z-10">
 
@@ -261,10 +253,10 @@ const Admissions = () => {
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-gold/25 bg-white shadow-[0_2px_16px_hsl(43_78%_52%/0.08)] hover:shadow-[0_8px_32px_hsl(43_78%_52%/0.16)] hover:-translate-y-1.5 transition-all duration-300"
                 style={{ boxShadow: `0 0 0 1px ${s.accentBorder}, 0 4px 16px hsl(43 78% 52% / 0.08)` }}
               >
-                {/* Accent top bar with shimmer */}
+                {/* Accent top bar */}
                 <div
-                  className="h-[3px] w-full shrink-0 animate-shimmer"
-                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)`, backgroundSize: "200% auto" }}
+                  className="h-[3px] w-full shrink-0"
+                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
                 />
 
                 {/* Glow on hover */}
@@ -367,13 +359,6 @@ const Admissions = () => {
           style={{ backgroundImage: "radial-gradient(hsl(22 88% 45%) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        {/* Floating mandalas */}
-        <MandalaBg className="absolute -left-24 top-8 w-48 h-48 opacity-[0.07] hidden lg:block" />
-        <MandalaBg className="absolute -right-20 bottom-8 w-44 h-44 opacity-[0.06] hidden lg:block" spin={false} />
-        {/* Floating sparkles */}
-        <span className="absolute top-16 right-[14%] h-2 w-2 rounded-full bg-gold/50 animate-sparkle hidden md:block" style={{ animationDelay: "0.6s" }} />
-        <span className="absolute bottom-20 left-[16%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.4s" }} />
-        <span className="absolute top-1/3 left-[8%] h-1 w-1 rounded-full bg-gold/40 animate-float-slow hidden md:block" style={{ animationDelay: "0.9s" }} />
 
         <div className="container-narrow relative z-10">
           {/* Header */}
@@ -498,7 +483,7 @@ const Admissions = () => {
               className="lg:col-span-3"
             >
               <div className="rounded-3xl border border-gold/25 bg-white shadow-temple overflow-hidden ornate-frame">
-                <div className="h-1.5 w-full bg-gradient-festive animate-shimmer" style={{ backgroundSize: "200% auto" }} />
+                <div className="h-1.5 w-full bg-gradient-festive" />
                 <div className="p-8 md:p-10">
                   <AnimatePresence mode="wait">
                     {submitted ? (
@@ -657,12 +642,6 @@ const Admissions = () => {
           style={{ backgroundImage: "radial-gradient(hsl(22 88% 45%) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        {/* Floating mandalas */}
-        <MandalaBg className="absolute -right-20 top-10 w-52 h-52 opacity-[0.07] hidden lg:block" spin={false} />
-        {/* Floating sparkles */}
-        <span className="absolute top-20 left-[10%] h-2 w-2 rounded-full bg-gold/50 animate-sparkle hidden md:block" style={{ animationDelay: "0.3s" }} />
-        <span className="absolute bottom-24 right-[12%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.6s" }} />
-        <span className="absolute top-1/2 left-[5%] h-1 w-1 rounded-full bg-gold/40 animate-float-slow hidden md:block" style={{ animationDelay: "0.7s" }} />
 
         <div className="container-narrow relative z-10">
 

@@ -157,11 +157,8 @@ const Academics = () => {
 
       {/* ── Stats Bar ── */}
       <section className="container-narrow mt-10 md:mt-14 relative z-10">
-        {/* Floating mandala watermark */}
-        <MandalaBg className="absolute -right-20 -top-10 w-48 h-48 opacity-[0.07] hidden md:block pointer-events-none" spin={false} />
         <div className="rounded-3xl border border-gold/30 bg-card shadow-temple overflow-hidden ornate-frame">
-          {/* Top festive bar with shimmer */}
-          <div className="h-1.5 w-full bg-gradient-festive animate-shimmer" style={{ backgroundSize: "200% auto" }} />
+          <div className="h-1.5 w-full bg-gradient-festive" />
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gold/15">
             {statsMeta.map((s, i) => (
               <motion.div
@@ -173,9 +170,7 @@ const Academics = () => {
                 className="relative group flex flex-col items-center justify-center gap-2 p-6 md:p-8 text-center overflow-hidden"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300`} />
-                {/* Ring pulse on hover */}
                 <div className="relative">
-                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-40 blur-sm animate-glow-pulse`} />
                   <div className={`relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-gold group-hover:scale-110 transition-transform duration-300`}>
                     <s.icon className="h-5 w-5" />
                   </div>
@@ -202,14 +197,6 @@ const Academics = () => {
         {/* Gold rules */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        {/* Floating mandalas */}
-        <MandalaBg className="absolute -left-32 top-10 w-72 h-72 opacity-[0.08] hidden lg:block" />
-        <MandalaBg className="absolute -right-24 bottom-10 w-56 h-56 opacity-[0.06] hidden lg:block" spin={false} />
-        {/* Floating sparkle dots */}
-        <span className="absolute top-16 left-[15%] h-2 w-2 rounded-full bg-gold/40 animate-float hidden md:block" style={{ animationDelay: "0s" }} />
-        <span className="absolute top-32 right-[18%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.2s" }} />
-        <span className="absolute bottom-20 left-[25%] h-1 w-1 rounded-full bg-gold/50 animate-float-slow hidden md:block" style={{ animationDelay: "0.6s" }} />
-        <span className="absolute bottom-32 right-[22%] h-2 w-2 rounded-full bg-primary/20 animate-float-slow hidden md:block" style={{ animationDelay: "2s" }} />
 
         <div className="container-narrow relative z-10">
 
@@ -248,7 +235,7 @@ const Academics = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.13, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  className={`group relative flex flex-col overflow-hidden rounded-3xl border ${m.borderClass} bg-white shadow-[0_4px_24px_hsl(43_78%_52%/0.10)] hover:shadow-[0_12px_40px_hsl(43_78%_52%/0.22)] hover:-translate-y-2 transition-all duration-300 animate-lotus-bloom`}
+                  className={`group relative flex flex-col overflow-hidden rounded-3xl border ${m.borderClass} bg-white shadow-[0_4px_24px_hsl(43_78%_52%/0.10)] hover:shadow-[0_12px_40px_hsl(43_78%_52%/0.22)] hover:-translate-y-2 transition-all duration-300`}
                 >
                   {/* Accent top bar */}
                   <div className={`h-1 w-full shrink-0 bg-gradient-to-r ${m.barClass}`} />
@@ -323,10 +310,6 @@ const Academics = () => {
         <div className="absolute inset-0 bg-gradient-temple" />
         <MandalaBg className="absolute -left-40 bottom-0 h-[30rem] w-[30rem] opacity-10 hidden lg:block z-0" />
         <MandalaBg className="absolute -right-40 top-0 h-[24rem] w-[24rem] opacity-8 hidden lg:block z-0" spin={false} />
-        {/* Floating sparkles */}
-        <span className="absolute top-20 right-[12%] h-2 w-2 rounded-full bg-gold/50 animate-sparkle hidden md:block" style={{ animationDelay: "0.3s" }} />
-        <span className="absolute bottom-24 left-[10%] h-1.5 w-1.5 rounded-full bg-primary/40 animate-sparkle hidden md:block" style={{ animationDelay: "1.5s" }} />
-        <span className="absolute top-1/2 right-[8%] h-1 w-1 rounded-full bg-gold/60 animate-float hidden md:block" style={{ animationDelay: "0.8s" }} />
         <div className="container-narrow relative z-10">
           <SectionHeader
             eyebrow={t("academics.programsEyebrow")}
@@ -360,8 +343,7 @@ const Academics = () => {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-3xl overflow-hidden shadow-temple border border-gold/20 ornate-frame"
           >
-            {/* Festive top bar with shimmer */}
-            <div className="h-1.5 w-full bg-gradient-festive animate-shimmer" style={{ backgroundSize: "200% auto" }} />
+            <div className="h-1.5 w-full bg-gradient-festive" />
             <div className="grid md:grid-cols-2 gap-0 bg-white">
               {/* Left */}
               <div className={`p-8 md:p-10 border-b md:border-b-0 md:border-r border-gold/15 bg-gradient-to-br ${programs[activeProgram].color}`}>
@@ -434,11 +416,6 @@ const Academics = () => {
         {/* Gold rules */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        {/* Floating mandalas */}
-        <MandalaBg className="absolute -right-24 top-8 w-52 h-52 opacity-[0.07] hidden lg:block" spin={false} />
-        {/* Floating sparkles */}
-        <span className="absolute top-12 left-[8%] h-2 w-2 rounded-full bg-gold/40 animate-sparkle hidden md:block" style={{ animationDelay: "0.4s" }} />
-        <span className="absolute bottom-16 right-[10%] h-1.5 w-1.5 rounded-full bg-primary/30 animate-float hidden md:block" style={{ animationDelay: "1.8s" }} />
 
         <div className="container-narrow relative z-10">
 
@@ -547,9 +524,8 @@ const Academics = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[hsl(22_88%_52%/0.18)] blur-[80px] pointer-events-none" />
           <div className="absolute inset-0 opacity-[0.04]"
             style={{ backgroundImage: "linear-gradient(hsl(43 78% 52%) 1px,transparent 1px),linear-gradient(90deg,hsl(43 78% 52%) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-60 animate-shimmer" style={{ backgroundSize: "200% auto" }} />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-60" />
           <MandalaBg className="absolute -right-16 -top-16 w-72 h-72 opacity-10" spin={false} />
-          <MandalaBg className="absolute -left-16 -bottom-16 w-56 h-56 opacity-[0.06]" />
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-14">
             <div>
