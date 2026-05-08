@@ -167,11 +167,14 @@ const Academics = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="relative group flex flex-col items-center justify-center gap-2 p-6 md:p-8 text-center overflow-hidden"
+                className="relative group flex flex-col items-center justify-center gap-2 p-6 md:p-8 text-center overflow-hidden cursor-default transition-all duration-300 hover:bg-[hsl(38_55%_97%)]"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300`} />
+                {/* Warm gradient wash on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-[0.07] transition-opacity duration-300`} />
+                {/* Bottom accent line slides in */}
+                <div className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r ${s.color} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center`} />
                 <div className="relative">
-                  <div className={`relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-gold group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${s.color} text-white shadow-gold group-hover:scale-110 group-hover:shadow-[0_4px_16px_hsl(43_78%_52%/0.3)] transition-all duration-300`}>
                     <s.icon className="h-5 w-5" />
                   </div>
                 </div>
@@ -235,13 +238,16 @@ const Academics = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.13, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  className={`group relative flex flex-col overflow-hidden rounded-3xl border ${m.borderClass} bg-white shadow-[0_4px_24px_hsl(43_78%_52%/0.10)] hover:shadow-[0_12px_40px_hsl(43_78%_52%/0.22)] hover:-translate-y-2 transition-all duration-300`}
+                  className={`group relative flex flex-col overflow-hidden rounded-3xl border ${m.borderClass} bg-white shadow-[0_4px_24px_hsl(43_78%_52%/0.10)] hover:shadow-[0_16px_48px_hsl(43_78%_52%/0.24)] hover:-translate-y-2 transition-all duration-300`}
                 >
-                  {/* Accent top bar */}
-                  <div className={`h-1 w-full shrink-0 bg-gradient-to-r ${m.barClass}`} />
+                  {/* Accent top bar — thickens on hover */}
+                  <div className={`h-1 w-full shrink-0 bg-gradient-to-r ${m.barClass} transition-all duration-300 group-hover:h-[5px]`} />
 
-                  {/* Hover glow overlay — always on mobile, hover-only on desktop */}
+                  {/* Warm wash overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-b ${m.glowClass} to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+
+                  {/* Bottom accent line slides in on hover */}
+                  <div className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r ${m.barClass} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
 
                   <div className="relative z-10 flex flex-col flex-1 p-7">
 
@@ -250,23 +256,23 @@ const Academics = () => {
                       <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] uppercase ${m.tagClass}`}>
                         {m.tag}
                       </span>
-                      <span className={`font-sanskrit text-5xl font-bold leading-none select-none opacity-15 group-hover:opacity-25 transition-opacity duration-300 ${m.accentClass}`}>
+                      <span className={`font-sanskrit text-5xl font-bold leading-none select-none opacity-15 group-hover:opacity-30 transition-opacity duration-300 ${m.accentClass}`}>
                         {m.devanagari}
                       </span>
                     </div>
 
-                    {/* Icon with glow ring + ring-pulse */}
+                    {/* Icon with glow ring */}
                     <div className="relative mb-6 w-fit">
                       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${m.barClass} opacity-20 blur-md scale-110`} />
-                      {/* Ring pulse on hover */}
-                      <span className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${m.barClass} opacity-0 group-hover:opacity-30 animate-ring-pulse`} />
+                      {/* Glow ring expands on hover */}
+                      <div className={`absolute -inset-1 rounded-2xl bg-gradient-to-br ${m.barClass} opacity-0 group-hover:opacity-20 blur-sm transition-opacity duration-300`} />
                       <div className={`relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${m.barClass} text-white shadow-gold group-hover:scale-110 transition-transform duration-300`}>
                         <p.Icon className="h-8 w-8" />
                       </div>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-display text-xl md:text-2xl text-secondary mb-3 leading-snug">
+                    {/* Title — shifts to accent on hover */}
+                    <h3 className={`font-display text-xl md:text-2xl text-secondary mb-3 leading-snug transition-colors duration-300 group-hover:${m.accentClass}`}>
                       {p.title}
                     </h3>
 
@@ -291,8 +297,8 @@ const Academics = () => {
                       <span className="text-[10px] font-semibold tracking-[0.2em] text-muted-foreground/50 uppercase">
                         Pillar {m.num}
                       </span>
-                      <div className={`flex h-7 w-7 items-center justify-center rounded-full border-2 ${m.borderClass} group-hover:bg-gradient-to-br group-hover:${m.barClass} transition-all duration-300`}>
-                        <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-br ${m.barClass}`} />
+                      <div className={`flex h-7 w-7 items-center justify-center rounded-full border-2 ${m.borderClass} transition-all duration-300 group-hover:border-transparent group-hover:shadow-md`}>
+                        <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-br ${m.barClass} transition-transform duration-300 group-hover:scale-125`} />
                       </div>
                     </div>
                   </div>
