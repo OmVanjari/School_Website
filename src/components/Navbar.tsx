@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { Menu, X, Flame } from "lucide-react";
+import { Menu, X, Flame, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+const isAdminLoggedIn = () => typeof window !== "undefined" && !!localStorage.getItem("admin-auth");
 
 const links = [
   { to: "/", key: "nav.home" as const },
@@ -20,6 +22,7 @@ const links = [
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const loggedIn = isAdminLoggedIn();
 
   return (
     <header className="sticky top-0 z-50 border-b border-gold/30 bg-card shadow-soft">
@@ -89,6 +92,14 @@ export const Navbar = () => {
           <Button asChild variant="hero" size="sm" className="hover:shadow-gold transition-shadow duration-300">
             <Link to="/admissions">Apply</Link>
           </Button>
+          {loggedIn && (
+            <Button asChild variant="outline" size="sm" className="gap-1.5 border-primary/30 text-primary hover:bg-primary/5">
+              <Link to="/admin">
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Dashboard
+              </Link>
+            </Button>
+          )}
         </div>
 
         <button
@@ -154,6 +165,14 @@ export const Navbar = () => {
                 <Button asChild variant="hero" className="w-full">
                   <Link to="/admissions" onClick={() => setOpen(false)}>Apply</Link>
                 </Button>
+                {loggedIn && (
+                  <Button asChild variant="outline" className="w-full mt-2 gap-2 border-primary/30 text-primary">
+                    <Link to="/admin" onClick={() => setOpen(false)}>
+                      <LayoutDashboard className="h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                )}
               </div>
             </nav>
           </motion.div>

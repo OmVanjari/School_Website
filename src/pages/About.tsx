@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { MandalaBg } from "@/components/MandalaBg";
-import { Heart, Eye, Star, Users, Award, Zap, Book, Globe, CheckCircle2, Quote } from "lucide-react";
+import { Heart, Eye, Star, Award, Zap, Book, Globe, CheckCircle2, Quote, GraduationCap, Clock, Briefcase } from "lucide-react";
 import heroAbout from "@/assets/aboutus.png";
 import heroAcademics from "@/assets/acdemics.png";
 import heroAdmissions from "@/assets/admission.png";
@@ -12,7 +12,7 @@ import heroCalendar from "@/assets/calenderpage.png";
 import heroContact from "@/assets/conatctus.png";
 import heroHome from "@/assets/hero-home.jpg";
 import schoolHome from "@/assets/schoolhome.png";
-import { loadAboutFacilities, loadAboutContent, defaultAboutContent, type AboutContent } from "@/lib/aboutContent";
+import { loadAboutFacilities, loadAboutContent, loadAboutFaculty, defaultAboutContent, defaultFaculty, type AboutContent, type AboutFaculty } from "@/lib/aboutContent";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const getInitials = (name: string) =>
@@ -39,6 +39,7 @@ const fadeRight = {
 const About = () => {
   const { t, language } = useLanguage();
   const [content, setContent] = useState<AboutContent>(defaultAboutContent);
+  const [faculty, setFaculty] = useState<AboutFaculty[]>(defaultFaculty);
 
   const c = (enKey: keyof AboutContent, hiKey: keyof AboutContent) =>
     language === "hi" ? (content[hiKey] as string) || (content[enKey] as string) : (content[enKey] as string);
@@ -78,6 +79,7 @@ const About = () => {
   useEffect(() => {
     loadAboutFacilities();
     setContent(loadAboutContent());
+    setFaculty(loadAboutFaculty());
   }, []);
 
   return (
@@ -357,7 +359,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Leadership Team ── */}
+      {/* ── Leadership Team / Faculty ── */}
       <section className="container-narrow py-20 relative overflow-hidden">
         <SectionHeader eyebrow={t("about.team.eyebrow")} title={t("about.team.title")} subtitle={t("about.team.subtitle")} />
         <motion.div
@@ -367,15 +369,7 @@ const About = () => {
           viewport={{ once: true, amount: 0.05 }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10"
         >
-          {team.map((member, i) => {
-            const roleColors = [
-              "bg-orange-100 text-orange-700",
-              "bg-amber-100 text-amber-700",
-              "bg-yellow-100 text-yellow-700",
-              "bg-orange-50 text-orange-600",
-              "bg-amber-50 text-amber-600",
-              "bg-yellow-50 text-yellow-600",
-            ];
+          {faculty.map((member, i) => {
             const avatarGradients = [
               "from-orange-500 to-red-500",
               "from-amber-500 to-orange-500",
@@ -384,37 +378,71 @@ const About = () => {
               "from-red-500 to-orange-500",
               "from-amber-600 to-yellow-500",
             ];
+            const grad = avatarGradients[i % avatarGradients.length];
+
             return (
               <motion.div
-                key={member.name}
+                key={member.name + i}
                 variants={itemVariants}
                 whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                className="group rounded-2xl section-surface border border-gold/20 shadow-soft overflow-hidden hover:shadow-warm transition-shadow duration-300"
+                className="group relative rounded-3xl bg-card border border-gold/20 shadow-soft hover:shadow-warm overflow-hidden transition-shadow duration-300 flex flex-col"
               >
-                {/* gradient header */}
-                <div className="relative h-28 bg-gradient-to-br from-primary/15 via-gold/10 to-amber-500/15 flex items-end justify-start px-6 pb-0 overflow-hidden">
-                  {/* decorative circles */}
-                  <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/5" />
-                  <div className="absolute -right-2 top-4 h-12 w-12 rounded-full bg-gold/10" />
-                  <MandalaBg className="absolute right-0 top-0 w-28 h-28 opacity-10 pointer-events-none" />
-                  <motion.div
-                    whileHover={{ scale: 1.12, rotate: 4 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className={`relative translate-y-8 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${avatarGradients[i]} text-white font-display text-xl font-bold shadow-gold ring-4 ring-card`}
-                  >
-                    {getInitials(member.name)}
-                    <span className="absolute inset-0 rounded-full bg-white/10 animate-[ring-pulse_2.5s_ease-out_infinite]" style={{ animationDelay: `${i * 0.3}s` }} />
-                  </motion.div>
+                {/* Photo / Avatar area */}
+                <div className={`relative h-52 overflow-hidden bg-gradient-to-br ${grad} flex-shrink-0`}>
+                  {member.photo ? (
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                  ) : (
+                    /* placeholder with initials */
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white/20 ring-4 ring-white/30 font-display text-4xl font-bold text-white shadow-lg">
+                        {getInitials(member.name)}
+                      </div>
+                    </div>
+                  )}
+                  {/* gradient overlay at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {/* role badge on photo */}
+                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-1 text-[11px] font-bold text-white uppercase tracking-wide">
+                      <Briefcase className="h-3 w-3" />
+                      {member.role}
+                    </span>
+                    {/* pulse ring indicator */}
+                    <span className="flex h-3 w-3 items-center justify-center">
+                      <span className="absolute h-3 w-3 rounded-full bg-green-400 animate-ping opacity-75" />
+                      <span className="relative h-2 w-2 rounded-full bg-green-400" />
+                    </span>
+                  </div>
                 </div>
-                <div className="pt-10 px-6 pb-6">
-                  <h4 className="font-display text-lg text-secondary">{member.name}</h4>
-                  <span className={`inline-block mt-1 mb-3 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide ${roleColors[i]}`}>
-                    {member.role}
-                  </span>
-                  <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent mb-3" />
-                  <p className="text-sm text-muted-foreground leading-relaxed">{member.expertise}</p>
+
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-5">
+                  {/* Name */}
+                  <h4 className="font-display text-xl text-secondary leading-tight">{member.name}</h4>
+
+                  {/* Subject */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <GraduationCap className="h-4 w-4 text-primary shrink-0" />
+                    <span className="text-sm font-medium text-primary">{member.subject}</span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="my-3 h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+
+                  {/* Experience */}
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
+                    <span className="text-sm text-muted-foreground">{member.experience} of experience</span>
+                  </div>
                 </div>
-                <div className="h-0.5 bg-gradient-festive scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+                {/* Bottom accent bar */}
+                <div className={`h-1 bg-gradient-to-r ${grad} scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`} />
               </motion.div>
             );
           })}

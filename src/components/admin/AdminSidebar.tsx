@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Megaphone, CalendarDays, Info, BookOpen,
   ClipboardList, MessageSquare, FileText, Wallet, LogOut,
-  GraduationCap, X, Images,
+  GraduationCap, X, Images, ScrollText, ArrowLeft,
 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
@@ -18,6 +18,7 @@ const navItems = [
   { to: "/admin/inquiries",  label: "Inquiries",       icon: MessageSquare },
   { to: "/admin/notices",    label: "Notices",         icon: FileText },
   { to: "/admin/fees",       label: "Fee Structure",   icon: Wallet },
+  { to: "/admin/circular",   label: "Circular / Cert", icon: ScrollText },
 ];
 
 interface AdminSidebarProps {
@@ -70,7 +71,14 @@ export const AdminSidebar = ({ mobileOpen, setMobileOpen }: AdminSidebarProps) =
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-4 border-t border-gold/20">
+      <div className="px-3 py-4 border-t border-gold/20 space-y-1">
+        <a
+          href="/"
+          className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted hover:text-foreground transition-all"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Website
+        </a>
         <button
           onClick={handleLogout}
           className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 transition-all"

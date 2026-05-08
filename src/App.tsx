@@ -28,6 +28,7 @@ import AdminNotices from "./pages/admin/Notices.tsx";
 import AdminFees from "./pages/admin/Fees.tsx";
 
 import AdminGallery from "./pages/admin/Gallery.tsx";
+import AdminCircular from "./pages/admin/Circular.tsx";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/admin/notices" element={<AdminNotices />} />
               <Route path="/admin/fees" element={<AdminFees />} />
               <Route path="/admin/gallery" element={<AdminGallery />} />
+              <Route path="/admin/circular" element={<AdminCircular />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
