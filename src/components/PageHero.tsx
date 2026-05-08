@@ -130,10 +130,10 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className={`text-white/90 leading-relaxed drop-shadow-[0_4px_14px_rgba(0,0,0,0.8)] ${
+            className={`font-display text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.9)] tracking-wide ${
               size === "compact"
-                ? `${isHindi ? "mt-2" : "mt-3"} text-sm md:text-lg`
-                : `${isHindi ? "mt-3" : "mt-4"} text-base md:text-xl`
+                ? `${isHindi ? "mt-2 font-sanskrit" : "mt-3"} text-base md:text-xl`
+                : `${isHindi ? "mt-3 font-sanskrit" : "mt-5"} text-lg md:text-2xl font-medium`
             }`}
           >
             {subtitle}
