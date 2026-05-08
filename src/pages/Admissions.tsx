@@ -218,13 +218,7 @@ const Admissions = () => {
         <div className="container-narrow relative z-10">
 
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 font-sanskrit text-xs tracking-[0.22em] text-primary mb-5">
               {t("admissions.stepsEyebrow")}
             </span>
@@ -239,77 +233,99 @@ const Admissions = () => {
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto leading-relaxed text-base">
               {t("admissions.stepsSubtitle")}
             </p>
-          </motion.div>
+          </div>
 
           {/* Step Cards */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {stepsMeta.map((s, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 36 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.13, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-gold/25 bg-white shadow-[0_2px_16px_hsl(43_78%_52%/0.08)] hover:shadow-[0_8px_32px_hsl(43_78%_52%/0.16)] hover:-translate-y-1.5 transition-all duration-300"
-                style={{ boxShadow: `0 0 0 1px ${s.accentBorder}, 0 4px 16px hsl(43 78% 52% / 0.08)` }}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_16px_48px_hsl(43_78%_52%/0.22)]"
+                style={{
+                  borderColor: s.accentBorder,
+                  boxShadow: `0 4px 16px hsl(43 78% 52% / 0.08)`,
+                }}
               >
-                {/* Accent top bar */}
+                {/* Accent top bar — widens on hover */}
                 <div
-                  className="h-[3px] w-full shrink-0"
+                  className="h-[3px] w-full shrink-0 transition-all duration-300 group-hover:h-[5px]"
                   style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
                 />
 
-                {/* Glow on hover */}
+                {/* Warm saffron wash on hover */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                  style={{ background: `radial-gradient(circle at 50% 0%, ${s.accentMuted}, transparent 70%)` }}
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${s.accentMuted}, transparent 72%)` }}
+                />
+
+                {/* Bottom accent line slides in on hover */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
                 />
 
                 <div className="relative z-10 flex flex-col flex-1 p-6">
                   {/* Top row: step number + devanagari */}
                   <div className="flex items-start justify-between mb-5">
                     <span
-                      className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-[0.2em] uppercase border"
+                      className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-[0.2em] uppercase border transition-all duration-300 group-hover:shadow-sm"
                       style={{ background: s.accentMuted, borderColor: s.accentBorder, color: s.accent }}
                     >
                       STEP {s.num}
                     </span>
-                    <span className="font-sanskrit text-3xl font-bold leading-none" style={{ color: s.accent, opacity: 0.25 }}>
+                    {/* Devanagari numeral brightens on hover */}
+                    <span
+                      className="font-sanskrit text-3xl font-bold leading-none transition-all duration-300 group-hover:opacity-60 group-hover:scale-110"
+                      style={{ color: s.accent, opacity: 0.2 }}
+                    >
                       {s.devanagari}
                     </span>
                   </div>
 
-                  {/* Icon */}
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${s.iconBg} text-white shadow-lg mb-5 group-hover:scale-105 transition-transform duration-300`}>
-                    {i === 0 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" />
-                      </svg>
-                    )}
-                    {i === 1 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    )}
-                    {i === 2 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    )}
-                    {i === 3 && (
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                      </svg>
-                    )}
+                  {/* Icon — scales and gets a soft glow ring on hover */}
+                  <div className="relative mb-5 w-fit">
+                    {/* Glow blur behind icon */}
+                    <div
+                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-40 blur-md scale-125 transition-opacity duration-300"
+                      style={{ background: `linear-gradient(135deg, ${s.accent}, transparent)` }}
+                    />
+                    <div className={`relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${s.iconBg} text-white shadow-gold transition-transform duration-300 group-hover:scale-110`}>
+                      {i === 0 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z" />
+                        </svg>
+                      )}
+                      {i === 1 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      )}
+                      {i === 2 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      )}
+                      {i === 3 && (
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-display text-xl text-secondary mb-2 leading-snug">
+                  {/* Title — shifts to accent colour on hover */}
+                  <h3
+                    className="font-display text-xl mb-2 leading-snug transition-colors duration-300 group-hover:text-primary"
+                    style={{ color: "hsl(var(--secondary))" }}
+                  >
                     {t((["admissions.step1Title","admissions.step2Title","admissions.step3Title","admissions.step4Title"] as const)[i])}
                   </h3>
 
-                  {/* Divider */}
-                  <div className="w-8 h-px mb-3" style={{ background: s.accent, opacity: 0.4 }} />
+                  {/* Divider — expands on hover */}
+                  <div
+                    className="h-px mb-3 transition-all duration-300 w-8 group-hover:w-14"
+                    style={{ background: s.accent, opacity: 0.5 }}
+                  />
 
                   {/* Description */}
                   <p className="text-sm text-muted-foreground leading-relaxed flex-1">
@@ -318,33 +334,27 @@ const Admissions = () => {
 
                   {/* Connector arrow (not last, desktop) */}
                   {i < stepsMeta.length - 1 && (
-                    <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 h-6 w-6 items-center justify-center rounded-full border border-gold/30 bg-white shadow-soft">
+                    <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 h-6 w-6 items-center justify-center rounded-full border border-gold/30 bg-white shadow-soft transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_2px_8px_hsl(22_88%_52%/0.2)]">
                       <svg className="h-3 w-3 text-primary/60" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {/* Bottom badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.75, duration: 0.5 }}
-            className="mt-12 flex items-center justify-center gap-4"
-          >
+          <div className="mt-12 flex items-center justify-center gap-4">
             <span className="h-px w-14 bg-gradient-to-r from-transparent to-gold/40" />
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-white px-5 py-2 text-xs font-medium text-primary shadow-[0_2px_8px_hsl(43_78%_52%/0.12)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary/60 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
               Entire process takes 2–3 weeks
-              <span className="h-1.5 w-1.5 rounded-full bg-primary/60 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
             </span>
             <span className="h-px w-14 bg-gradient-to-l from-transparent to-gold/40" />
-          </motion.div>
+          </div>
 
         </div>
       </section>
@@ -479,7 +489,7 @@ const Admissions = () => {
               transition={{ duration: 0.55 }}
               className="lg:col-span-3"
             >
-              <div className="rounded-3xl border border-gold/25 bg-white shadow-temple overflow-hidden">
+              <div className="rounded-3xl border border-gold/25 bg-white shadow-temple overflow-hidden ornate-frame">
                 <div className="h-1.5 w-full bg-gradient-festive" />
                 <div className="p-8 md:p-10">
                   <AnimatePresence mode="wait">

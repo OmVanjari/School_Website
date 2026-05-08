@@ -1,97 +1,90 @@
 import asyncHandler from '../utils/asyncHandler.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import Notice from '../models/notice.mode.js';
-import ApiError from '../utils/ApiError';
+import ApiError from '../utils/ApiError.js';
 
 
-const newNotice = asyncHandler(async(req,res)=>{
-
-  const { title, category, content, date, attachmentUrl } = req.body
+const newNotice = asyncHandler(async (req, res) => {
+  const { title, category, content, date, attachmentUrl } = req.body;
 
   const noticeData = {
-      title,
-      category,
-      content,
-      date
+    title,
+    category,
+    content,
+    date
+  };
+
+  if (attachmentUrl) {
+    noticeData.attachmentUrl = attachmentUrl;
   }
 
-  if(attachmentUrl) return noticeData.attachmentUrl = attachmentUrl
+  const notice = await Notice.create(noticeData);
 
-  const notice = await Notice.create(noticeData)
-
-  if(!notice) {
-    throw new ApiError(404, "Notice can't posted ")
+  if (!notice) {
+    throw new ApiError(404, "Notice can't be posted");
   }
 
+  return res.status(201).json(new ApiResponse(201, notice, 'New Notice posted successfully'));
+});
 
-    return res.status(201).json(new ApiResponse(201, {}, "New Notice posted successfully"))
-})
-
-const updateNotice = asyncHandler(async(req,res)=>{
-
-  const { noticeId } = req.params
-
+const updateNotice = asyncHandler(async (req, res) => {
+  const { noticeId } = req.params;
   const updateData = { ...req.body };
 
-  const notice = await Notice.findById(noticeId)
+  const notice = await Notice.findById(noticeId);
 
-     if(!notice) {
-        throw new ApiError(404, "Notice not found")
-      }
-
-
-    if (!updateData || Object.keys(updateData).length === 0) {
-      throw new ApiError(400, "No data provided to update");
-    }
-
-
-  if (updateData.date) {
-    const date = new Date(updateData.date);
-    if (isNaN(startParsedDate.getTime())) {
-      throw new ApiError(400, "Invalid date format. Use YYYY-MM-DD");
-    }
-    updateData.date = date;
+  if (!notice) {
+    throw new ApiError(404, 'Notice not found');
   }
 
-  const noticeUpdate =  await Notice.findByIdAndUpdate(
-            noticeId,
+  if (!updateData || Object.keys(updateData).length === 0) {
+    throw new ApiError(400, 'No data provided to update');
+  }
+
+  if (updateData.date) {
+    const parsedDate = new Date(updateData.date);
+    if (isNaN(parsedDate.getTime())) {
+      throw new ApiError(400, 'Invalid date format. Use YYYY-MM-DD');
+    }
+    updateData.date = parsedDate;
+  }
+
+  const noticeUpdate = await Notice.findByIdAndUpdate(
+    noticeId,
     { $set: updateData },
     { new: true, runValidators: true }
-      );
+  );
 
-      if(!noticeUpdate) {
-        throw new ApiError(404, "Notice not found")
-      }
+  if (!noticeUpdate) {
+    throw new ApiError(404, 'Notice not found');
+  }
 
-    return res.status(200).json(new ApiResponse(200, updatedNotice, "Notice update successfully"))
-})
+  return res.status(200).json(new ApiResponse(200, noticeUpdate, 'Notice updated successfully'));
+});
 
-const getAllNotice = asyncHandler(async(req,res)=>{
+const getAllNotice = asyncHandler(async (req, res) => {
+  const allNotice = await Notice.find().lean();
+  return res.status(200).json(new ApiResponse(200, allNotice, 'Notice fetched successfully'));
+});
 
-    const allNotice = await Notice.find().lean()
+const deleteNotice = asyncHandler(async (req, res) => {
+  const { noticeId } = req.params;
 
-    return res.status(200).json(new ApiResponse(200, allNotice, "Notice fetch Succesfully"))
-})
+  const notice = await Notice.findById(noticeId);
 
-const deleteNotice = asyncHandler(async(req,res)=>{
+  if (!notice) {
+    throw new ApiError(404, 'Notice not found');
+  }
 
-     const { noticeId } = req.params
+  await Notice.findByIdAndDelete(notice._id);
 
-     const notice = await Notice.findById(noticeId)
-
-     if(!notice) {
-        throw new ApiError(404, "Notice not found")
-      }
-
-      await Notice.findByIdAndDelete(notice._id)
-
-  return res.status(200).json(new ApiResponse(200, {}, 'notice delete successfully'))
-})
+  return res.status(200).json(new ApiResponse(200, {}, 'Notice deleted successfully'));
+});
 
 
-return {
+export {
   newNotice,
   updateNotice,
   getAllNotice,
   deleteNotice
-}
+};

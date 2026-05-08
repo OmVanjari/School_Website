@@ -16,7 +16,7 @@ const newInquirie = asyncHandler(async(req,res)=>{
       throw new ApiError(404, "Inquirie can't create plese again some time")
     }
 
-    return res.status(201).json(new ApiResponse(201, newInquirie, "send Inquirie"))
+    return res.status(201).json(new ApiResponse(201, inquirie, "Inquiry sent successfully"))
 
 })
 

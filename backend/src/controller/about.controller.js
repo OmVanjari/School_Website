@@ -1,272 +1,222 @@
-import asyncHandler from '../utils/asyncHandler';
-import ApiResponse from '../utils/ApiResponse';
-import About from '../models/about.model';
-import ApiError from '../utils/ApiError';
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import About from '../models/about.model.js';
+import ApiError from '../utils/ApiError.js';
 
-const createAboutSection = asyncHandler(async(req,res)=>{
-
+const createAboutSection = asyncHandler(async (req, res) => {
   const {
-      schoolHistory,
-      missionVision ,
-      principleMessage ,
-      campusFacility
-     } = req.body
+    schoolHistory,
+    missionVision,
+    principleMessage,
+    campusFacility
+  } = req.body;
 
-     const schoolData = {
-        description : schoolHistory.description
-     }
+  const schoolData = {
+    description: schoolHistory.description
+  };
 
-     let corevalueArray ;
-
-    if(typeof schoolHistory.coreValues ===  "string") {
-      corevalueArray =  schoolHistory.coreValues.split("," )
-      schoolData.coreValues = corevalueArray
-    }
-
-
-     if(schoolHistory.coreValues && schoolHistory.coreValues.length > 0 ) {
-        schoolData.coreValues = schoolData.coreValues
-     } else {
-        schoolData.coreValues = []
-     }
-
-     const missionVisionData = {
-        mission : missionVision.mission,
-        vision : missionVision.vision
-     }
-
-     const principleMessageData = {
-        name : principleMessage.name,
-        message : principleMessage.message
-     }
-
-     if(principleMessage.photoUrl) return principleMessageData.photoUrl =  principleMessage.photoUrl
-
-     let campusAndFacility = [];
-
-    if(campusFacility && campusFacility.lenth > 0){
-          campusAndFacility.push(campusAndFacility)
-    }
-      else {
-        campusAndFacility = []
-    }
-
-
-     const about = await About.create({
-        schoolHistory : schoolData,
-        missionVision : missionVisionData,
-        principleMessage : principleMessageData,
-        campusFacility : campusFacility
-     })
-
-     if(!about) {
-       throw new ApiError(404, "About didn't create")
-     }
-
-
-  return res.status(201).json(new ApiResponse(201, about, "create About section successfully"))
-})
-
-const getAbout = asyncHandler(async(req,res)=>{
-
-  const about = await About.find().lean()
-
-  return res.status(200).json(new ApiResponse(200, about, "Fetch About"))
-})
-
-const updateSchoolHistory = asyncHandler(async(req,res)=>{
-
-  const {
-    description,
-    coreValues
-  } = req.body
-
-  const updateData = { }
-
-  if(typeof coreValues ===  "string" ) {
-    corevalueArray =  coreValues.split("," )
-    if(corevalueArray.length > 0) {
-      updateData.coreValues = corevalueArray
-    }
-    updateData.coreValues = []
+  if (typeof schoolHistory.coreValues === 'string') {
+    const corevalueArray = schoolHistory.coreValues.split(',');
+    schoolData.coreValues = corevalueArray.length > 0 ? corevalueArray : [];
+  } else if (Array.isArray(schoolHistory.coreValues) && schoolHistory.coreValues.length > 0) {
+    schoolData.coreValues = schoolHistory.coreValues;
+  } else {
+    schoolData.coreValues = [];
   }
 
-  if(coreValues.length > 0 ) {
-      updateData.coreValues = coreValues
+  const missionVisionData = {
+    mission: missionVision.mission,
+    vision: missionVision.vision
+  };
+
+  const principleMessageData = {
+    name: principleMessage.name,
+    message: principleMessage.message
+  };
+
+  if (principleMessage.photoUrl) {
+    principleMessageData.photoUrl = principleMessage.photoUrl;
   }
 
-
-  if(description) return updateData.description = description
-
-  if(coreValues.lenth) return updateData.vision = vision
-
-  if(Object.values(updateData).length > 0) {
-    throw new ApiError(400, "can not be empty please ensert the value")
+  let campusAndFacility = [];
+  if (campusFacility && campusFacility.length > 0) {
+    campusAndFacility = campusFacility;
   }
 
+  const about = await About.create({
+    schoolHistory: schoolData,
+    missionVision: missionVisionData,
+    principleMessage: principleMessageData,
+    campusFacility: campusAndFacility
+  });
+
+  if (!about) {
+    throw new ApiError(404, "About didn't create");
+  }
+
+  return res.status(201).json(new ApiResponse(201, about, 'Create About section successfully'));
+});
+
+const getAbout = asyncHandler(async (req, res) => {
+  const about = await About.find().lean();
+  return res.status(200).json(new ApiResponse(200, about, 'Fetch About'));
+});
+
+const updateSchoolHistory = asyncHandler(async (req, res) => {
+  const { description, coreValues } = req.body;
+
+  const updateData = {};
+
+  if (description) {
+    updateData.description = description;
+  }
+
+  if (coreValues) {
+    if (typeof coreValues === 'string') {
+      const corevalueArray = coreValues.split(',');
+      updateData.coreValues = corevalueArray.length > 0 ? corevalueArray : [];
+    } else if (Array.isArray(coreValues) && coreValues.length > 0) {
+      updateData.coreValues = coreValues;
+    }
+  }
+
+  if (Object.values(updateData).length === 0) {
+    throw new ApiError(400, 'Cannot be empty, please insert a value');
+  }
 
   const schoolHistory = await About.findOneAndUpdate(
     {},
-    {
-        schoolHistory : updateData
-    },  { new: true, runValidators: true })
+    { $set: { 'schoolHistory': updateData } },
+    { new: true, runValidators: true }
+  );
 
-
-  if(!schoolHistory) {
-    throw new ApiError(404, "schoolHistory didn't updated")
+  if (!schoolHistory) {
+    throw new ApiError(404, "School history didn't update");
   }
 
+  return res.status(200).json(new ApiResponse(200, schoolHistory, 'Update School History successfully'));
+});
 
-    return res.status(200).json(new ApiError(200, schoolHistory, "Update School History successfully"))
-})
+const updateMissionVision = asyncHandler(async (req, res) => {
+  const { mission, vision } = req.body;
 
-const updateMissionVision = asyncHandler(async(req,res)=>{
+  const updateData = {};
 
-  const {
-    mission,
-    vision
-  } = req.body
+  if (mission) updateData['missionVision.mission'] = mission;
+  if (vision) updateData['missionVision.vision'] = vision;
 
-  const updateData = { }
-
-  if(mission) return updateData.mission = mission
-  if(vision) return updateData.vision = vision
-
-  if(Object.values(updateData).length > 0) {
-    throw new ApiError(400, "can not be empty please ensert the value")
+  if (Object.values(updateData).length === 0) {
+    throw new ApiError(400, 'Cannot be empty, please insert a value');
   }
 
   const missionVision = await About.findOneAndUpdate(
     {},
-    {
-        missionVision : updateData
-    }
-  )
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-  if(!missionVision) {
-    throw new ApiError(404, "Mission Vision didn't updated")
+  if (!missionVision) {
+    throw new ApiError(404, "Mission Vision didn't update");
   }
 
+  return res.status(200).json(new ApiResponse(200, missionVision, 'Update Mission Vision successfully'));
+});
 
-    return res.status(200).json(new ApiError(200, missionVision, "Update Mission vision successfully"))
-})
+const updatePrincipleMessage = asyncHandler(async (req, res) => {
+  const { name, photoUrl, message } = req.body;
 
-const updatePrincipleMessage = asyncHandler(async(req,res)=>{
+  const updateData = {};
 
+  if (name) updateData['principleMessage.name'] = name;
+  if (photoUrl) updateData['principleMessage.photoUrl'] = photoUrl;
+  if (message) updateData['principleMessage.message'] = message;
 
-  const { name, photoUrl,message } = req.body
-
-  const updateData = { }
-
-  if(name) return updateData.name = name
-  if(photoUrl) return updateData.photoUrl = photoUrl
-  if(message) return updateData.message = message
-
-  if(Object.values(updateData).length > 0) {
-    throw new ApiError(400, "can not be empty please ensert the value")
+  if (Object.values(updateData).length === 0) {
+    throw new ApiError(400, 'Cannot be empty, please insert a value');
   }
 
   const principlemessage = await About.findOneAndUpdate(
     {},
-    {
-        principleMessage : updateData
-    }
-  )
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-  if(!principlemessage) {
-    throw new ApiError(404, "Principle Message didn't updated")
+  if (!principlemessage) {
+    throw new ApiError(404, "Principle Message didn't update");
   }
 
+  return res.status(200).json(new ApiResponse(200, principlemessage, 'Update Principle Message successfully'));
+});
 
-  return res.status(200).json(new ApiResponse(200, updateprincipleMessage, "Update Principle Message succesfully" ))
-})
+const addCampusFacility = asyncHandler(async (req, res) => {
+  const { name, imageUrl, description } = req.body;
 
-const addCampusFacility = asyncHandler(async(req,res)=>{
-
-  const { name,imageUrl, description } = req.body
-
-  const campusFacility =  {
-        name,
-        description
+  if (!name || !description) {
+    throw new ApiError(400, 'Name and description are required');
   }
 
-  if(Object.value(campusFacility).lenth == 0) {
-    throw new ApiError("name and description are required")
+  const campusFacility = { name, description };
+
+  if (imageUrl) {
+    campusFacility.imageUrl = imageUrl;
   }
 
-  if(imageUrl) return campusFacility.imageUrl = imageUrl
+  const campusAndFacility = await About.findOneAndUpdate(
+    {},
+    { $push: { campusFacility: campusFacility } },
+    { new: true }
+  );
 
-    const campusAndFacility = await About.findOneAndUpdate(
-      {},
-      {
-          campusFacility : {
-            $push : campusFacility
-          }
-      },
-      { new : true }
-    )
-
-  if(campusAndFacility.campusFacility < 0) {
-      throw new ApiError(404, "didn't add new campus facility")
+  if (!campusAndFacility) {
+    throw new ApiError(404, "Didn't add new campus facility");
   }
 
-  return res.status(201).json(new ApiResponse(201, campusFacility, "add campus facility "))
-})
+  return res.status(201).json(new ApiResponse(201, campusFacility, 'Add campus facility'));
+});
 
-const updateCampusFacility = asyncHandler(async(req,res)=>{
+const updateCampusFacility = asyncHandler(async (req, res) => {
+  const { name, imageUrl, description } = req.body;
+  const { facilityId } = req.params;
 
-  const { name,imageUrl, description } = req.body
-  const { facilityId } = req.params
-
-
-  const updateData =  {
-        name,
-        description
+  if (!name && !description && !imageUrl) {
+    throw new ApiError(400, 'At least one field is required to update');
   }
 
-  if(Object.value(updateData).lenth == 0) {
-    throw new ApiError("name and description are required")
+  const updateFields = {};
+  if (name) updateFields['campusFacility.$.name'] = name;
+  if (description) updateFields['campusFacility.$.description'] = description;
+  if (imageUrl) updateFields['campusFacility.$.imageUrl'] = imageUrl;
+
+  const updatecampusandfacility = await About.findOneAndUpdate(
+    { 'campusFacility._id': facilityId },
+    { $set: updateFields },
+    { new: true }
+  );
+
+  if (!updatecampusandfacility) {
+    throw new ApiError(404, "Didn't update campus facility");
   }
 
-  if(imageUrl) return updateData.imageUrl = imageUrl
+  return res.status(200).json(new ApiResponse(200, updatecampusandfacility, 'Update Campus Facility'));
+});
 
-  const  updatecampusandfacility = await About.findOneAndUpdate(
-    {
-        "campusFacility._id" : facilityId
-    }, {
-        $set : {
-          campusFacility : updateData
-        }
-    }
-  )
+const deleteCampusFacility = asyncHandler(async (req, res) => {
+  const { facilityId } = req.params;
 
-  if(updatecampusandfacility.campusFacility < 0) {
-      throw new ApiError(404, "didn't update campus facility")
+  const facility = await About.findOne({ 'campusFacility._id': facilityId });
+
+  if (!facility) {
+    throw new ApiError(404, 'Campus Facility not found');
   }
 
-  return res.status(200).json(new ApiResponse(200, updatecampusandfacility, "Update Campus Facility"))
-})
+  await About.findOneAndUpdate(
+    {},
+    { $pull: { campusFacility: { _id: facilityId } } },
+    { new: true }
+  );
 
-const deleteCampusFacility = asyncHandler(async(req,res)=> {
-
-    const { facilityId } = req.params
-
-  const facility = await About.findOne({
-      "campusFacility._id" : facilityId
-  })
-
-  if(facility.lenth > 0) {
-      throw new ApiError(404, "Campus Facility not found")
-  }
-
-  await About.findOneAndUpdate({},{
-      $pull : {
-          campusFacility : { id : facilityId}
-      }
-  }, { new : true})
-
-  return res.status(200).json(new ApiResponse(200, {}, "Delete Campus Facility successfully"))
-})
+  return res.status(200).json(new ApiResponse(200, {}, 'Delete Campus Facility successfully'));
+});
 
 
 export {
@@ -278,4 +228,4 @@ export {
   updateCampusFacility,
   deleteCampusFacility,
   getAbout
-}
+};

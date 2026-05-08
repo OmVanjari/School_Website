@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { admissionStatus, admissionStatusEnums } from '../utils/constant.js';
+import { admissionStatus, admissionStatusEnums, emailRegex } from '../utils/constant.js';
 
 const admissionSchema = new mongoose.Schema(
     {
@@ -25,7 +25,7 @@ const admissionSchema = new mongoose.Schema(
           },
           additionalMessage : {
             type : String,
-            required : true
+            required : false
           },
           isReview : {
             type : Boolean,
