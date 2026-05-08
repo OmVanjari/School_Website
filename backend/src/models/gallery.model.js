@@ -5,7 +5,7 @@ const gallarySchema = new mongoose.Schema(
     {
         imageUrl : {
           type : String,
-          requird : true
+          required : true
         },
         imageLable : {
           type : String,

@@ -27,4 +27,5 @@ const uploadCloudinary = async function (localFilePath) {
     }
 }
 
+export { uploadCloudinary };
 export default uploadCloudinary;

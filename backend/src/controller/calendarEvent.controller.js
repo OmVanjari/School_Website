@@ -5,50 +5,56 @@ import ApiError from '../utils/ApiError.js';
 import { fieldNotFound } from '../utils/helper.js';
 
 
-const newEvent = asyncHandler(async(req,res)=>{
-
-  const { eventTitle, startDate, endDate, category, location, Description } = req.body
+const newEvent = asyncHandler(async (req, res) => {
+  const { eventTitle, startDate, endDate, category, location, Description } = req.body;
 
   const startParsedDate = new Date(startDate);
 
+  if (isNaN(startParsedDate.getTime())) {
+    throw new ApiError(400, 'Invalid startDate format. Use YYYY-MM-DD');
+  }
+
   let endParsedDate;
-
-  if(endDate) {
-    endParsedDate = new Date(startDate);
-  }
-
-  const eventData =  {
-      eventTitle,
-      startDate : startParsedDate,
-      endDate : endDate ? endParsedDate : endDate ,
-      category,
-      location,
-      Description
-  }
-
-  const calendarEvent = await CalendarEvent.create(eventData)
-
-  if(!calendarEvent) {
-    throw new ApiError(500, "Can't create the calendar event")
-  }
-
-  return res.status(201).json(new ApiResponse(201))
-})
-
-const updateEvent = asyncHandler(async(req,res)=>{
-
-  const { calendarEventId } = req.params
-    const updateData = { ...req.body };
-
-    if (!updateData || Object.keys(updateData).length === 0) {
-      throw new ApiError(400, "No data provided to update");
+  if (endDate) {
+    endParsedDate = new Date(endDate);
+    if (isNaN(endParsedDate.getTime())) {
+      throw new ApiError(400, 'Invalid endDate format. Use YYYY-MM-DD');
     }
+    if (endParsedDate < startParsedDate) {
+      throw new ApiError(400, 'End date cannot be before start date');
+    }
+  }
 
+  const eventData = {
+    eventTitle,
+    startDate: startParsedDate,
+    endDate: endDate ? endParsedDate : undefined,
+    category,
+    location,
+    Description
+  };
+
+  const calendarEvent = await CalendarEvent.create(eventData);
+
+  if (!calendarEvent) {
+    throw new ApiError(500, "Can't create the calendar event");
+  }
+
+  return res.status(201).json(new ApiResponse(201, calendarEvent, 'Calendar event created successfully'));
+});
+
+const updateEvent = asyncHandler(async (req, res) => {
+  const { calendarEventId } = req.params;
+  const updateData = { ...req.body };
+
+  if (!updateData || Object.keys(updateData).length === 0) {
+    throw new ApiError(400, 'No data provided to update');
+  }
 
   if (updateData.startDate) {
     const startParsedDate = new Date(updateData.startDate);
     if (isNaN(startParsedDate.getTime())) {
-      throw new ApiError(400, "Invalid startDate format. Use YYYY-MM-DD");
+      throw new ApiError(400, 'Invalid startDate format. Use YYYY-MM-DD');
     }
     updateData.startDate = startParsedDate;
   }
@@ -56,52 +62,46 @@ const updateEvent = asyncHandler(async(req,res)=>{
   if (updateData.endDate) {
     const endParsedDate = new Date(updateData.endDate);
     if (isNaN(endParsedDate.getTime())) {
-      throw new ApiError(400, "Invalid endDate format. Use YYYY-MM-DD");
+      throw new ApiError(400, 'Invalid endDate format. Use YYYY-MM-DD');
     }
     updateData.endDate = endParsedDate;
   }
 
-    if (updateData.startDate && updateData.endDate) {
+  if (updateData.startDate && updateData.endDate) {
     if (updateData.endDate < updateData.startDate) {
-      throw new ApiError(400, "End date cannot be before start date");
+      throw new ApiError(400, 'End date cannot be before start date');
     }
   }
 
+  const calendarEventUpdate = await CalendarEvent.findByIdAndUpdate(
+    calendarEventId,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-  const calendarEventUpdate =  await CalendarEvent.findByIdAndUpdate(
-          calendarEventId,
-  { $set: updateData },
-  { new: true, runValidators: true }
-    );
+  if (!calendarEventUpdate) {
+    throw new ApiError(404, 'Calendar Event not found');
+  }
 
-    if(!calendarEventUpdate) {
-      throw new ApiError(404, "Calendar Event not found")
-    }
+  return res.status(200).json(new ApiResponse(200, calendarEventUpdate, 'Event updated successfully'));
+});
 
+const getAllEvents = asyncHandler(async (req, res) => {
+  const allEvents = await CalendarEvent.find().lean();
+  return res.status(200).json(new ApiResponse(200, allEvents, 'Fetch all events successfully'));
+});
 
-  return res.status(200).json(new ApiResponse(200, "Event Update successfully"))
-})
+const deleteEvent = asyncHandler(async (req, res) => {
+  const { calendarEventId } = req.params;
 
-const getAllEvents = asyncHandler(async(req,res)=>{
+  const calendarEvent = await CalendarEvent.findById(calendarEventId);
 
-  const allEvents = await CalendarEvent.find().lean()
+  fieldNotFound(calendarEvent);
 
-  return res.status(200).json(new ApiResponse(200, allEvents, "fetch successfully all events"))
-})
+  await CalendarEvent.findByIdAndDelete(calendarEventId);
 
-const deleteEvent = asyncHandler(async(req,res)=>{
-
-  const { calendarEventId } = req.params
-
-  const calendarEvent = await CalendarEvent.findById(calendarEventId)
-
-  fieldNotFound(calendarEvent)
-
-  await CalendarEvent.findByIdAndDelete(calendarEventId)
-
-
-  return res.status(200).json(new ApiResponse(200, {}, "Delete event Successfully"))
-})
+  return res.status(200).json(new ApiResponse(200, {}, 'Delete event successfully'));
+});
 
 
 export {

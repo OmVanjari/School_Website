@@ -3,6 +3,7 @@ import ApiError from "../utils/ApiError.js"
 import jwt from "jsonwebtoken"
 import { accessTokenSecret } from "../utils/config.js"
 import asyncHandler from '../utils/asyncHandler.js';
+import { userRoles } from '../utils/constant.js';
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   const token =
@@ -49,7 +50,7 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
     req.user = user;
   }
 
-  if (req.user.role !== "admin") {
+  if (req.user.role !== userRoles.ADMIN) {
     throw new ApiError(403, "Only admin can perform this action");
   }
 

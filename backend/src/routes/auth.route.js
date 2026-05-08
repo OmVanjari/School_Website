@@ -13,33 +13,28 @@ import {
   authRegisterValidator
 } from "../validators/auth.validators.js";
 import { validate } from "../validators/validate.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
 
 
-const router = Router()
+const router = Router();
 
 router.route("/signup")
-            .post(authRegisterValidator(),
-            validate,
-            registerUser)
+  .post(authRegisterValidator(), validate, registerUser);
 
 router.route("/login")
-            .post(authloginValidator(),
-            validate,
-            loginUser)
+  .post(authloginValidator(), validate, loginUser);
 
 router.route("/logout")
-            .get(logoutUser)
+  .get(verifyJWT, logoutUser);
 
 router.route("/update-profile")
-            .put(updateUserProfile)
+  .put(verifyJWT, updateUserProfile);
 
 router.route("/get")
-            .get(getUser)
+  .get(verifyJWT, getUser);
 
 router.route("/change-current/password")
-            .put(authChangeCurrentPasswordValidator(),
-             validate,
-             changeCurrentPassword)
+  .put(verifyJWT, authChangeCurrentPasswordValidator(), validate, changeCurrentPassword);
 
 
 export default router;

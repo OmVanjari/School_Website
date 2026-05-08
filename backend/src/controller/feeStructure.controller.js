@@ -1,107 +1,97 @@
-import asyncHandler from '../utils/asyncHandler';
-import ApiResponse from '../utils/ApiResponse';
-import ApiError from '../utils/ApiError';
-import FeeStructure from '../models/feeStructure.model';
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import ApiError from '../utils/ApiError.js';
+import FeeStructure from '../models/feeStructure.model.js';
 
-const addClassFees = asyncHandler(async(req,res)=>{
-
+const addClassFees = asyncHandler(async (req, res) => {
   const {
-      classOrGrade,
-      tutionFee,
-      admissionFee,
-      examFee,
-      otherCharges
-  } = req.body
+    classOrGrade,
+    tutionFee,
+    admissionFee,
+    examFee,
+    otherCharges
+  } = req.body;
 
-  if(!classOrGrade,!tutionFee,!admissionFee,!examFee,!otherCharges) {
-    throw new ApiError(404, "all Filed are required")
+  if (!classOrGrade || !tutionFee || !admissionFee || !examFee || !otherCharges) {
+    throw new ApiError(400, 'All fields are required');
   }
 
-      const classFeeData = {
-        classOrGrade,
-        tutionFee,
-        admissionFee,
-        examFee,
-        otherCharges
-    }
+  const classFeeData = {
+    classOrGrade,
+    tutionFee: typeof tutionFee === 'string' ? Number(tutionFee) : tutionFee,
+    admissionFee: typeof admissionFee === 'string' ? Number(admissionFee) : admissionFee,
+    examFee: typeof examFee === 'string' ? Number(examFee) : examFee,
+    otherCharges: typeof otherCharges === 'string' ? Number(otherCharges) : otherCharges
+  };
 
-  if(typeof tutionFee === "string") return classFeeData.tutionFee = Number(tutionFee)
-  if(typeof admissionFee === "string") return classFeeData.admissionFee = Number(admissionFee)
-  if(typeof examFee === "string") return classFeeData.examFee = Number(examFee)
-  if(typeof otherCharges === "string") return classFeeData.otherCharges=  Number(otherCharges)
+  const createClassFee = await FeeStructure.create(classFeeData);
 
-
-    const createClassFee = await FeeStructure.create(classFeeData)
-
-    if(!createClassFee) {
-      throw new ApiError(404, "class fee Didn' create")
-    }
-
-  return res.status(201).json(new ApiResponse(201, createClassFee, "Add New Class Fees Successfully"))
-})
-
-const updateClassFee = asyncHandler(async(req,res)=>{
-
-  const { classId } = req.body
-  const {
-      classOrGrade,
-      tutionFee,
-      admissionFee,
-      examFee,
-      otherCharges
-  } = req.body
-
-  const classFeesStructure = await FeeStructure.findById(classId)
-
-  if(!classFeesStructure) {
-    throw new ApiError(404, "class fee structure didn't find")
+  if (!createClassFee) {
+    throw new ApiError(404, "Class fee didn't create");
   }
 
-  const updateData = {}
+  return res.status(201).json(new ApiResponse(201, createClassFee, 'Add New Class Fees Successfully'));
+});
 
-  if(classOrGrade) return updateData.classOrGrade = classOrGrade
-  if(tutionFee &&  typeof tutionFee === "string") return classFeeData.tutionFee = Number(tutionFee)
-  if(admissionFee && typeof admissionFee === "string") return classFeeData.admissionFee = Number(admissionFee)
-  if(examFee && typeof examFee === "string") return classFeeData.examFee = Number(examFee)
-  if(otherCharges && typeof otherCharges === "string") return classFeeData.otherCharges=  Number(otherCharges)
+const updateClassFee = asyncHandler(async (req, res) => {
+  const { classId } = req.params;
+  const {
+    classOrGrade,
+    tutionFee,
+    admissionFee,
+    examFee,
+    otherCharges
+  } = req.body;
 
-    const updateFeeStructure = await FeeStructure.findByIdAndUpdate(
-      classId,
-      {
-         $set : updateData
-      },
-      { new: true, runValidators: true }
-    )
+  const classFeesStructure = await FeeStructure.findById(classId);
 
-    if(!updateFeeStructure) {
-      throw new ApiError(404, "fee structure didn't update")
-    }
+  if (!classFeesStructure) {
+    throw new ApiError(404, "Class fee structure not found");
+  }
 
- return res.status(200).json(new ApiResponse(200, updateFeeStructure, "Update Fee Structure Successfully"))
+  const updateData = {};
 
-})
+  if (classOrGrade) updateData.classOrGrade = classOrGrade;
+  if (tutionFee !== undefined) updateData.tutionFee = typeof tutionFee === 'string' ? Number(tutionFee) : tutionFee;
+  if (admissionFee !== undefined) updateData.admissionFee = typeof admissionFee === 'string' ? Number(admissionFee) : admissionFee;
+  if (examFee !== undefined) updateData.examFee = typeof examFee === 'string' ? Number(examFee) : examFee;
+  if (otherCharges !== undefined) updateData.otherCharges = typeof otherCharges === 'string' ? Number(otherCharges) : otherCharges;
 
-const getFullOfFeeStructure = asyncHandler(async(req,res)=>{
+  if (Object.keys(updateData).length === 0) {
+    throw new ApiError(400, 'No data provided to update');
+  }
 
-  const getfullstructure = await FeeStructure.find().lean()
+  const updateFeeStructure = await FeeStructure.findByIdAndUpdate(
+    classId,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-  return res.status(200).json(new ApiResponse(200, getfullstructure, "fetch full of fee structure successfully"))
-})
+  if (!updateFeeStructure) {
+    throw new ApiError(404, "Fee structure didn't update");
+  }
 
-const deleteFeeStructreClass = asyncHandler(async(req,res)=>{
+  return res.status(200).json(new ApiResponse(200, updateFeeStructure, 'Update Fee Structure Successfully'));
+});
 
-    const { classId } = req.body
+const getFullOfFeeStructure = asyncHandler(async (req, res) => {
+  const getfullstructure = await FeeStructure.find().lean();
+  return res.status(200).json(new ApiResponse(200, getfullstructure, 'Fetch full fee structure successfully'));
+});
 
-    const classFeeStructre = await FeeStructure.findById(classId)
+const deleteFeeStructreClass = asyncHandler(async (req, res) => {
+  const { classId } = req.params;
 
-    if(!classFeeStructre) {
-       throw new ApiError(404, "can't find Class Fee Structure")
-    }
+  const classFeeStructre = await FeeStructure.findById(classId);
 
-    await FeeStructure.findByIdAndDelete(classId)
+  if (!classFeeStructre) {
+    throw new ApiError(404, "Can't find Class Fee Structure");
+  }
 
-  return res.status(200).json(new ApiResponse(200, {}, "Fee Structure delete succesfully"))
-})
+  await FeeStructure.findByIdAndDelete(classId);
+
+  return res.status(200).json(new ApiResponse(200, {}, 'Fee Structure deleted successfully'));
+});
 
 
 export {
@@ -109,4 +99,4 @@ export {
   updateClassFee,
   getFullOfFeeStructure,
   deleteFeeStructreClass
-}
+};
