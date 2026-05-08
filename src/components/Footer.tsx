@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -17,6 +17,7 @@ const contact = [
   { Icon: MapPin, val: "108, Saraswati Marg, Bengaluru – 560001" },
   { Icon: Phone,  val: "+91 98765 43210" },
   { Icon: Mail,   val: "hello@vidyalaya.in" },
+  { Icon: Clock,  val: "Mon – Sat · 8 AM – 5 PM" },
 ];
 
 export const Footer = () => {
@@ -37,7 +38,7 @@ export const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="md:col-span-5"
+          className="md:col-span-4"
         >
           <div className="flex items-center gap-3 mb-5">
             <div className="flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10">
@@ -62,7 +63,7 @@ export const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="md:col-span-3"
+          className="md:col-span-2"
         >
           <h4 className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-amber-400 mb-5">
             {t("footer.quicklinks")}
@@ -82,27 +83,46 @@ export const Footer = () => {
           </ul>
         </motion.div>
 
-        {/* Contact */}
+        {/* Contact info */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="md:col-span-4"
+          className="md:col-span-3"
         >
           <h4 className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-amber-400 mb-5">
             {t("footer.visit")}
           </h4>
-          <ul className="space-y-4">
+          <ul className="space-y-3.5">
             {contact.map(({ Icon, val }) => (
-              <li key={val} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-amber-500/20 bg-amber-500/10">
-                  <Icon className="h-3.5 w-3.5 text-amber-400" />
-                </span>
-                <span className="text-sm leading-relaxed text-stone-400">{val}</span>
+              <li key={val} className="flex items-start gap-2.5">
+                <Icon className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
+                <span className="text-xs leading-relaxed text-stone-400">{val}</span>
               </li>
             ))}
           </ul>
+        </motion.div>
+
+        {/* Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="md:col-span-3"
+        >
+          <h4 className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-amber-400 mb-5">
+            Find Us
+          </h4>
+          <div className="rounded-xl overflow-hidden border border-amber-500/20 shadow-md h-36">
+            <iframe
+              title="Vidyalaya location"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=77.55%2C12.93%2C77.65%2C13.03&layer=mapnik"
+              className="w-full h-full border-0 opacity-90"
+              loading="lazy"
+            />
+          </div>
         </motion.div>
       </div>
 

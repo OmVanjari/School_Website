@@ -140,7 +140,29 @@ type TranslationKey =
   | "admissions.faq3Q" | "admissions.faq3A" | "admissions.faq4Q" | "admissions.faq4A"
   | "admissions.faq5Q" | "admissions.faq5A" | "admissions.faq6Q" | "admissions.faq6A"
   | "admissions.faq7Q" | "admissions.faq7A"
-  | "admissions.ctaTitle" | "admissions.ctaSubtitle" | "admissions.ctaVisit" | "admissions.ctaCall";
+  | "admissions.ctaTitle" | "admissions.ctaSubtitle" | "admissions.ctaVisit" | "admissions.ctaCall"
+  // contact page
+  | "contact.heroTitle" | "contact.heroSubtitle"
+  | "contact.eyebrow" | "contact.reachUs"
+  | "contact.mainCampus" | "contact.callUs" | "contact.email" | "contact.officeHours"
+  | "contact.formTitle" | "contact.formSubtitle"
+  | "contact.name" | "contact.emailLabel" | "contact.subject" | "contact.message"
+  | "contact.send" | "contact.toastSuccess"
+  | "contact.campusTag" | "contact.campusTitle" | "contact.campusAddress"
+  | "contact.campusNear" | "contact.campusDirections"
+  | "contact.subjectGeneral" | "contact.subjectAdmissions" | "contact.subjectFees"
+  | "contact.subjectAcademic" | "contact.subjectScholarships" | "contact.subjectVisit"
+  | "contact.subjectPTM" | "contact.subjectComplaint" | "contact.subjectOther"
+  | "contact.selectSubject"
+  // fees page
+  | "fees.heroTitle" | "fees.heroSubtitle"
+  | "fees.eyebrow" | "fees.sectionTitle" | "fees.sectionSubtitle"
+  | "fees.colClass" | "fees.colTuition" | "fees.colAdmission" | "fees.colExam" | "fees.colOther" | "fees.colTotal"
+  | "fees.note"
+  | "fees.paymentTitle"
+  | "fees.pay1" | "fees.pay2" | "fees.pay3" | "fees.pay4"
+  | "fees.scholarshipTitle" | "fees.scholarshipDesc" | "fees.scholarshipCta"
+  | "fees.class1" | "fees.class2" | "fees.class3" | "fees.class4" | "fees.class5";
 
 // ─── translations ──────────────────────────────────────────────────────────────
 const messages: Record<Language, Record<TranslationKey, string>> = {
@@ -410,6 +432,35 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "admissions.faq7Q": "Is there a school bus or transport facility available?", "admissions.faq7A": "Yes, Vidyalaya operates GPS-tracked school buses covering major routes across the city. Transport fees are charged separately based on distance. Contact the office for route maps and fee details.",
     "admissions.ctaTitle": "Begin the Journey Today", "admissions.ctaSubtitle": "Admissions for 2026–27 are open. Walk through our gates and feel the heritage.",
     "admissions.ctaVisit": "Schedule a Visit", "admissions.ctaCall": "Call Us Now",
+    // contact page
+    "contact.heroTitle": "Visit Our Vidyalaya", "contact.heroSubtitle": "We'd love to hear from you. Whether you have questions about admissions, academics, or just want to say hello — our doors and hearts are always open.",
+    "contact.eyebrow": "॥ संपर्कः ॥", "contact.reachUs": "Reach Us",
+    "contact.mainCampus": "Main Campus", "contact.callUs": "Call Us", "contact.email": "Email", "contact.officeHours": "Office Hours",
+    "contact.formTitle": "Send Us a Message", "contact.formSubtitle": "We'll respond within one working day.",
+    "contact.name": "Name", "contact.emailLabel": "Email", "contact.subject": "Subject", "contact.message": "Message",
+    "contact.send": "Send Message", "contact.toastSuccess": "Message sent! We will reply soon. 🙏",
+    "contact.campusTag": "Campus Address", "contact.campusTitle": "Vidyalaya Main Campus",
+    "contact.campusAddress": "108, Saraswati Marg, Bengaluru - 560001", "contact.campusNear": "Near Temple Square",
+    "contact.campusDirections": "Reach us by metro or city bus. Parent parking is available at the entrance gate.",
+    "contact.subjectGeneral": "General Inquiry", "contact.subjectAdmissions": "Admissions",
+    "contact.subjectFees": "Fee Structure", "contact.subjectAcademic": "Academic Programs",
+    "contact.subjectScholarships": "Scholarships", "contact.subjectVisit": "Campus Visit",
+    "contact.subjectPTM": "Parent-Teacher Meeting", "contact.subjectComplaint": "Complaint / Feedback",
+    "contact.subjectOther": "Other", "contact.selectSubject": "Select a subject…",
+    // fees page
+    "fees.heroTitle": "Fee Structure", "fees.heroSubtitle": "Clear, class-wise fee details for 2025–26. No hidden charges — just transparent pricing covering tuition, activities, and facilities. Scholarships and sibling discounts available.",
+    "fees.eyebrow": "॥ शुल्काः ॥", "fees.sectionTitle": "Class-wise Fee Details", "fees.sectionSubtitle": "All fees are for the academic year 2025–26. Contact the office for scholarship information.",
+    "fees.colClass": "Class / Grade", "fees.colTuition": "Tuition Fee", "fees.colAdmission": "Admission Fee", "fees.colExam": "Exam Fee", "fees.colOther": "Other Charges", "fees.colTotal": "Annual Total",
+    "fees.note": "Admission fee is a one-time charge. Tuition fee is payable monthly or quarterly. All fees are subject to revision for the next academic year.",
+    "fees.paymentTitle": "Payment Modes",
+    "fees.pay1": "Cash payment at school office (Mon–Sat, 9 AM – 2 PM)",
+    "fees.pay2": "Online transfer via NEFT/RTGS to school bank account",
+    "fees.pay3": "Demand Draft in favour of 'Vidyalaya School'",
+    "fees.pay4": "UPI payment at the school counter",
+    "fees.scholarshipTitle": "Need Financial Assistance?",
+    "fees.scholarshipDesc": "Vidyalaya offers merit-based and need-based scholarships. No deserving child should be denied education due to financial constraints.",
+    "fees.scholarshipCta": "Contact Us for Scholarships",
+    "fees.class1": "Class I – II", "fees.class2": "Class III – V", "fees.class3": "Class VI – VIII", "fees.class4": "Class IX – X", "fees.class5": "Class XI – XII",
   },
 
   hi: {
@@ -678,6 +729,35 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "admissions.faq7Q": "क्या स्कूल बस या परिवहन सुविधा उपलब्ध है?", "admissions.faq7A": "हाँ, GPS-ट्रैक्ड स्कूल बसें शहर के प्रमुख मार्गों को कवर करती हैं। परिवहन शुल्क दूरी के आधार पर अलग से लिया जाता है।",
     "admissions.ctaTitle": "आज ही यात्रा शुरू करें", "admissions.ctaSubtitle": "2026–27 के लिए प्रवेश खुले हैं। हमारे द्वार से प्रवेश करें और विरासत को महसूस करें।",
     "admissions.ctaVisit": "भ्रमण निर्धारित करें", "admissions.ctaCall": "अभी कॉल करें",
+    // contact page
+    "contact.heroTitle": "हमारे विद्यालय में पधारें", "contact.heroSubtitle": "हम आपसे सुनना चाहते हैं। प्रवेश, शिक्षा या किसी भी विषय पर प्रश्न हों — हमारे द्वार और हृदय सदा खुले हैं।",
+    "contact.eyebrow": "॥ संपर्कः ॥", "contact.reachUs": "संपर्क करें",
+    "contact.mainCampus": "मुख्य परिसर", "contact.callUs": "फ़ोन करें", "contact.email": "ईमेल", "contact.officeHours": "कार्यालय समय",
+    "contact.formTitle": "हमें संदेश भेजें", "contact.formSubtitle": "हम एक कार्य दिवस के भीतर उत्तर देंगे।",
+    "contact.name": "नाम", "contact.emailLabel": "ईमेल", "contact.subject": "विषय", "contact.message": "संदेश",
+    "contact.send": "संदेश भेजें", "contact.toastSuccess": "संदेश भेज दिया गया! हम शीघ्र उत्तर देंगे। 🙏",
+    "contact.campusTag": "परिसर का पता", "contact.campusTitle": "विद्यालय मुख्य परिसर",
+    "contact.campusAddress": "१०८, सरस्वती मार्ग, बेंगलुरु - ५६०००१", "contact.campusNear": "मंदिर चौक के निकट",
+    "contact.campusDirections": "मेट्रो या सिटी बस से पहुँचें। अभिभावकों के लिए प्रवेश द्वार पर पार्किंग उपलब्ध है।",
+    "contact.subjectGeneral": "सामान्य जानकारी", "contact.subjectAdmissions": "प्रवेश",
+    "contact.subjectFees": "शुल्क संरचना", "contact.subjectAcademic": "शैक्षणिक कार्यक्रम",
+    "contact.subjectScholarships": "छात्रवृत्ति", "contact.subjectVisit": "परिसर भ्रमण",
+    "contact.subjectPTM": "अभिभावक-शिक्षक बैठक", "contact.subjectComplaint": "शिकायत / सुझाव",
+    "contact.subjectOther": "अन्य", "contact.selectSubject": "विषय चुनें…",
+    // fees page
+    "fees.heroTitle": "शुल्क संरचना", "fees.heroSubtitle": "२०२५–२६ के लिए स्पष्ट, कक्षावार शुल्क विवरण। कोई छिपा शुल्क नहीं — केवल पारदर्शी मूल्य निर्धारण। छात्रवृत्ति और भाई-बहन छूट उपलब्ध है।",
+    "fees.eyebrow": "॥ शुल्काः ॥", "fees.sectionTitle": "कक्षावार शुल्क विवरण", "fees.sectionSubtitle": "सभी शुल्क शैक्षणिक वर्ष २०२५–२६ के लिए हैं। छात्रवृत्ति जानकारी के लिए कार्यालय से संपर्क करें।",
+    "fees.colClass": "कक्षा / ग्रेड", "fees.colTuition": "शिक्षण शुल्क", "fees.colAdmission": "प्रवेश शुल्क", "fees.colExam": "परीक्षा शुल्क", "fees.colOther": "अन्य शुल्क", "fees.colTotal": "वार्षिक कुल",
+    "fees.note": "प्रवेश शुल्क एकमुश्त है। शिक्षण शुल्क मासिक या त्रैमासिक देय है। सभी शुल्क अगले शैक्षणिक वर्ष में संशोधन के अधीन हैं।",
+    "fees.paymentTitle": "भुगतान के तरीके",
+    "fees.pay1": "विद्यालय कार्यालय में नकद भुगतान (सोम–शनि, प्रातः ९ – दोपहर २)",
+    "fees.pay2": "विद्यालय बैंक खाते में NEFT/RTGS द्वारा ऑनलाइन ट्रांसफर",
+    "fees.pay3": "'विद्यालय स्कूल' के पक्ष में डिमांड ड्राफ्ट",
+    "fees.pay4": "विद्यालय काउंटर पर UPI भुगतान",
+    "fees.scholarshipTitle": "आर्थिक सहायता चाहिए?",
+    "fees.scholarshipDesc": "विद्यालय योग्यता-आधारित और आवश्यकता-आधारित छात्रवृत्तियाँ प्रदान करता है। किसी भी योग्य बच्चे को आर्थिक कारणों से शिक्षा से वंचित नहीं किया जाना चाहिए।",
+    "fees.scholarshipCta": "छात्रवृत्ति के लिए संपर्क करें",
+    "fees.class1": "कक्षा I – II", "fees.class2": "कक्षा III – V", "fees.class3": "कक्षा VI – VIII", "fees.class4": "कक्षा IX – X", "fees.class5": "कक्षा XI – XII",
   },
 };
 interface LanguageContextValue {

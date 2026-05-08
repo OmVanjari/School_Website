@@ -40,6 +40,7 @@ export interface FeeRecord {
   admission: string;
   exam: string;
   other: string;
+  total: string;
 }
 
 export const announcements: Announcement[] = [
@@ -70,9 +71,9 @@ export const notices: Notice[] = [
 ];
 
 export const feeRecords: FeeRecord[] = [
-  { id: 1, className: "Class I – II", tuition: "₹2,500/month", admission: "₹5,000", exam: "₹800", other: "₹500" },
-  { id: 2, className: "Class III – V", tuition: "₹3,000/month", admission: "₹5,000", exam: "₹1,000", other: "₹500" },
-  { id: 3, className: "Class VI – VIII", tuition: "₹3,500/month", admission: "₹6,000", exam: "₹1,200", other: "₹600" },
-  { id: 4, className: "Class IX – X", tuition: "₹4,000/month", admission: "₹7,000", exam: "₹1,500", other: "₹700" },
-  { id: 5, className: "Class XI – XII", tuition: "₹4,500/month", admission: "₹8,000", exam: "₹1,800", other: "₹800" },
+  { id: 1, className: "Class I – II",    tuition: "₹2,500/month", admission: "₹5,000", exam: "₹800",   other: "₹500",  total: "₹36,300/yr" },
+  { id: 2, className: "Class III – V",   tuition: "₹3,000/month", admission: "₹5,000", exam: "₹1,000", other: "₹500",  total: "₹42,500/yr" },
+  { id: 3, className: "Class VI – VIII", tuition: "₹3,500/month", admission: "₹6,000", exam: "₹1,200", other: "₹600",  total: "₹49,800/yr" },
+  { id: 4, className: "Class IX – X",    tuition: "₹4,000/month", admission: "₹7,000", exam: "₹1,500", other: "₹700",  total: "₹57,200/yr" },
+  { id: 5, className: "Class XI – XII",  tuition: "₹4,500/month", admission: "₹8,000", exam: "₹1,800", other: "₹800",  total: "₹64,600/yr" },
 ];
