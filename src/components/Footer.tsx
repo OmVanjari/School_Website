@@ -118,9 +118,10 @@ export const Footer = () => {
           <div className="rounded-xl overflow-hidden border border-amber-500/20 shadow-md h-36">
             <iframe
               title="Vidyalaya location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=77.55%2C12.93%2C77.65%2C13.03&layer=mapnik"
+              src="https://maps.google.com/maps?q=Basavanagudi,+Bengaluru,+Karnataka+560004&z=15&output=embed"
               className="w-full h-full border-0 opacity-90"
               loading="lazy"
+              allowFullScreen
             />
           </div>
         </motion.div>
