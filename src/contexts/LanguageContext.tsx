@@ -253,7 +253,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "home.gallery.l7": "School Home",
     // calendar
     "cal.heroTitle": "Academic Calendar",
-    "cal.heroSubtitle": "Plan your year with confidence. Exams, results, holidays, parent-teacher meetings, cultural festivals, and sports events — every important date for 2025–26 in one place.",
+    "cal.heroSubtitle": "Exams, results, holidays, meetings and events — your complete academic year at a glance.",
     "cal.sectionTitle": "All Events",
     "cal.sectionSub": "Filter by category to find what matters most to you.",
     "cal.filterAll": "All",
@@ -269,7 +269,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "cal.cta.sub": "Subscribe for monthly newsletter with calendar updates, photo highlights and parent notes.",
     // notices
     "notices.heroTitle": "Notices & Circulars",
-    "notices.heroSubtitle": "Stay informed and never miss an update. Official school notices, government circulars, exam schedules, and urgent announcements — published promptly and archived for easy reference.",
+    "notices.heroSubtitle": "Official school notices, government circulars and urgent announcements — all in one place.",
     "notices.sectionTitle": "Latest Notices",
     "notices.sectionSub": "Stay informed with the latest updates from school administration and government.",
     "notices.filterAll": "All",
@@ -281,7 +281,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     // about page
     "about.heroTitle": "About Vidyalaya",
     "about.heroSanskrit": "॥ सा विद्या या विमुक्तये ॥",
-    "about.heroSubtitle": "Founded in 2005, Vidyalaya is a school where Bharatiya values meet modern education. Over 2,400 students, 180+ faculty, and two decades of nurturing curious minds, noble hearts, and confident leaders.",
+    "about.heroSubtitle": "A school rooted in Bharatiya values, nurturing curious minds and noble hearts since 2005.",
     "about.mvv.eyebrow": "॥ आधारशिला ॥",
     "about.mvv.title": "Mission, Vision & Values",
     "about.mvv.subtitle": "The three pillars that guide everything we do at Vidyalaya.",
@@ -351,7 +351,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "footer.blessing": "शुभम् भवतु · सर्वे भवन्तु सुखिनः",
     // ── Academics EN ──────────────────────────────────────────────────────────
     "academics.heroTitle": "Academic Excellence",
-    "academics.heroSubtitle": "A curriculum that honours Bharatiya wisdom while preparing students for a competitive, compassionate world. 98% board pass rate, 180+ subject experts, and Olympiad champions — excellence is our standard.",
+    "academics.heroSubtitle": "A curriculum that honours Bharatiya wisdom while preparing students for a competitive, compassionate world.",
     "academics.statsPassRate": "Board Pass Rate", "academics.statsUniversity": "University Admissions / Year",
     "academics.statsExperts": "Subject Experts", "academics.statsOlympiad": "Olympiad Medals",
     "academics.pillarsEyebrow": "॥ शिक्षा स्तम्भाः ॥", "academics.pillarsTitle": "Four Pillars of Learning",
@@ -395,7 +395,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "academics.ctaApply": "Apply Now", "academics.ctaContact": "Contact Us",
     // ── Admissions EN ─────────────────────────────────────────────────────────
     "admissions.heroTitle": "Join Our School",
-    "admissions.heroSubtitle": "Every child carries a divine spark. Admissions open for Pre-K to Grade 12 for 2026–27. A simple 4-step process, merit-based scholarships, and a warm community waiting to welcome your family.",
+    "admissions.heroSubtitle": "Every child carries a divine spark. Help us help yours shine in a nurturing, values-driven environment.",
     "admissions.stepsEyebrow": "॥ प्रक्रिया ॥", "admissions.stepsTitle": "Simple Admission Process",
     "admissions.stepsSubtitle": "A welcoming path from inquiry to enrollment — just four easy steps.",
     "admissions.step1Title": "Inquiry", "admissions.step1Desc": "Reach out and share your child's interests, grade, and any questions you have.",
@@ -433,7 +433,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "admissions.ctaTitle": "Begin the Journey Today", "admissions.ctaSubtitle": "Admissions for 2026–27 are open. Walk through our gates and feel the heritage.",
     "admissions.ctaVisit": "Schedule a Visit", "admissions.ctaCall": "Call Us Now",
     // contact page
-    "contact.heroTitle": "Visit Our Vidyalaya", "contact.heroSubtitle": "We'd love to hear from you. Whether you have questions about admissions, academics, or just want to say hello — our doors and hearts are always open.",
+    "contact.heroTitle": "Visit Our Vidyalaya", "contact.heroSubtitle": "We'd love to hear from you — our doors and hearts are always open.",
     "contact.eyebrow": "॥ संपर्कः ॥", "contact.reachUs": "Reach Us",
     "contact.mainCampus": "Main Campus", "contact.callUs": "Call Us", "contact.email": "Email", "contact.officeHours": "Office Hours",
     "contact.formTitle": "Send Us a Message", "contact.formSubtitle": "We'll respond within one working day.",
@@ -448,7 +448,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "contact.subjectPTM": "Parent-Teacher Meeting", "contact.subjectComplaint": "Complaint / Feedback",
     "contact.subjectOther": "Other", "contact.selectSubject": "Select a subject…",
     // fees page
-    "fees.heroTitle": "Fee Structure", "fees.heroSubtitle": "Clear, class-wise fee details for 2025–26. No hidden charges — just transparent pricing covering tuition, activities, and facilities. Scholarships and sibling discounts available.",
+    "fees.heroTitle": "Fee Structure", "fees.heroSubtitle": "Transparent, class-wise fee details for the academic year 2025–26.",
     "fees.eyebrow": "॥ शुल्काः ॥", "fees.sectionTitle": "Class-wise Fee Details", "fees.sectionSubtitle": "All fees are for the academic year 2025–26. Contact the office for scholarship information.",
     "fees.colClass": "Class / Grade", "fees.colTuition": "Tuition Fee", "fees.colAdmission": "Admission Fee", "fees.colExam": "Exam Fee", "fees.colOther": "Other Charges", "fees.colTotal": "Annual Total",
     "fees.note": "Admission fee is a one-time charge. Tuition fee is payable monthly or quarterly. All fees are subject to revision for the next academic year.",
@@ -550,7 +550,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "home.gallery.l7": "विद्यालय गृह",
     // calendar
     "cal.heroTitle": "शैक्षणिक कैलेंडर",
-    "cal.heroSubtitle": "अपने वर्ष की योजना आत्मविश्वास के साथ बनाएं। परीक्षाएं, परिणाम, छुट्टियाँ, अभिभावक-शिक्षक बैठकें, सांस्कृतिक उत्सव और खेल कार्यक्रम — 2025–26 की हर महत्वपूर्ण तारीख एक जगह।",
+    "cal.heroSubtitle": "परीक्षाएं, परिणाम, छुट्टियाँ, बैठकें और कार्यक्रम — पूरे शैक्षणिक वर्ष की एक झलक।",
     "cal.sectionTitle": "सभी कार्यक्रम",
     "cal.sectionSub": "अपनी जरूरत के अनुसार श्रेणी से फ़िल्टर करें।",
     "cal.filterAll": "सभी",
@@ -566,7 +566,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "cal.cta.sub": "कैलेंडर अपडेट, फोटो हाइलाइट्स और अभिभावक नोट्स के साथ मासिक न्यूज़लेटर के लिए सदस्यता लें।",
     // notices
     "notices.heroTitle": "सूचनाएं एवं परिपत्र",
-    "notices.heroSubtitle": "सूचित रहें और कोई अपडेट न चूकें। आधिकारिक विद्यालय सूचनाएं, सरकारी परिपत्र, परीक्षा कार्यक्रम और अत्यावश्यक घोषणाएं — तुरंत प्रकाशित और आसान संदर्भ के लिए संग्रहीत।",
+    "notices.heroSubtitle": "आधिकारिक विद्यालय सूचनाएं, सरकारी परिपत्र और अत्यावश्यक घोषणाएं — सब एक जगह।",
     "notices.sectionTitle": "नवीनतम सूचनाएं",
     "notices.sectionSub": "विद्यालय प्रशासन और सरकार के नवीनतम अपडेट से अवगत रहें।",
     "notices.filterAll": "सभी",
@@ -578,7 +578,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     // about page
     "about.heroTitle": "विद्यालय के बारे में",
     "about.heroSanskrit": "॥ सा विद्या या विमुक्तये ॥",
-    "about.heroSubtitle": "2005 में स्थापित, विद्यालय वह स्थान है जहाँ भारतीय मूल्य आधुनिक शिक्षा से मिलते हैं। 2,400 से अधिक विद्यार्थी, 180+ शिक्षक, और दो दशकों से जिज्ञासु मन, उदार हृदय और आत्मविश्वासी नेताओं का पोषण।",
+    "about.heroSubtitle": "2005 से भारतीय मूल्यों में निहित एक विद्यालय, जो जिज्ञासु मन और उदार हृदय का पोषण करता है।",
     "about.mvv.eyebrow": "॥ आधारशिला ॥",
     "about.mvv.title": "मिशन, दृष्टि और मूल्य",
     "about.mvv.subtitle": "तीन स्तंभ जो विद्यालय में हम जो कुछ भी करते हैं उसका मार्गदर्शन करते हैं।",
@@ -648,7 +648,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "footer.blessing": "शुभम् भवतु · सर्वे भवन्तु सुखिनः",
     // ── Academics HI ──────────────────────────────────────────────────────────
     "academics.heroTitle": "शैक्षणिक उत्कृष्टता",
-    "academics.heroSubtitle": "एक पाठ्यक्रम जो भारतीय ज्ञान का सम्मान करते हुए विद्यार्थियों को प्रतिस्पर्धी और करुणामय विश्व के लिए तैयार करता है। 98% बोर्ड उत्तीर्ण दर, 180+ विषय विशेषज्ञ और ओलंपियाड विजेता — उत्कृष्टता हमारा मानक है।",
+    "academics.heroSubtitle": "एक पाठ्यक्रम जो भारतीय ज्ञान का सम्मान करते हुए विद्यार्थियों को प्रतिस्पर्धी और करुणामय विश्व के लिए तैयार करता है।",
     "academics.statsPassRate": "बोर्ड उत्तीर्ण दर", "academics.statsUniversity": "विश्वविद्यालय प्रवेश / वर्ष",
     "academics.statsExperts": "विषय विशेषज्ञ", "academics.statsOlympiad": "ओलंपियाड पदक",
     "academics.pillarsEyebrow": "॥ शिक्षा स्तम्भाः ॥", "academics.pillarsTitle": "शिक्षा के चार स्तम्भ",
@@ -692,7 +692,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "academics.ctaApply": "अभी आवेदन करें", "academics.ctaContact": "संपर्क करें",
     // ── Admissions HI ─────────────────────────────────────────────────────────
     "admissions.heroTitle": "हमारे विद्यालय में प्रवेश लें",
-    "admissions.heroSubtitle": "हर बच्चे में एक दिव्य ज्योति है। 2026–27 के लिए Pre-K से कक्षा 12 तक प्रवेश खुले हैं। सरल 4-चरण प्रक्रिया, योग्यता-आधारित छात्रवृत्ति, और आपके परिवार का स्वागत करने के लिए एक गर्मजोशी भरा समुदाय।",
+    "admissions.heroSubtitle": "हर बच्चे में एक दिव्य ज्योति है। हमें उसे एक पोषणकारी, मूल्य-आधारित वातावरण में चमकाने दें।",
     "admissions.stepsEyebrow": "॥ प्रक्रिया ॥", "admissions.stepsTitle": "सरल प्रवेश प्रक्रिया",
     "admissions.stepsSubtitle": "जिज्ञासा से नामांकन तक एक स्वागतपूर्ण मार्ग — केवल चार आसान चरण।",
     "admissions.step1Title": "जिज्ञासा", "admissions.step1Desc": "संपर्क करें और अपने बच्चे की रुचियाँ, कक्षा और प्रश्न साझा करें।",
@@ -730,7 +730,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "admissions.ctaTitle": "आज ही यात्रा शुरू करें", "admissions.ctaSubtitle": "2026–27 के लिए प्रवेश खुले हैं। हमारे द्वार से प्रवेश करें और विरासत को महसूस करें।",
     "admissions.ctaVisit": "भ्रमण निर्धारित करें", "admissions.ctaCall": "अभी कॉल करें",
     // contact page
-    "contact.heroTitle": "हमारे विद्यालय में पधारें", "contact.heroSubtitle": "हम आपसे सुनना चाहते हैं। प्रवेश, शिक्षा या किसी भी विषय पर प्रश्न हों — हमारे द्वार और हृदय सदा खुले हैं।",
+    "contact.heroTitle": "हमारे विद्यालय में पधारें", "contact.heroSubtitle": "हम आपसे सुनना चाहते हैं — हमारे द्वार और हृदय सदा खुले हैं।",
     "contact.eyebrow": "॥ संपर्कः ॥", "contact.reachUs": "संपर्क करें",
     "contact.mainCampus": "मुख्य परिसर", "contact.callUs": "फ़ोन करें", "contact.email": "ईमेल", "contact.officeHours": "कार्यालय समय",
     "contact.formTitle": "हमें संदेश भेजें", "contact.formSubtitle": "हम एक कार्य दिवस के भीतर उत्तर देंगे।",
@@ -745,7 +745,7 @@ const messages: Record<Language, Record<TranslationKey, string>> = {
     "contact.subjectPTM": "अभिभावक-शिक्षक बैठक", "contact.subjectComplaint": "शिकायत / सुझाव",
     "contact.subjectOther": "अन्य", "contact.selectSubject": "विषय चुनें…",
     // fees page
-    "fees.heroTitle": "शुल्क संरचना", "fees.heroSubtitle": "२०२५–२६ के लिए स्पष्ट, कक्षावार शुल्क विवरण। कोई छिपा शुल्क नहीं — केवल पारदर्शी मूल्य निर्धारण। छात्रवृत्ति और भाई-बहन छूट उपलब्ध है।",
+    "fees.heroTitle": "शुल्क संरचना", "fees.heroSubtitle": "शैक्षणिक वर्ष २०२५–२६ के लिए पारदर्शी, कक्षावार शुल्क विवरण।",
     "fees.eyebrow": "॥ शुल्काः ॥", "fees.sectionTitle": "कक्षावार शुल्क विवरण", "fees.sectionSubtitle": "सभी शुल्क शैक्षणिक वर्ष २०२५–२६ के लिए हैं। छात्रवृत्ति जानकारी के लिए कार्यालय से संपर्क करें।",
     "fees.colClass": "कक्षा / ग्रेड", "fees.colTuition": "शिक्षण शुल्क", "fees.colAdmission": "प्रवेश शुल्क", "fees.colExam": "परीक्षा शुल्क", "fees.colOther": "अन्य शुल्क", "fees.colTotal": "वार्षिक कुल",
     "fees.note": "प्रवेश शुल्क एकमुश्त है। शिक्षण शुल्क मासिक या त्रैमासिक देय है। सभी शुल्क अगले शैक्षणिक वर्ष में संशोधन के अधीन हैं।",
