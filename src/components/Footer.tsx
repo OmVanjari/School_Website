@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import schoolLogo from "@/assets/schoollogo.png";
 
 const navLinks = [
   { to: "/about",      key: "nav.about" as const },
@@ -41,12 +42,13 @@ export const Footer = () => {
           className="md:col-span-4"
         >
           <div className="flex items-center gap-3 mb-5">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10">
-              <span className="font-sanskrit text-2xl leading-none text-amber-400">ॐ</span>
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-amber-500/40 bg-white shadow-gold overflow-hidden shrink-0">
+              <img src={schoolLogo} alt="School Logo" className="h-12 w-12 object-contain" />
             </div>
             <div>
-              <div className="font-display text-2xl font-bold tracking-wide text-amber-100">Vidyalaya</div>
-              <div className="font-sanskrit text-xs text-amber-400/80 tracking-wider">विद्या ददाति विनयं</div>
+              <div className="font-display text-base font-bold tracking-wide text-amber-100 leading-tight">Pratap Saraswati</div>
+              <div className="font-display text-base font-bold tracking-wide text-amber-300 leading-tight">Vidya Mandir</div>
+              <div className="font-sanskrit text-[10px] text-amber-400/80 tracking-wider mt-0.5">विद्या ददाति विनयं</div>
             </div>
           </div>
           <p className="text-sm leading-relaxed text-stone-400 max-w-xs">{t("footer.tagline")}</p>
@@ -117,7 +119,7 @@ export const Footer = () => {
           </h4>
           <div className="rounded-xl overflow-hidden border border-amber-500/20 shadow-md h-36">
             <iframe
-              title="Vidyalaya location"
+              title="PSVM location"
               src="https://maps.google.com/maps?q=Basavanagudi,+Bengaluru,+Karnataka+560004&z=15&output=embed"
               className="w-full h-full border-0 opacity-90"
               loading="lazy"

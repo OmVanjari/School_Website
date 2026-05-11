@@ -6,6 +6,7 @@ interface PageHeroProps {
   sanskrit?: string;
   subtitle?: string;
   image: string;
+  video?: string;
   mobileImage?: string;
   align?: "center" | "left";
   imageFit?: "cover" | "contain";
@@ -14,7 +15,7 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => {
+export const PageHero = ({ title, sanskrit, subtitle, image, video, mobileImage, align = "center", imageFit = "cover", imagePosition = "center center", size = "default", children }: PageHeroProps) => {
   const { language } = useLanguage();
   const isHindi = language === "hi";
 
@@ -26,9 +27,39 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
       ? "min-h-[65vh] md:min-h-[68vh]"
       : "min-h-[72vh] md:min-h-[75vh]"
   }`}>
-    {/* Background image */}
+    {/* Background */}
     <div className="absolute inset-0 w-full h-full">
-      {mobileImage ? (
+      {video ? (
+        /* Video background — plays only first 6 seconds then loops */
+        <video
+          autoPlay
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: imagePosition }}
+          onTimeUpdate={(e) => {
+            const v = e.currentTarget;
+            if (v.currentTime >= 6) {
+              v.currentTime = 0;
+            }
+          }}
+        >
+          <source src={video} type="video/mp4" />
+          <img src={image} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+        </video>
+      ) : imageFit === "contain" ? (
+        /* For contain: use CSS background so the full image shows without cropping */
+        <div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundColor: "#0d0500",
+          }}
+        />
+      ) : mobileImage ? (
         <picture className="absolute inset-0 h-full w-full">
           <source media="(max-width: 767px)" srcSet={mobileImage} />
           <img
@@ -36,9 +67,7 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
             alt=""
             aria-hidden
             style={{ objectPosition: imagePosition }}
-            className={`absolute inset-0 h-full w-full opacity-90 animate-fade-in ${
-              imageFit === "contain" ? "object-contain object-center" : "object-cover object-center"
-            }`}
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-90 animate-fade-in"
           />
         </picture>
       ) : (
@@ -47,13 +76,11 @@ export const PageHero = ({ title, sanskrit, subtitle, image, mobileImage, align 
           alt=""
           aria-hidden
           style={{ objectPosition: imagePosition }}
-          className={`absolute inset-0 h-full w-full opacity-90 animate-fade-in ${
-            imageFit === "contain" ? "object-contain object-center" : "object-cover object-[center_30%]"
-          }`}
+          className="absolute inset-0 h-full w-full object-cover object-[center_30%] opacity-90 animate-fade-in"
         />
       )}
       {/* Dark scrim */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className={`absolute inset-0 ${imageFit === "contain" && !video ? "bg-black/50" : "bg-black/55"}`} />
       {/* Warm gradient overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(160deg,hsl(20_60%_10%/0.65)_0%,hsl(20_40%_12%/0.35)_60%,transparent_100%)]" />
       {/* Festive radial glow */}

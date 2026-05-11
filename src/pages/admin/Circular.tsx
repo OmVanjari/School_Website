@@ -36,7 +36,7 @@ const L = {
     issuedBy: "Issued By", designation: "Designation",
     certifiedThat: "This is to certify that",
     schoolSeal: "School Seal", principal: "Principal", chairman: "Chairman",
-    footer: "Vidyalaya School · 108, Saraswati Marg, Bengaluru – 560001 · Affiliated to CBSE",
+    footer: "Pratap Saraswati Vidya Mandir · 108, Saraswati Marg, Bengaluru – 560001 · Affiliated to CBSE",
     tagline: "विद्या ददाति विनयं",
     blessing: "॥ सर्वे भवन्तु सुखिनः ॥",
     shloka: "॥ विद्यया अमृतमश्नुते ॥",
@@ -130,10 +130,10 @@ const Header = ({ lang }: { lang: Lang }) => {
       <div style={s.headerRow}>
         <span style={s.lotus}>🪷</span>
         <div>
-          <p style={s.schoolName}>VIDYALAYA</p>
+          <p style={s.schoolName}>PRATAP SARASWATI VIDYA MANDIR</p>
           <p style={s.tagline}>{t.tagline}</p>
           <p style={s.address}>108, Saraswati Marg, Bengaluru – 560001</p>
-          <p style={s.address}>+91 98765 43210 &nbsp;|&nbsp; hello@vidyalaya.in</p>
+          <p style={s.address}>+91 98765 43210 &nbsp;|&nbsp; hello@psvidyamandir.in</p>
         </div>
         <span style={s.lotus}>🪷</span>
       </div>
@@ -189,7 +189,7 @@ const CircularPreview = ({ f }: { f: FormData }) => {
             <div style={s.sigLine} />
             <p style={s.sigName}>{f.issuedBy || "Dr. Arvind Krishnan"}</p>
             <p style={s.sigRole}>{f.designation || t.principal}</p>
-            <p style={{ ...s.sigRole, color: "#9ca3af" }}>Vidyalaya School</p>
+            <p style={{ ...s.sigRole, color: "#9ca3af" }}>Pratap Saraswati Vidya Mandir</p>
           </div>
         </div>
         <Footer lang={f.lang} />
@@ -258,10 +258,10 @@ const buildPrintHTML = (f: FormData): string => {
       <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:8px;">
         <span style="font-size:28px;color:#c2410c;">🪷</span>
         <div>
-          <p style="font-family:'Cinzel','Georgia',serif;font-size:22px;font-weight:700;color:#7c2d12;letter-spacing:2px;margin:0 0 2px;">VIDYALAYA</p>
+          <p style="font-family:'Cinzel','Georgia',serif;font-size:22px;font-weight:700;color:#7c2d12;letter-spacing:2px;margin:0 0 2px;">PRATAP SARASWATI VIDYA MANDIR</p>
           <p style="font-size:12px;color:#b45309;letter-spacing:2px;margin:0 0 4px;">${t.tagline}</p>
           <p style="font-size:10px;color:#6b7280;margin:2px 0;">108, Saraswati Marg, Bengaluru – 560001</p>
-          <p style="font-size:10px;color:#6b7280;margin:2px 0;">+91 98765 43210 &nbsp;|&nbsp; hello@vidyalaya.in</p>
+          <p style="font-size:10px;color:#6b7280;margin:2px 0;">+91 98765 43210 &nbsp;|&nbsp; hello@psvidyamandir.in</p>
         </div>
         <span style="font-size:28px;color:#c2410c;">🪷</span>
       </div>
@@ -301,7 +301,7 @@ const buildPrintHTML = (f: FormData): string => {
         <div style="height:40px;border-bottom:1px solid #9ca3af;margin-bottom:4px;"></div>
         <p style="font-size:12px;font-weight:600;color:#1f2937;">${f.issuedBy || "Dr. Arvind Krishnan"}</p>
         <p style="font-size:11px;color:#6b7280;">${f.designation || t.principal}</p>
-        <p style="font-size:11px;color:#9ca3af;">Vidyalaya School</p>
+        <p style="font-size:11px;color:#9ca3af;">Pratap Saraswati Vidya Mandir</p>
       </div>
     </div>`;
 

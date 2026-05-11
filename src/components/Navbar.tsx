@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { Menu, X, Flame, LayoutDashboard } from "lucide-react";
+import { Menu, X, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import schoolLogo from "@/assets/schoollogo.png";
 
 const isAdminLoggedIn = () => typeof window !== "undefined" && !!localStorage.getItem("admin-auth");
 
@@ -29,12 +30,13 @@ export const Navbar = () => {
       <div className="container-narrow flex h-20 items-center justify-between">
         <motion.div initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.55 }}>
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-saffron shadow-gold group-hover:scale-105 transition-transform duration-300">
-              <Flame className="h-6 w-6 text-primary-foreground" />
+            <div className="relative flex h-16 w-16 items-center justify-center rounded-full overflow-hidden border-2 border-primary/30 shadow-gold group-hover:scale-105 transition-transform duration-300 bg-white shrink-0">
+              <img src={schoolLogo} alt="School Logo" className="h-14 w-14 object-contain" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-xl font-bold text-secondary">Vidyalaya</div>
-              <div className="font-sanskrit text-xs text-primary">विद्या ददाति विनयं</div>
+              <div className="font-display text-base font-bold text-secondary leading-tight">Pratap Saraswati</div>
+              <div className="font-display text-base font-bold text-primary leading-tight">Vidya Mandir</div>
+              <div className="font-sanskrit text-[10px] text-muted-foreground">विद्या ददाति विनयं</div>
             </div>
           </Link>
         </motion.div>

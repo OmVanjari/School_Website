@@ -10,7 +10,8 @@ import {
   BookOpen, FlaskConical, Palette, Trophy, Award, Sparkles, ArrowRight,
   Megaphone, FileText, Wallet, CalendarDays, Star, ChevronRight, Users,
 } from "lucide-react";
-import heroHome from "@/assets/newherosection.png";
+import heroHome from "@/assets/hero-home.jpg";
+import heroVideo from "@/assets/herosection.mp4";
 import heroHomeMobile from "@/assets/mobilevertficateimage.png";
 import heroAbout from "@/assets/aboutus.png";
 import heroAcademics from "@/assets/acdemics.png";
@@ -104,6 +105,7 @@ const Index = () => {
         sanskrit="॥ विद्यया अमृतमश्नुते ॥"
         subtitle={t("home.heroSubtitle")}
         image={heroHome}
+        video={heroVideo}
         mobileImage={heroHomeMobile}
         imageFit="cover"
         imagePosition="center center"

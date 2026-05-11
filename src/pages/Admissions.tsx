@@ -473,9 +473,9 @@ const Admissions = () => {
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20"><Phone className="h-4 w-4" /></div>
                     +91 98765 43210
                   </a>
-                  <a href="mailto:admissions@vidyalaya.in" className="flex items-center gap-3 text-sm opacity-90 hover:opacity-100 transition-opacity">
+                  <a href="mailto:admissions@psvidyamandir.in" className="flex items-center gap-3 text-sm opacity-90 hover:opacity-100 transition-opacity">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20"><Mail className="h-4 w-4" /></div>
-                    admissions@vidyalaya.in
+                    admissions@psvidyamandir.in
                   </a>
                 </div>
               </div>
@@ -730,10 +730,10 @@ const Admissions = () => {
                   ))}
                 </ul>
                 <div className="mt-4 pt-3 border-t border-gold/15">
-                  <a href="mailto:admissions@vidyalaya.in"
+                  <a href="mailto:admissions@psvidyamandir.in"
                     className="inline-flex items-center gap-2 text-xs font-semibold text-primary hover:text-primary/80 transition-colors">
                     <Mail className="h-3.5 w-3.5" />
-                    admissions@vidyalaya.in
+                    admissions@psvidyamandir.in
                   </a>
                 </div>
               </div>

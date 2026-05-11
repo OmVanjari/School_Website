@@ -34,7 +34,7 @@ const Contact = () => {
   const items = [
     { icon: MapPin, label: t("contact.mainCampus"), value: "108, Saraswati Marg, Bengaluru — 560001" },
     { icon: Phone,  label: t("contact.callUs"),      value: "+91 98765 43210" },
-    { icon: Mail,   label: t("contact.email"),       value: "hello@vidyalaya.in" },
+    { icon: Mail,   label: t("contact.email"),       value: "hello@psvidyamandir.in" },
     { icon: Clock,  label: t("contact.officeHours"), value: "Mon – Sat · 8 AM – 5 PM" },
   ];
 
@@ -120,7 +120,7 @@ const Contact = () => {
               <div className="relative z-10">
                 <p className="font-sanskrit text-2xl text-gold mb-3">॥ अतिथि देवो भव ॥</p>
                 <p className="text-sm leading-relaxed opacity-90">
-                  "The guest is God." At Vidyalaya, every parent, student, and visitor is welcomed with warmth and respect.
+                  "The guest is God." At Pratap Saraswati Vidya Mandir, every parent, student, and visitor is welcomed with warmth and respect.
                 </p>
                 <div className="mt-4 flex items-center gap-2 text-xs text-white/70">
                   <MessageCircle className="h-3.5 w-3.5" />
